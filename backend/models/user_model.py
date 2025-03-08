@@ -1,0 +1,53 @@
+import bcrypt
+import jwt
+from datetime import datetime, timedelta, timezone
+from models.base_model import Base
+from pydantic import BaseModel
+
+SECRET_KEY = "your_secret_key" 
+
+class UserBase(BaseModel):
+    username: str
+    email: str
+    password: str
+
+class Users(Base):
+    def create_user(self, user: UserBase):
+        try:
+            # Hash the password
+            hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
+            user_data = user.model_dump()
+            user_data['password'] = hashed_password.decode('utf-8')
+            
+            self.db.insert_one(user_data)
+            return {"message": "User created successfully"}
+        except Exception as e:
+            return {"error": str(e)}
+
+    def verify_user(self, username: str, password: str):
+        user = self.db.find_one({"username": username})
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
+            return user
+        return None
+
+    def generate_jwt(self, user: dict):
+        payload = {
+            "user_id": str(user["_id"]),
+            "username": user["username"],
+            "exp": datetime.now(timezone.utc) +timedelta(hours=1)
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+        return {"token": token}
+
+    def verify_jwt(self, token: str):
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            return payload
+        except jwt.ExpiredSignatureError:
+            return None
+        except jwt.InvalidTokenError:
+            return None
+
+class UserLogin(BaseModel):
+    username: str
+    password: str

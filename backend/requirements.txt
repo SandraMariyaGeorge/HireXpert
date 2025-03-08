@@ -1,0 +1,8 @@
+openai
+python-dotenv
+fastapi[standard]
+pymongo
+openpyxl
+bcrypt
+pyjwt
+pillow
