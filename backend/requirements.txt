@@ -5,4 +5,8 @@ pymongo
 openpyxl
 bcrypt
 pyjwt
-pillow
+beautifulsoup4
+requests
+pymongo
+openai
+google-genai
