@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-interface Job {
-  id: string;
-  title: string;
-  description: string;
-  // Add other job properties here
-}
+import { Job } from '../../../../lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ApplyPageClient from './apply-client';
 import axios from 'axios';
