@@ -30,5 +30,141 @@
     {
         "role": "assistant",
         "content": "Here's what you've shared with me so far:\n- Name: Vishnuhari\n- Age: 17\n- School Name: BVB\n- You're a full-stack engineer with 5 projects\n\nNow, let's complete your personal details. Could you please provide:\n- Your gender\n- Your email address\n- Your phone number\n- Your GitHub profile (if available)\n- Your LinkedIn profile (if available)"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! Let's continue with your resume. Could you please provide your gender, email address, phone number, GitHub profile (if available), and LinkedIn profile (if available)?"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi! It seems like we might have gotten disconnected or started over. Let's continue building your resume. Could you provide your gender, email address, phone number, GitHub profile (if available), and LinkedIn profile (if available)?"
+    },
+    {
+        "role": "user",
+        "content": "who are you"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm your AI assistant, here to help you create a professional resume. I'll guide you through the process and ensure we capture all the necessary details. Let me know how else I can assist you! Would you like to continue with your resume? If so, let's start with your gender, email address, and phone number."
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! I'm here to assist you with creating a professional resume. Let's start by getting some basic details. Can you please provide your full name?"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! I'm here to help you build your resume. Let's start with your personal details. Could you please let me know your full name?"
+    },
+    {
+        "role": "user",
+        "content": "helo"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! Let's create your resume. Could you please provide me with your full name to get started?"
+    },
+    {
+        "role": "user",
+        "content": "who are you"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm an AI assistant designed to help you create a professional resume. I'll guide you through the process, step by step, gathering information that can best represent your skills and experiences. Would you like to continue with your resume setup? If so, let's begin with your full name."
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! I'm here to help you create your resume. Let's start by gathering some basic information. Could you please tell me your full name?"
+    },
+    {
+        "role": "user",
+        "content": "how are you"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for asking! I'm here and ready to help you create a fantastic resume. Let's get started with your personal details. Could you please share your full name?"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! I'm here to assist you with crafting a professional resume. Could you start by providing your full name?"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! I'm ready to help you with your resume. Let's start by filling out your personal details. Could you please share your full name?"
+    },
+    {
+        "role": "user",
+        "content": "hii"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! Let's begin putting together your resume. Could you please provide me with your full name?"
+    },
+    {
+        "role": "user",
+        "content": "i am vishnuhari"
+    },
+    {
+        "role": "assistant",
+        "content": "Great to meet you, Vishnuhari! Let's move on to the next steps. Could you please provide your:\n- Age\n- Gender\n- Email address\n- Phone number\n- GitHub profile (if available)\n- LinkedIn profile (if available)"
+    },
+    {
+        "role": "user",
+        "content": "Ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Perfect! Let's start with your age and gender. Could you please provide those details?"
+    },
+    {
+        "role": "user",
+        "content": "i am male and i am 20 years old"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you, Vishnuhari. Next, could you please share your email address and phone number?"
+    },
+    {
+        "role": "user",
+        "content": "ok i will share after sometime"
+    },
+    {
+        "role": "assistant",
+        "content": "That's perfectly fine! Whenever you're ready, you can provide those details. \n\nIn the meantime, would you like to move on to your education details? Could you share the details of your school, including the time period, the percentage or grade achieved, and the board affiliation (e.g., CBSE, State, ICSE)?"
+    },
+    {
+        "role": "user",
+        "content": "no need i am tired now"
+    },
+    {
+        "role": "assistant",
+        "content": "I understand! It's important to take breaks. Whenever you're ready to continue, feel free to reach out, and we can pick up where we left off. Take care!"
     }
 ]
