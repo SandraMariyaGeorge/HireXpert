@@ -1,0 +1,34 @@
+[
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! I'm here to help you create a professional resume. Let's start by gathering some personal details. Could you please provide me with your full name?"
+    },
+    {
+        "role": "user",
+        "content": "vishnuhari"
+    },
+    {
+        "role": "assistant",
+        "content": "Great to meet you, Vishnuhari! Can you please tell me your age?"
+    },
+    {
+        "role": "user",
+        "content": "i am 17 and i have 5 project and i am a full stack engineer and my school is bvb"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for sharing that information, Vishnuhari! Let's proceed step-by-step to ensure we capture everything accurately. \n\nFirst, can we complete your personal details? Could you please provide:\n- Your gender?\n- Your email address?\n- Your phone number?\n- Your GitHub profile (if you have one)?\n- Your LinkedIn profile (if you have one)?"
+    },
+    {
+        "role": "user",
+        "content": "what did i tell until now"
+    },
+    {
+        "role": "assistant",
+        "content": "Here's what you've shared with me so far:\n- Name: Vishnuhari\n- Age: 17\n- School Name: BVB\n- You're a full-stack engineer with 5 projects\n\nNow, let's complete your personal details. Could you please provide:\n- Your gender\n- Your email address\n- Your phone number\n- Your GitHub profile (if available)\n- Your LinkedIn profile (if available)"
+    }
+]

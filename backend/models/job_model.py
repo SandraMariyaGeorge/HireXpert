@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from pymongo import MongoClient
 from google import genai
 
+from bson import ObjectId
+
 # Initialize Gemini client
 gemini_client = genai.Client(api_key="AIzaSyBhwkZ1_Ro1ilYsRkkkUt0leeOLhK-w7Og")
 
@@ -11,6 +13,7 @@ gemini_client = genai.Client(api_key="AIzaSyBhwkZ1_Ro1ilYsRkkkUt0leeOLhK-w7Og")
 mongo_client = MongoClient("mongodb+srv://user:user123@cluster0.q30qd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = mongo_client["job_database"]
 collection = db["job_embeddings"]
+
 
 class Jobs(Base):
 
@@ -61,4 +64,18 @@ class Jobs(Base):
             return [{"id": str(doc["_id"]), "metadata": doc["metadata"], "score": doc["score"]} for doc in results]
         except Exception as e:
             return []
+        
+    def get_job_by_id(self, id: str) -> dict:
+        """Get job details by ID."""
+        try:
+            result = collection.find_one({"_id": id})
+            if not result:
+                return {"error": "Job not found"}
+            return {
+                "id": str(result["_id"]),
+                "metadata": result.get("metadata", {}),
+            }
+        except Exception as e:
+            return {"error": str(e)}
+
 

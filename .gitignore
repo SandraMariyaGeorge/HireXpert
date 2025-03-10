@@ -5,3 +5,5 @@ frontend/build/
 frontend/.env
 __pycache__/
 **/__pycache__/
+backend/.venv/
+backend/.env
