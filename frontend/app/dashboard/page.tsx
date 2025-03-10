@@ -168,7 +168,7 @@ export default function Dashboard() {
               </Button>
             </li>
             <li className="p-4 hover:bg-gray-700">
-              <Button className="flex items-center space-x-2 w-full text-left">
+              <Button className="flex items-center space-x-2 w-full text-left" onClick={() => router.push('/chatinterface')}>
                 <FileText className="w-5 h-5 text-white" /> {/* Set the icon color to white */}
                 <span>Resume Generation</span>
               </Button>
