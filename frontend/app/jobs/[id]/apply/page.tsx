@@ -1,24 +1,52 @@
-import { jobs } from '@/data/jobs';
-import dynamic from 'next/dynamic';
+"use client";
 
-// Import the client component dynamically with no SSR
-const ApplyPageClient = dynamic(() => import('./apply-client'), { ssr: false });
+import { useState, useEffect } from 'react';
 
-// Generate static params for all job IDs
-export function generateStaticParams() {
-  return jobs.map((job) => ({
-    id: job.id,
-  }));
+interface Job {
+  id: string;
+  title: string;
+  description: string;
+  // Add other job properties here
 }
+import { useRouter, useSearchParams } from 'next/navigation';
+import ApplyPageClient from './apply-client';
+import axios from 'axios';
 
-// This is a server component
-export default function ApplyPage({ params }: { params: { id: string } }) {
-  const job = jobs.find(j => j.id === params.id);
-  
-  // Pass the job data to the client component
-  return (
-    <div className="min-h-screen bg-background">
-      <ApplyPageClient job={job} />
-    </div>
-  );
+export default function ApplyPage() {
+  const [job, setJob] = useState<Job | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const jobId = searchParams.get('id');
+
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/job/${jobId}`);
+        setJob(response.data);
+      } catch (error) {
+        setError('Failed to fetch job data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (jobId) {
+      fetchJob();
+    } else {
+      setLoading(false);
+      setError('Job ID not provided');
+    }
+  }, [jobId]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  return <ApplyPageClient job={job} />;
 }

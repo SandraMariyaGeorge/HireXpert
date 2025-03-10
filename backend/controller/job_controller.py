@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Form
+from fastapi import APIRouter
+from pydantic import BaseModel
 from models.job_model import Jobs
 
 router = APIRouter(
@@ -6,9 +7,11 @@ router = APIRouter(
     tags=["job"],
 )
 
+# Define request body model
+class JobSearchRequest(BaseModel):
+    query: str
+
 @router.post("/search")
-async def search(
-    query: str = Form(...),
-):
+async def search(request: JobSearchRequest):
     job = Jobs()
-    return job.search_jobs_vector(query)
+    return job.search_jobs_vector(request.query)

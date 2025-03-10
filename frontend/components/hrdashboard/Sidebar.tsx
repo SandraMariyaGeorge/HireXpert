@@ -5,7 +5,7 @@ interface SidebarProps {
   items: {
     id: string;
     label: string;
-    icon: LucideIcon;
+    icon: typeof LucideIcon;
   }[];
   activeTab: string;
   setActiveTab: (tab: string) => void;

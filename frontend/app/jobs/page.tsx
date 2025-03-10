@@ -1,22 +1,66 @@
 "use client";
 
-import { useState } from 'react';
-import { Search, MapPin, Calendar, DollarSign, Briefcase } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Search, MapPin, Calendar, DollarSign, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { jobs } from '@/data/jobs';
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function JobsPage() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  interface Job {
+    id: string;
+    metadata: {
+      companyLogo?: string;
+      company: string;
+      title: string;
+      location: string;
+      salary: string;
+      type: string;
+      posted: string;
+      description: string;
+      responsibilities: string[];
+    };
+  }
 
-  const filteredJobs = jobs.filter(job => 
-    job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    job.company.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const fetchJobs = async (query = "") => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/job/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch jobs");
+      }
+
+      const data = await response.json();
+      setJobs(data); // Backend returns an array of job objects
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = () => {
+    fetchJobs(searchTerm);
+  };
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -33,67 +77,76 @@ export default function JobsPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Button>Search</Button>
+            <Button onClick={handleSearch}>Search</Button>
           </div>
         </div>
 
+        {loading && <p className="text-center">Loading jobs...</p>}
+        {error && <p className="text-center text-red-500">{error}</p>}
+
         <div className="grid gap-6">
-          {filteredJobs.map((job) => (
-            <Card key={job.id}>
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex gap-4">
-                    {job.companyLogo && (
-                      <img
-                        src={job.companyLogo}
-                        alt={job.company}
-                        className="w-16 h-16 rounded-lg object-cover"
-                      />
-                    )}
-                    <div>
-                      <h3 className="text-xl font-semibold">{job.title}</h3>
-                      <p className="text-muted-foreground">{job.company}</p>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {job.location}
-                        </Badge>
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <DollarSign className="h-3 w-3" />
-                          {job.salary}
-                        </Badge>
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <Briefcase className="h-3 w-3" />
-                          {job.type}
-                        </Badge>
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {job.posted}
-                        </Badge>
+          {jobs.length > 0 ? (
+            jobs.map((job) => (
+              <Card key={job.id}>
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex gap-4">
+                      {job.metadata.companyLogo && (
+                        <img
+                          src={job.metadata.companyLogo}
+                          alt={job.metadata.company}
+                          className="w-16 h-16 rounded-lg object-cover"
+                        />
+                      )}
+                      <div>
+                        <h3 className="text-xl font-semibold">{job.metadata.title}</h3>
+                        <p className="text-muted-foreground">{job.metadata.company}</p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          <Badge variant="secondary" className="flex items-center gap-1">
+                            <MapPin className="h-3 w-3" />
+                            {job.metadata.location}
+                          </Badge>
+                          <Badge variant="secondary" className="flex items-center gap-1">
+                            <DollarSign className="h-3 w-3" />
+                            {job.metadata.salary}
+                          </Badge>
+                          <Badge variant="secondary" className="flex items-center gap-1">
+                            <Briefcase className="h-3 w-3" />
+                            {job.metadata.type}
+                          </Badge>
+                          <Badge variant="secondary" className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {job.metadata.posted}
+                          </Badge>
+                        </div>
                       </div>
                     </div>
+                    <Link href={`/jobs/${job.id}/apply`}>
+                      <Button>Quick Apply</Button>
+                    </Link>
                   </div>
-                  <Link href={`/jobs/${job.id}/apply`}>
-                    <Button>Quick Apply</Button>
-                  </Link>
-                </div>
-                
-                <Separator className="my-4" />
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground">{job.description}</p>
-                  <div>
-                    <h4 className="font-semibold mb-2">Key Responsibilities:</h4>
-                    <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                      {job.responsibilities.map((resp, index) => (
-                        <li key={index}>{resp}</li>
-                      ))}
-                    </ul>
+
+                  <Separator className="my-4" />
+
+                  <div className="space-y-4">
+                    <p className="text-muted-foreground">{job.metadata.description}</p>
+                    <div>
+                      <h4 className="font-semibold mb-2">Key Responsibilities:</h4>
+                      <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                      {(Array.isArray(job.metadata?.responsibilities) ? job.metadata.responsibilities : []).map((resp, index) => (
+  <li key={index}>{resp}</li>
+))}
+
+
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            !loading && <p className="text-center">No jobs found.</p>
+          )}
         </div>
       </div>
     </div>
