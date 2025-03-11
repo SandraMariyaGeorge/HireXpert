@@ -166,5 +166,13 @@
     {
         "role": "assistant",
         "content": "I understand! It's important to take breaks. Whenever you're ready to continue, feel free to reach out, and we can pick up where we left off. Take care!"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! Ready to work on your resume now? Let me know if you'd like to continue from where we left off or if there's anything specific you'd like to focus on."
     }
 ]

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from controller import user_controller, job_controller, chat_controller
+from controller import user_controller, job_controller, chat_controller, interview_controller
 
 load_dotenv()
 

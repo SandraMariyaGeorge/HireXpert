@@ -17,5 +17,5 @@ export const TypewriterEffect = ({ text }: { text: string }) => {
     return () => clearInterval(interval);
   }, [text]);
 
-  return <h1 className="text-4xl sm:text-6xl font-bold mb-6">{displayedText}</h1>;
+  return <h1 className="text-4xl text-black sm:text-6xl font-bold mb-6">{displayedText}</h1>;
 };
