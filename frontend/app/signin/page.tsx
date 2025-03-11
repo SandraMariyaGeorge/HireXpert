@@ -51,7 +51,7 @@ export default function SignIn() {
           // Store token in localStorage or cookie
           localStorage.setItem("token", data.token);
           console.log("Token stored:", data.token); // Debugging log
-          router.push("/dashboard");
+          router.push("/chatinterface");
         } else {
           setError("Signin failed");
         }

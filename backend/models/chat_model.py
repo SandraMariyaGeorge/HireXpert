@@ -180,6 +180,7 @@ class Chat:
                 Your goal is to ensure that the resume generated is complete and structured, making it easy for the candidate to apply for jobs quickly. 
                 Keep the conversation interactive, ask for clarification when needed, and provide guidance if the candidate is unsure about what to enter. 
                 Your responses should be clear, concise, and supportive to help the candidate present themselves effectively.
+                Only ask the questions one by one in a short and breif way
                 """}
             ] + conversation_memory
         )

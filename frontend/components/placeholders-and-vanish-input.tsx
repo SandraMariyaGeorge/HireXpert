@@ -1,20 +1,18 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-interface PlaceholdersAndVanishInputProps {
-  placeholders: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-}
-
-export const PlaceholdersAndVanishInput: React.FC<PlaceholdersAndVanishInputProps> = ({
+export function PlaceholdersAndVanishInput({
   placeholders,
   onChange,
   onSubmit,
-}) => {
+}: {
+  placeholders: string[];
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}) {
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -223,7 +221,7 @@ export const PlaceholdersAndVanishInput: React.FC<PlaceholdersAndVanishInputProp
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-gray-300 h-4 w-4"
+          className="text-black h-4 w-4" // Changed color to black
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <motion.path
@@ -266,7 +264,7 @@ export const PlaceholdersAndVanishInput: React.FC<PlaceholdersAndVanishInputProp
                 duration: 0.3,
                 ease: "linear",
               }}
-              className="dark:text-zinc-500 text-sm sm:text-base font-normal text-black pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
+              className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
             >
               {placeholders[currentPlaceholder]}
             </motion.p>
@@ -275,4 +273,4 @@ export const PlaceholdersAndVanishInput: React.FC<PlaceholdersAndVanishInputProp
       </div>
     </form>
   );
-};
+}
