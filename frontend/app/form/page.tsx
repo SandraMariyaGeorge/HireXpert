@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import router, { useRouter } from "next/navigation";
-import SparklesEffect from "@/components/SparklesEffect"; // Import the sparkles effect
+// import { SparklesEffect } from "@/components/sparkles"; // Import the sparkles effect
 
 // Function to handle routing
 const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
@@ -14,7 +14,7 @@ export default function Form() {
   
   return (
     <div className="relative min-h-screen bg-black">
-      <SparklesEffect /> {/* Apply the sparkles effect */}
+      {/* <SparklesEffect /> Apply the sparkles effect */}
       <section id="form" className="py-20 px-4 sm:px-6 lg:px-8 flex justify-center items-center min-h-screen">
         <Card className="bg-white dark:bg-gray-700 shadow-xl w-full max-w-md z-10">
           <CardHeader>

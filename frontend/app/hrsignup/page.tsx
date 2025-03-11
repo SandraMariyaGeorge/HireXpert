@@ -23,13 +23,8 @@ export default function SignUp() {
     const usernameElement = form.elements.namedItem("username") as HTMLInputElement;
     const emailElement = form.elements.namedItem("email") as HTMLInputElement;
     const passwordElement = form.elements.namedItem("password") as HTMLInputElement;
-    const aadhaarElement = form.elements.namedItem("aadhaar") as HTMLInputElement;
 
-    if (!usernameElement || !emailElement || !passwordElement || !aadhaarElement) {
-      setError("Please fill out the username, email, password, and Aadhaar fields");
-      setIsLoading(false);
-      return;
-    }
+   
 
     const formData = new URLSearchParams();
     formData.append("username", usernameElement.value);

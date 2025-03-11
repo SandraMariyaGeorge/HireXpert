@@ -1,44 +1,56 @@
-import React from 'react';
-import { DivideIcon as LucideIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { CalendarPlus, Users, FileSpreadsheet } from 'lucide-react';
+
+
+interface SidebarItem {
+  id: string;
+  label: string;
+  icon: React.ElementType;
+}
 
 interface SidebarProps {
-  items: {
-    id: string;
-    label: string;
-    icon: typeof LucideIcon;
-  }[];
+  items: SidebarItem[];
   activeTab: string;
-  setActiveTab: (tab: string) => void;
+  setActiveTab: (id: string) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ items, activeTab, setActiveTab }) => {
+  const router = useRouter();
+
+  interface SidebarProps {
+    items: SidebarItem[];
+    activeTab: string;
+    setActiveTab: (id: string) => void;
+  }
+
+  const handleItemClick = (id: string) => {
+    setActiveTab(id);
+    if (id === 'create-interview') {
+      router.push('/hrdash/create-interview');
+    }
+    else if (id === 'view-interview-details') {
+      router.push('/hrdash/view-interview-details');
+    }
+    
+    // Add more navigation logic for other tabs if needed
+  };
+
   return (
-    <aside className="w-64 bg-gray-100 border-r border-gray-200">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-gray-900">HR Portal</h2>
-      </div>
-      
-      <nav className="mt-4">
-        {items.map((item) => {
-          const Icon = item.icon;
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center px-6 py-3 text-left ${
-                activeTab === item.id
-                  ? 'bg-gray-200 text-gray-900 border-r-4 border-gray-900'
-                  : 'text-gray-600 hover:bg-gray-50'
-              }`}
-            >
-              <Icon className="w-5 h-5 mr-3" />
-              <span className="font-medium">{item.label}</span>
-            </button>
-          );
-        })}
-      </nav>
-    </aside>
+    <div className="w-64 bg-gray-800 text-white">
+      <ul>
+        {items.map((item) => (
+          <li
+            key={item.id}
+            className={`p-4 cursor-pointer ${activeTab === item.id ? 'bg-gray-700' : ''}`}
+            onClick={() => handleItemClick(item.id)}
+          >
+            <item.icon className="inline-block mr-2" />
+            {item.label}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-}
+};
 
 export default Sidebar;

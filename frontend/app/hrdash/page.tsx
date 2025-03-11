@@ -1,133 +1,39 @@
 "use client";
+import React, { useState } from 'react';
+import { Users, CalendarPlus, FileSpreadsheet } from 'lucide-react';
+import Sidebar from '@/components/hrdashboard/Sidebar';
+import HiringInsights from '@/components/hrdashboard/HiringInsights';
+import ActivityFeed from '@/components/hrdashboard/ActivityFeed';
+import Header from '@/components/common/Header'; // Common header component
+import Footer from '@/components/common/Footer'; // Common footer component
 
-import { useState, useEffect } from 'react';
-import { Search, MapPin, Calendar, DollarSign, Briefcase } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import Link from 'next/link';
-import axios from 'axios';
+function HRDashboard() {
+  const [activeTab, setActiveTab] = useState('dashboard');
 
-export default function JobsPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-  interface Job {
-    id: number;
-    title: string;
-    company: string;
-    companyLogo?: string;
-    location: string;
-    salary: string;
-    type: string;
-    posted: string;
-    description: string;
-    responsibilities: string[];
-  }
-
-  const [jobs, setJobs] = useState<Job[]>([]);
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.post('http://127.0.0.1:8000/job/search', {
-          query: searchTerm || ""
-        });
-        console.log('Fetched jobs:', response.data); // Debug statement
-        setJobs(response.data);
-      } catch (error) {
-        console.error('Error fetching jobs:', error);
-      }
-    };
-
-    fetchJobs();
-  }, [searchTerm]);
-
-  const filteredJobs = jobs.filter(job => 
-    job?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    job?.company?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  console.log('Filtered jobs:', filteredJobs); // Debug statement
+  const sidebarItems = [
+    { id: 'create-interview', label: 'Create Interview', icon: CalendarPlus },
+    { id: 'view-interview-details', label: 'View Interview Details', icon: FileSpreadsheet },
+  ];
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="flex flex-col space-y-8">
-        <div className="flex flex-col space-y-4">
-          <h1 className="text-4xl font-bold">Find Your Next Opportunity</h1>
-          <div className="flex gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-              <Input
-                placeholder="Search jobs..."
-                className="pl-10"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <Button>Search</Button>
+    <div className="flex flex-col h-screen bg-gray-50">
+      <Header /> {/* Common header */}
+      <div className="flex flex-1">
+        <Sidebar items={sidebarItems} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <main className="flex-1 overflow-y-auto p-8 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <header className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900">HR Dashboard</h1>
+              <p className="mt-2 text-gray-600">Welcome back, HR Manager</p>
+            </header>
+            <HiringInsights />
+            <ActivityFeed />
           </div>
-        </div>
-
-        <div className="grid gap-6">
-          {filteredJobs.map((job) => (
-            <Card key={job.id}>
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex gap-4">
-                    {job.companyLogo && (
-                      <img
-                        src={job.companyLogo}
-                        alt={job.company}
-                        className="w-16 h-16 rounded-lg object-cover"
-                      />
-                    )}
-                    <div>
-                      <h3 className="text-xl font-semibold">{job.title}</h3>
-                      <p className="text-muted-foreground">{job.company}</p>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {job.location}
-                        </Badge>
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <DollarSign className="h-3 w-3" />
-                          {job.salary}
-                        </Badge>
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <Briefcase className="h-3 w-3" />
-                          {job.type}
-                        </Badge>
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {job.posted}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                  <Link href={`/jobs/${job.id}/apply`}>
-                    <Button>Quick Apply</Button>
-                  </Link>
-                </div>
-                
-                <Separator className="my-4" />
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground">{job.description}</p>
-                  <div>
-                    <h4 className="font-semibold mb-2">Key Responsibilities:</h4>
-                    <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                      {job.responsibilities.map((resp, index) => (
-                        <li key={index}>{resp}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        </main>
       </div>
+      <Footer /> {/* Common footer */}
     </div>
   );
 }
+
+export default HRDashboard;

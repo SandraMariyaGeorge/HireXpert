@@ -75,10 +75,10 @@ export default function Home() {
     router.push("/form"); // Navigate to the form page
     
   };
-  const handleDashboardClick = () => {
-    router.push("/dashboard"); // Navigate to the form page
+  // const handleDashboardClick = () => {
+  //   router.push("/dashboard"); // Navigate to the form page
     
-  };
+  // };
 
   return (
     <main className="min-h-screen relative">
@@ -97,9 +97,9 @@ export default function Home() {
           <Button className="bg-white text-black hover:bg-black hover:text-white" onClick={() => scrollToSection("pricing")}>
             Pricing
           </Button>
-          <Button className="bg-white text-black hover:bg-black hover:text-white" onClick={handleDashboardClick}>
+          {/* <Button className="bg-white text-black hover:bg-black hover:text-white" onClick={handleDashboardClick}>
           Dashboard
-        </Button>
+        </Button> */}
         </div>
         <Button className="bg-white text-black hover:bg-black hover:text-white" onClick={handleButtonClick}>
           Login <LogInIcon className="ml-2 h-4 w-4" />
@@ -109,7 +109,7 @@ export default function Home() {
       
       {/* Show the card as a pop-up when the button is pressed */}
       {showCard && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10 z-40">
           <Card className="p-6 relative w-full max-w-md">
             <button onClick={handleClose} className="absolute top-2 right-2 text-gray-600 dark:text-gray-300">
               &times;
