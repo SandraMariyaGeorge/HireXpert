@@ -10,6 +10,7 @@ function ViewInterviewDetails() {
     id: number;
     jobTitle: string;
     jobDescription: string;
+    jobQualifications: string;
     qualities: string;
     salary: string;
     jobType: string;
