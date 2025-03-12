@@ -213,7 +213,7 @@ export default function Home() {
           <p className="mb-8 text-gray-100">
             Join thousands of companies already using our platform
           </p>
-          <Button size="lg" variant="secondary">
+          <Button size="lg" variant="secondary" onClick={handleButtonClick}>
             Get Started Now
           </Button>
         </div>
