@@ -182,5 +182,29 @@
     {
         "role": "assistant",
         "content": "Thanks, Stiya. Could you share your age with me?"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi, Stiya! Please let me know your age when you're ready, or if you'd like to skip to another part of building your resume, just let me know!"
+    },
+    {
+        "role": "user",
+        "content": ",,,,"
+    },
+    {
+        "role": "assistant",
+        "content": "No worries, Stiya. Just let me know when you're ready to continue, or if there's a specific section you'd like to work on next."
+    },
+    {
+        "role": "user",
+        "content": "jkhjhjkh"
+    },
+    {
+        "role": "assistant",
+        "content": "If there's anything specific you'd like help with, feel free to let me know. We can continue with your resume whenever you're ready. Just say the word!"
     }
 ]

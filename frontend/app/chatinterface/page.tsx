@@ -5,14 +5,22 @@ import { Card } from "@/components/ui/card";
 import ChatInterface from "@/components/ChatInterface";
 // import { FileUpload } from "@/components/file-upload";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { Bot, Image, Video, FileText, HomeIcon, SkipBackIcon, SkipForwardIcon, LogOutIcon } from "lucide-react";
 import { FloatingDock } from "../../components/floating-dock";
 import { ShootingStars } from "@/components/ShootingStars";
 import { StarsBackground } from "@/components/stars-background";
+import router from "next/router";
+
+const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
+  router.push(path);
+};
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("chat");
   const [showChat, setShowChat] = useState(false);
+  const router = useRouter();
   const [messages, setMessages] = useState([]); // Assuming messages state
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -22,15 +30,15 @@ export default function Home() {
     }
   }, [messages]); // Add messages as a dependency
 
-  const handleFileSubmit = (files: File[]) => {
-    // Handle file submission logic here
-    console.log("Files submitted:", files);
-  };
+  // const handleFileSubmit = (files: File[]) => {
+  //   // Handle file submission logic here
+  //   console.log("Files submitted:", files);
+  // };
 
-  const handleGenerateResume = () => {
-    // Logic to generate resume
-    console.log("Generate Resume button clicked");
-  };
+  // const handleGodashboard = () => {
+  //   // Logic to generate resume
+  //   console.log("go dashboard");
+  // };
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -47,8 +55,6 @@ export default function Home() {
               <TabsTrigger
                 value="chat"
                 className="data-[state=active]:bg-white/10"
-                onMouseEnter={() => setShowChat(true)}
-                onMouseLeave={() => activeTab !== "chat" && setShowChat(false)}
               >
                 <Bot className="mr-2 h-4 w-4" />
                 Chat
@@ -97,24 +103,20 @@ export default function Home() {
             </div>
           </Tabs>
         </Card>
-        {/* <FloatingDock 
-          items={[
-            { title: "Home", icon: <HomeIcon />, href: "/app/page.tsx" }, // Updated href to /app/page.tsx
-            { title: "Back", icon: <SkipBackIcon />, href: "/dashboard" },
-            { title: "Next", icon: <SkipForwardIcon />, href: "/documents" },
-            { title: "Logout", icon: <LogOutIcon />, href: "/app/page.tsx" }
-          ]}
-        /> */}
         <FloatingDock 
   items={[
     { title: "Home", icon: <HomeIcon className="text-black" />, href: "/app/page.tsx" }, 
-    { title: "Back", icon: <SkipBackIcon className="text-black" />, href: "/dashboard" },
+    { title: "Back", icon: <SkipBackIcon className="text-black" />, href: "/signin" },
     { title: "Next", icon: <SkipForwardIcon className="text-black" />, href: "/documents" },
-    { title: "Logout", icon: <LogOutIcon className="text-black" />, href: "/app/page.tsx" }
+    { title: "Logout", icon: <LogOutIcon className="text-black" />, href: "/" }
   ]}
 />
-
-       
+<Button 
+  className="bg-white hover:bg-white text-black p-2 rounded-lg mt-4" 
+  onClick={() => router.push('/dashboard')}
+>
+  End chat and go Dashboard
+</Button>
       </div>
     </div>
   );
