@@ -94,6 +94,8 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
             </Card>
           </TabsContent>
         </Tabs>
+
+        
       </div>
     </div>
   );

@@ -121,7 +121,7 @@ export default function JobsPage() {
                         </div>
                       </div>
                     </div>
-                    <Link href={`/jobs/${job.id}/apply`}>
+                    <Link href={`/jobs/id=${job.id}`}>
                       <Button>Quick Apply</Button>
                     </Link>
                   </div>
@@ -133,11 +133,9 @@ export default function JobsPage() {
                     <div>
                       <h4 className="font-semibold mb-2">Key Responsibilities:</h4>
                       <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                      {(Array.isArray(job.metadata?.responsibilities) ? job.metadata.responsibilities : []).map((resp, index) => (
-  <li key={index}>{resp}</li>
-))}
-
-
+                        {(Array.isArray(job.metadata?.responsibilities) ? job.metadata.responsibilities : []).map((resp, index) => (
+                          <li key={index}>{resp}</li>
+                        ))}
                       </ul>
                     </div>
                   </div>
