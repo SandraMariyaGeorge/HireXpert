@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import ChatInterface from "@/components/ChatInterface";
+import  ChatComponent from "@/components/ChatInterface";
 // import { FileUpload } from "@/components/file-upload";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,8 @@ const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
   router.push(path);
 };
 
+
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState("chat");
   const [showChat, setShowChat] = useState(false);
@@ -30,19 +32,16 @@ export default function Home() {
     }
   }, [messages]); // Add messages as a dependency
 
-  // const handleFileSubmit = (files: File[]) => {
-  //   // Handle file submission logic here
-  //   console.log("Files submitted:", files);
-  // };
-
-  // const handleGodashboard = () => {
-  //   // Logic to generate resume
-  //   console.log("go dashboard");
-  // };
+  
 
   return (
+    
     <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto p-4 max-w-5xl">
+      <div>
+          <h2>Eagerly waiting to generate the resume.Move ahead to see something special</h2>
+          </div>
+
         <Card className="p-6 bg-black/90 text-white relative">
           {activeTab === "chat" && (
             <>
@@ -50,6 +49,8 @@ export default function Home() {
               <ShootingStars /> {/* Add ShootingStars component */}
             </>
           )}
+         
+
           <Tabs defaultValue="chat" className="w-full" onValueChange={(value) => setActiveTab(value)}>
             <TabsList className="grid w-full grid-cols-4 bg-black/40">
               <TabsTrigger
@@ -83,7 +84,7 @@ export default function Home() {
             </TabsList>
             <div className="mt-4" ref={chatContainerRef}>
               <TabsContent value="chat">
-                {(showChat || activeTab === "chat") && <ChatInterface messages={messages} setMessages={setMessages} />}
+                {(showChat || activeTab === "chat") && <ChatComponent messages={messages} setMessages={setMessages} />}
               </TabsContent>
               <TabsContent value="image">
                 <div className="h-[400px] flex items-center justify-center text-white/60">
@@ -105,10 +106,9 @@ export default function Home() {
         </Card>
         <FloatingDock 
   items={[
-    { title: "Home", icon: <HomeIcon className="text-black" />, href: "/app/page.tsx" }, 
+    { title: "Home", icon: <HomeIcon className="text-black" />, href: "/" }, 
     { title: "Back", icon: <SkipBackIcon className="text-black" />, href: "/signin" },
-    { title: "Next", icon: <SkipForwardIcon className="text-black" />, href: "/documents" },
-    { title: "Logout", icon: <LogOutIcon className="text-black" />, href: "/" }
+    { title: "Next", icon: <SkipForwardIcon className="text-black" />, href: "/dashboard" }
   ]}
 />
 <Button 

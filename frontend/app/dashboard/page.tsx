@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, Briefcase, FileText, LogOut } from "lucide-react";
+import { Menu, X, User, Briefcase, FileText, LogOut, PersonStanding } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CircularProgress } from "@/components/ui/CircularProgress"; // Import the CircularProgress component
 import { TextRevealCard, TextRevealCardTitle, TextRevealCardDescription } from "@/components/text-reveal-card"; // Import the TextRevealCard component
 import LoadingOverlayComponent from "@/components/loading-overlay";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 
 const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
   router.push(path);
@@ -16,6 +17,16 @@ export default function Dashboard() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [userDetails, setUserDetails] = useState({
+    name: "Logged User",
+    email: "user@example.com",
+    phone: "123-456-7890",
+    address: "123 Main St, City, Country",
+    jobTitle: "Software Engineer",
+    age:"18",
+    // Add other details as needed
+  });
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -28,6 +39,20 @@ export default function Dashboard() {
       setLoading(false);
       // Add any additional logic here if needed
     }, 2000);
+  };
+
+  const handleUserDetailsChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
+  const handleUserDetailsSubmit = (e) => {
+    e.preventDefault();
+    // Add logic to update user details
+    setIsDialogOpen(false);
   };
 
   return (
@@ -75,10 +100,12 @@ export default function Dashboard() {
             </Button>
             <h1 className="text-2xl font-semibold text-white">Welcome to HireExpert</h1>
           </div>
-          <div className="flex items-center space-x-4">
-            <User className="w-6 h-6 text-white" /> {/* Set the icon color to white */}
-            <span>Logged User</span>
-            <Button className="bg-red-600 hover:bg-red-500 p-2 rounded-full" onClick={() => router.push('/')}>
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setIsDialogOpen(true)}>
+            <User className="w-5 h-6 text-white" /> {/* Set the icon color to white */}
+            Logged User
+         
+          {/* <div className="flex items-center space-x-4"> */}
+            <Button className="bg-white-400 hover:bg-white p-2 rounded-full" onClick={() => router.push("/")}>
               <LogOut className="text-white" /> {/* Set the icon color to white */}
             </Button>
           </div>
@@ -177,6 +204,97 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* User Details Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>Update User Details</DialogTitle>
+            <DialogClose />
+          </DialogHeader>
+          <form onSubmit={handleUserDetailsSubmit}>
+            <div className="flex space-x-4">
+              <div className="w-1/3 flex flex-col items-center">
+                <img src="/assets/avatar.png" alt="User" className="w-24 h-24 rounded-full mb-4" />
+                <h2 className="text-xl font-semibold">{userDetails.name}</h2>
+              </div>
+              <div className="w-2/3">
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={userDetails.name}
+                    onChange={handleUserDetailsChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={userDetails.email}
+                    onChange={handleUserDetailsChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+                    Phone
+                  </label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="text"
+                    value={userDetails.phone}
+                    onChange={handleUserDetailsChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
+                    Address
+                  </label>
+                  <input
+                    id="address"
+                    name="address"
+                    type="text"
+                    value={userDetails.address}
+                    onChange={handleUserDetailsChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobTitle">
+                    Job Title
+                  </label>
+                  <input
+                    id="jobTitle"
+                    name="jobTitle"
+                    type="text"
+                    value={userDetails.jobTitle}
+                    onChange={handleUserDetailsChange}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                {/* Add other fields as needed */}
+                <div className="flex items-center justify-between">
+                  <Button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Update
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
