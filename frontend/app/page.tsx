@@ -71,10 +71,10 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleMockInterviewClick = () => {
-    router.push("/form"); // Navigate to the form page
+  // const handleMockInterviewClick = () => {
+  //   router.push("/form"); // Navigate to the form page
     
-  };
+  // };
   // const handleDashboardClick = () => {
   //   router.push("/dashboard"); // Navigate to the form page
     
@@ -91,9 +91,9 @@ export default function Home() {
           <Button className="bg-white text-black hover:bg-black hover:text-white" onClick={() => scrollToSection("features")}>
             Features
           </Button>
-          <Button className="bg-white text-black hover:bg-black hover:text-white" onClick={handleMockInterviewClick}>
+          {/* <Button className="bg-white text-black hover:bg-black hover:text-white" onClick={handleMockInterviewClick}>
             Mock Interview
-          </Button>
+          </Button> */}
           <Button className="bg-white text-black hover:bg-black hover:text-white" onClick={() => scrollToSection("pricing")}>
             Pricing
           </Button>
