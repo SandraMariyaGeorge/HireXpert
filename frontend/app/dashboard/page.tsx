@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CircularProgress } from "@/components/ui/CircularProgress"; // Import the CircularProgress component
 import { TextRevealCard, TextRevealCardTitle, TextRevealCardDescription } from "@/components/text-reveal-card"; // Import the TextRevealCard component
+import LoadingOverlayComponent from "@/components/loading-overlay";
 
 const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
   router.push(path);
@@ -14,13 +15,24 @@ const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
 export default function Dashboard() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const handleResumeGenerationClick = () => {
+    setLoading(true);
+    // Simulate a delay for the loading effect
+    setTimeout(() => {
+      setLoading(false);
+      // Add any additional logic here if needed
+    }, 2000);
+  };
+
   return (
     <div className="flex min-h-screen bg-grey-100 dark:bg-grey-900">
+      {loading && <LoadingOverlayComponent />}
       {/* Sidebar */}
       <div className={`fixed inset-y-0 left-0 bg-gray-800 text-white w-64 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out z-20`}>
         <div className="flex items-center justify-between p-4">
@@ -44,7 +56,7 @@ export default function Dashboard() {
               </Button>
             </li>
             <li className="p-4 hover:bg-gray-700">
-              <Button className="flex items-center space-x-2 w-full text-left" onClick={() => router.push('/chatinterface')}>
+              <Button className="flex items-center space-x-2 w-full text-left" onClick={handleResumeGenerationClick}>
                 <FileText className="w-5 h-5 text-white" /> {/* Set the icon color to white */}
                 <span>Resume Generation</span>
               </Button>

@@ -57,6 +57,7 @@
     "framer-motion": "^11.18.0",
     "input-otp": "^1.2.4",
     "list": "^2.0.19",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.446.0",
     "motion": "^12.4.10",
     "next": "13.5.1",

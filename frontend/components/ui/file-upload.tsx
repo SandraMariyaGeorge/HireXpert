@@ -41,9 +41,6 @@ export const FileUpload = ({
   const handleClick = () => {
     fileInputRef.current?.click();
   };
-  // const handleRemoveFile = () => {
-  //   setUploadedFile(null);
-  // };
 
   const { getRootProps, isDragActive } = useDropzone({
     multiple: false,
@@ -54,43 +51,26 @@ export const FileUpload = ({
     },
   });
 
-  // return (
-  //   <div className="w-full" {...getRootProps()}>
-  //     <motion.div
-  //       onClick={handleClick}
-  //       whileHover="animate"
-  //       className="p-10 group/file block rounded-lg cursor-pointer w-full relative overflow-hidden"
-  //     >
-  //       <input
-  //         ref={fileInputRef}
-  //         id="file-upload-handle"
-  //         type="file"
-  //         onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
-  //         className="hidden"
-  //       />
-
   return (
     <div className="w-full flex justify-start" {...getRootProps()}>
       <motion.div
-      onClick={handleClick}
-      whileHover="animate"
-      className="p-10 group/file block rounded-lg cursor-pointer relative overflow-hidden"
+        onClick={handleClick}
+        whileHover="animate"
+        className="p-10 group/file block rounded-lg cursor-pointer relative overflow-hidden"
       >
-      <input
-        ref={fileInputRef}
-        id="file-upload-handle"
-        type="file"
-        onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
-        className="hidden"
-      />
-
+        <input
+          ref={fileInputRef}
+          id="file-upload-handle"
+          type="file"
+          onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
+          className="hidden"
+        />
         <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
           <GridPattern />
         </div>
         <div className="flex flex-col items-left justify-left">
-         
           <p className="relative z-20 font-sans font-normal text-neutral-400 dark:text-neutral-400 text-base mt-2">
-             Drop your files here 
+            Drop your files here
           </p>
           <div className="relative w-full mt-10 max-w-xl mx-auto">
             {files.length > 0 &&
@@ -121,7 +101,6 @@ export const FileUpload = ({
                       {(file.size / (1024 * 1024)).toFixed(2)} MB
                     </motion.p>
                   </div>
-
                   <div className="flex text-sm md:flex-row flex-col items-start md:items-center w-full mt-2 justify-between text-neutral-600 dark:text-neutral-400">
                     <motion.p
                       initial={{ opacity: 0 }}
@@ -131,7 +110,6 @@ export const FileUpload = ({
                     >
                       {file.type}
                     </motion.p>
-
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -143,20 +121,6 @@ export const FileUpload = ({
                   </div>
                 </motion.div>
               ))}
-
-{/* {setUploadedFile && (
-      <div className="flex items-center mt-2">
-        <span className="text-sm text-gray-600 dark:text-gray-300">
-          {setUploadedFile.name}
-        </span>
-        <button
-          onClick={handleRemoveFile}
-          className="ml-2 text-red-500 hover:text-red-700"
-        >
-          &times;
-        </button>
-      </div>
-    )} */}
             {!files.length && (
               <motion.div
                 layoutId="file-upload"
@@ -185,7 +149,6 @@ export const FileUpload = ({
                 )}
               </motion.div>
             )}
-
             {!files.length && (
               <motion.div
                 variants={secondaryVariant}
@@ -221,8 +184,5 @@ export function GridPattern() {
       )}
     </div>
   );
-}
-function setUploadedFile(arg0: null) {
-  throw new Error("Function not implemented.");
 }
 
