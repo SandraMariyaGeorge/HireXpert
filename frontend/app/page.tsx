@@ -1,5 +1,5 @@
 "use client";
-
+import { AuthProvider } from '../context/AuthContext';
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Use next/navigation instead of next/router
 import { Button } from "@/components/ui/button";
@@ -50,7 +50,8 @@ export default function Home() {
 
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white">
+    <AuthProvider>
+      <main className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white">
       {/* Navigation */}
       <nav className="fixed w-full top-0 bg-black/30 backdrop-blur-lg border-b border-gray-700 z-50">
         <div className="max-w-7xl mx-auto px-6">
@@ -174,9 +175,10 @@ export default function Home() {
           </Button>
         </div>
       </section>
-       </main>
-         );
-       }
+      </main>
+    </AuthProvider>
+  );
+}
 
 
 

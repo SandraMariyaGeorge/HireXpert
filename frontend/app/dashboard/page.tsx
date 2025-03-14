@@ -8,6 +8,9 @@ import { CircularProgress } from "@/components/ui/CircularProgress"; // Import t
 import { TextRevealCard, TextRevealCardTitle, TextRevealCardDescription } from "@/components/text-reveal-card"; // Import the TextRevealCard component
 import LoadingOverlayComponent from "@/components/loading-overlay";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
+import Dashboard_Header from "@/components/dashboard_header";
+import Dashboard_Sidebar from "@/components/dashboard_sidebar";
+import { AuthProvider } from "@/context/AuthContext";
 
 const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
   router.push(path);
@@ -56,60 +59,20 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen bg-black">
+    <AuthProvider>
+      <div className="flex min-h-screen bg-black">
       {loading && <LoadingOverlayComponent />}
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 bg-gray-800 text-white w-64 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out z-20`}>
-        <div className="flex items-center justify-between p-4">
-          <h2 className="text-xl font-semibold">Dashboard</h2>
-          <Button className="bg-gray-700 hover:bg-gray-600 p-2 rounded-full" onClick={toggleSidebar}>
-            <X className="text-white" /> {/* Set the icon color to white */}
-          </Button>
-        </div>
-        <nav className="mt-4">
-          <ul>
-            <li className="p-3 hover:bg-gray-700">
-              <Button className="flex items-center space-x-2 w-full text-left" onClick={() => router.push('/mockquestions')}>
-                <Briefcase className="w-5 h-5 text-white" /> {/* Set the icon color to white */}
-                <span>Mock Interview</span>
-              </Button>
-            </li>
-            <li className="p-4 hover:bg-gray-700">
-              <Button className="flex items-center space-x-1 w-full text-left" onClick={() => router.push('/jobs')}>
-                <Briefcase className="w-3 h-3 text-white" /> {/* Set the icon color to white */}
-                <span>Job Listings</span>
-              </Button>
-            </li>
-            <li className="p-4 hover:bg-gray-700">
-              <Button className="flex items-center space-x-2 w-full text-left" onClick={handleResumeGenerationClick}>
-                <FileText className="w-5 h-5 text-white" /> {/* Set the icon color to white */}
-                <span>Resume Generation</span>
-              </Button>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <Dashboard_Sidebar
+        sidebarOpen={sidebarOpen}
+        toggleSidebar={toggleSidebar}
+        handleResumeGenerationClick={handleResumeGenerationClick}
+      />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Navbar */}
-        <div className="flex items-center justify-between bg-black p-4 text-white">
-          <div className="flex items-center space-x-4">
-            <Button className="bg-black-500 hover:bg-black-400 p-2 rounded-full" onClick={toggleSidebar}>
-              <Menu className="text-white" /> {/* Set the icon color to white */}
-            </Button>
-            <h1 className="text-2xl font-semibold text-white">Welcome to HireExpert</h1>
-          </div>
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setIsDialogOpen(true)}>
-            <User className="w-5 h-6 text-white" /> {/* Set the icon color to white */}
-            Logged User
-         
-          {/* <div className="flex items-center space-x-4"> */}
-            <Button className="bg-white-400 hover:bg-white p-2 rounded-full" onClick={() => router.push("/")}>
-              <LogOut className="text-white" /> {/* Set the icon color to white */}
-            </Button>
-          </div>
-        </div>
+        <Dashboard_Header toggleSidebar={toggleSidebar} setIsDialogOpen={setIsDialogOpen} />
 
         {/* Content */}
         <div className="flex-1 p-6 bg-black text-white">
@@ -296,5 +259,7 @@ export default function Dashboard() {
         </DialogContent>
       </Dialog>
     </div>
+    </AuthProvider>
+    
   );
 }
