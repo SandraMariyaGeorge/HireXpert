@@ -38,7 +38,7 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
     return (
       <div className="container mx-auto py-16 px-4 text-center">
         <h1 className="text-2xl font-bold mb-4 text-gray-100">Job Not Found</h1>
-        <p className="text-gray-400 mb-8">The job you're looking for doesn't exist or has been removed.</p>
+        <p className="text-gray-400 mb-8">The job you&apos;re looking for doesn&apos;t exist or has been removed.</p>
         <Link href="/jobs">
           <Button className="bg-gray-800 text-white">Back to Jobs</Button>
         </Link>

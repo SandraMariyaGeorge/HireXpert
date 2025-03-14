@@ -7,10 +7,9 @@ const Header = () => {
     <div className="max-w-7xl mx-auto flex justify-between items-center">
       <h1 className="text-xl font-bold">HireXpert</h1>
       <nav className="flex space-x-4">
-          <Link href="/" className="mr-4">Home</Link>
-          <Link href="/jobs" className="mr-4">Jobs</Link>
+          <Link href="/hrdash" className="mr-4">Home</Link>
+          <Link href="/hrdash/jobs" className="mr-4">Jobs</Link>
           <Link href="/hrdash" className="mr-4">HR Dashboard</Link>
-          <Link href="/hrsignin">Sign In</Link>
         </nav>
       </div>
     </header>

@@ -51,7 +51,7 @@ export default function SignIn() {
           // Store token in localStorage or cookie
           localStorage.setItem("token", data.token);
           console.log("Token stored:", data.token); // Debugging log
-          router.push("/chatinterface");
+          router.push("/dashboard/chatinterface");
         } else {
           setError("Signin failed");
         }
@@ -138,7 +138,7 @@ export default function SignIn() {
           </CardContent>
           <CardFooter className="text-center">
             <div className="mt-8 text-center text-sm text-slate-500 font-inter">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/signup" className="text-black-600 hover:text-black-300 font-medium transition-colors">
                 Sign up
               </Link>

@@ -3,15 +3,26 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import Dashboard_Sidebar from "@/components/dashboard_sidebar";
+import Dashboard_Header from "@/components/dashboard_header";
+import LoadingOverlayComponent from "@/components/loading-overlay";
+import Link from "next/link";
 
 const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
     router.push(path);
   };
 
 export default function MockQuestions() {
+  
   const router = useRouter();
   const [jobDescription, setJobDescription] = useState("");
-
+  const [loading, setLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
   const handleGenerateQuestions = () => {
     // Logic to generate questions based on job description
     console.log("Generating questions for:", jobDescription);
@@ -20,11 +31,33 @@ export default function MockQuestions() {
   const handleAttendMockInterview = () => {
     // Logic to attend mock interview
     console.log("Attending mock interview for:", jobDescription);
-    router.push('/mockinterview');
+    router.push('/dashboard/mockinterview');
+  };
+
+  const handleResumeGenerationClick = () => {
+    setLoading(true);
+    // Simulate a delay for the loading effect
+    setTimeout(() => {
+      setLoading(false);
+      // Add any additional logic here if needed
+    }, 2000);
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+
+    <div className="flex min-h-screen bg-black">
+      {loading && <LoadingOverlayComponent />}
+      {/* Sidebar */}
+      <Dashboard_Sidebar
+        sidebarOpen={sidebarOpen}
+        toggleSidebar={toggleSidebar}
+        handleResumeGenerationClick={handleResumeGenerationClick}
+      />
+      {/*Header */}
+      <div className="flex-1 flex flex-col">
+        {/* Navbar */}
+        <Dashboard_Header toggleSidebar={toggleSidebar} setIsDialogOpen={setIsDialogOpen} />
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <Card className="w-full max-w-lg bg-white shadow-xl">
         <CardHeader>
           <CardTitle className="text-xl font-semibold text-black">Enter Job Description</CardTitle>
@@ -40,12 +73,17 @@ export default function MockQuestions() {
             <Button className="bg-blue-500 hover:bg-grey-600 text-white p-2 rounded-lg" onClick={handleGenerateQuestions}>
               Generate Questions
             </Button>
-            <Button className="bg-red-500 hover:bg-grey-600 text-white p-2 rounded-lg" onClick={() => router.push('/mockinterview')}>
-              Attend Mock Interview
-            </Button>
+            <Link href="/dashboard/mockinterview" passHref>
+            <Button className="bg-red-500 hover:bg-grey-600 text-white p-2 rounded-lg">
+                Attend Mock Interview
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>
     </div>
+    </div>
+  </div>
   );
 }
+
