@@ -8,7 +8,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Zap, CheckCircle, Users, BarChart2, ArrowRight, LogInIcon, UserSearchIcon, BarChart3, LucideSection } from "lucide-react";
-import { TypewriterEffect } from "@/components/typewriter-effect"; // Import the TypewriterEffect component
+import { TypewriterEffect, TypewriterEffectSmooth } from "@/components/ui/typewriter-effect"; // Import the TypewriterEffect component
+
 import { Form } from "react-hook-form";
 
 
@@ -78,13 +79,17 @@ export default function Home() {
       <section>
       {/* Hero Section */}
       <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto ">
           <span className="px-4 py-1.5 mb-6 text-sm font-semibold bg-white text-black rounded-full inline-block">
             AI-Powered Interviews
           </span>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-            <TypewriterEffect words={[{ text: "HireExpert: Supercharge Your Hiring Process in 50+ Languages" }]} />
-          </h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+            <TypewriterEffectSmooth words={[
+              { text: "HireExpert" },
+              { text: ": Supercharge" },
+              { text: "Your Hiring Process" },
+            ]} />
+            </h1>
           <p className="text-gray-400 text-lg mb-8">
             Conduct AI-driven interviews in 50+ languages and make hiring faster & smarter.
           </p>

@@ -1,25 +1,3 @@
-// "use client";
-// import React, { useEffect, useState } from "react";
-
-// export const TypewriterEffect = ({ text }: { text: string }) => {
-//   const [displayedText, setDisplayedText] = useState("");
-
-//   useEffect(() => {
-//     let index = 0;
-//     const interval = setInterval(() => {
-//       setDisplayedText((prev) => prev + (text[index] || ""));
-//       index++;
-//       if (index === text.length) {
-//         clearInterval(interval);
-//       }a
-//     }, 100);
-//     return () => clearInterval(interval);
-//   }, [text]);
-
-//   return <h1 className="text-4xl text-black sm:text-6xl font-bold mb-6 no-hover">{displayedText}</h1>;
-// };
-
-
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -77,7 +55,7 @@ export const TypewriterEffect = ({
                   initial={{}}
                   key={`char-${index}`}
                   className={cn(
-                    `dark:text-white text-black opacity-0 hidden`,
+                    `dark:text-white text-white opacity-0 hidden`,
                     word.className
                   )}
                 >
@@ -148,7 +126,7 @@ export const TypewriterEffectSmooth = ({
               {word.text.map((char, index) => (
                 <span
                   key={`char-${index}`}
-                  className={cn(`dark:text-white text-black `, word.className)}
+                  className={cn(`dark:text-white text-white `, word.className)}
                 >
                   {char}
                 </span>
@@ -178,7 +156,7 @@ export const TypewriterEffectSmooth = ({
         }}
       >
         <div
-          className="text-xs sm:text-base md:text-xl lg:text:3xl xl:text-5xl font-bold"
+          className="text-xs sm:text-base md:text-3xl lg:text:3xl xl:text-3xl font-bold"
           style={{
             whiteSpace: "nowrap",
           }}

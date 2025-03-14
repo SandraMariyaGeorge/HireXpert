@@ -54,7 +54,7 @@
     "embla-carousel-react": "^8.3.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.1",
-    "framer-motion": "^11.18.0",
+    "framer-motion": "^11.18.2",
     "input-otp": "^1.2.4",
     "list": "^2.0.19",
     "lottie-react": "^2.4.1",
