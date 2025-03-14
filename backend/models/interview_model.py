@@ -8,6 +8,7 @@ from pymongo import MongoClient
 import speech_recognition as sr
 import requests
 import base64
+import uuid
 
 api_key = "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"  # Replace with your actual OpenAI API key
 client = OpenAI(api_key=api_key)
@@ -105,3 +106,15 @@ class Interview(Base):
             return base64.b64encode(response.content).decode("utf-8")
         else:
             return "Error generating audio response"
+    
+    def create_interview(self, username):
+        """Create a new interview with a unique ID and save it to the database."""
+        interview_id = str(uuid.uuid4())
+        interview_data = {
+            "interview_id": interview_id,
+            "username": username
+        }
+        self.db.insert_one(interview_data)
+
+        return {"status": "success", "interview_id": interview_id}
+

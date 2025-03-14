@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from models.interview_model import Interview, InterviewRequest, InterviewResponse
+from models.user_model import Users
 
 router = APIRouter(
     prefix="/interview",
@@ -30,11 +31,15 @@ async def clear_interview():
     
 
 @router.post("/create")
-async def create_interview():
-    """Create a new interview."""
+async def create_interview(token: str):
     try:
+        users = Users()
+        payload = users.verify_jwt(token)
+        username = payload["username"]
         interview_instance = Interview()
-        interview_instance.clear_memory()
-        return {"message": "New interview created successfully"}
+        result = interview_instance.create_interview(username)
+        return {"message": "Interview created successfully", "interview_id": result["interview_id"]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error creating interview: {str(e)}")
+
+
