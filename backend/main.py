@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from controller import user_controller, job_controller, chat_controller, interview_controller
+from controller import user_controller, job_controller, chat_controller, interview_controller, userdetails_controller, generate_controller
 
 load_dotenv()
 
@@ -20,5 +20,6 @@ app.add_middleware(
 app.include_router(user_controller.router)
 app.include_router(job_controller.router)
 app.include_router(chat_controller.router)
-
-
+app.include_router(interview_controller.router)
+app.include_router(userdetails_controller.router)
+app.include_router(generate_controller.router)

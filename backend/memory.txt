@@ -1,55 +1,39 @@
 [
     {
         "role": "user",
-        "content": "helloo "
-    },
-    {
-        "role": "assistant",
-        "content": "Hello! I'm here to help you build a complete and professional resume. Let's start with your personal details. Could you please provide me with the following information?\n\n- Full Name\n- Age\n- Gender\n- Email Address\n- Phone Number\n- GitHub Profile (if available)\n- LinkedIn Profile (if available)"
-    },
-    {
-        "role": "user",
-        "content": "why are you so rude"
-    },
-    {
-        "role": "assistant",
-        "content": "I apologize if I came across as rude, that was not my intention at all. I'm here to assist you in creating a great resume, and I want to make sure we cover everything you need. Let's start again\u2014how about we begin with collecting your personal details? Feel free to share what you're comfortable with, and I'm here to guide you through the process."
-    },
-    {
-        "role": "user",
         "content": "hi"
     },
     {
         "role": "assistant",
-        "content": "Hi! I'm glad you're here. Let's start working on your resume. Could you please provide me with your full name?"
+        "content": "Hello! I'm here to help you build a great resume. Let's start with your personal details. Can you tell me your full name?"
     },
     {
         "role": "user",
-        "content": "i am stiya"
+        "content": "Vishnuhari V A"
     },
     {
         "role": "assistant",
-        "content": "Great to meet you, Stiya! Could you please share your age?"
+        "content": "Great, Vishnuhari! Could you please provide your age?"
     },
     {
         "role": "user",
-        "content": "i am 31 years old"
+        "content": "20"
     },
     {
         "role": "assistant",
-        "content": "Thank you, Stiya. Could you also let me know your gender?"
+        "content": "Thank you! Could you let me know your gender?"
     },
     {
         "role": "user",
-        "content": "i am male"
+        "content": "Male"
     },
     {
         "role": "assistant",
-        "content": "Got it. Could you please provide your email address?"
+        "content": "Got it. What's your email address?"
     },
     {
         "role": "user",
-        "content": "stiya11111@gmail.com"
+        "content": "vishnuhari.anup@gmail.com"
     },
     {
         "role": "assistant",
@@ -57,43 +41,11 @@
     },
     {
         "role": "user",
-        "content": "hehe88hehe"
+        "content": "8590449717"
     },
     {
         "role": "assistant",
-        "content": "No worries, you can share that when you're ready. Do you have a GitHub profile you'd like to include? If you don't have one, that's okay too."
-    },
-    {
-        "role": "user",
-        "content": "why no no needed?"
-    },
-    {
-        "role": "assistant",
-        "content": "Including a GitHub profile can be beneficial if you have projects or code you'd like to showcase, especially if you're in a tech field. If you don\u2019t have one, that\u2019s perfectly fine too. Just let me know if you'd like to include it, or we can go on to the next question!"
-    },
-    {
-        "role": "user",
-        "content": "hello what is my name"
-    },
-    {
-        "role": "assistant",
-        "content": "Your name is Stiya. Would you like to move on to adding your LinkedIn profile, or should we revisit any previous details?"
-    },
-    {
-        "role": "user",
-        "content": "what is my summary"
-    },
-    {
-        "role": "assistant",
-        "content": "It seems we haven't discussed a summary or objective for your resume yet. A summary is typically a brief statement that highlights your professional background and career goals. If you'd like to create one now, you could provide me with some details about your career objectives or key skills you'd like to emphasize, and we can draft it together. Let me know how you'd like to proceed!"
-    },
-    {
-        "role": "user",
-        "content": "what is my name and age"
-    },
-    {
-        "role": "assistant",
-        "content": "Your name is Stiya, and you are 31 years old. Would you like to proceed with your LinkedIn profile details, or is there anything else you'd like to go over?"
+        "content": "Thanks! Do you have a GitHub profile? If so, please provide the URL. If not, just let me know."
     },
     {
         "role": "user",
@@ -101,110 +53,6 @@
     },
     {
         "role": "assistant",
-        "content": "Hi again! Let me know how you'd like to continue\u2014whether it's sharing more personal details or diving into the next section of your resume. Just let me know!"
-    },
-    {
-        "role": "user",
-        "content": "i am sreelekshmi"
-    },
-    {
-        "role": "assistant",
-        "content": "Nice to meet you, Sreelekshmi! Let's update your details. Can you share your age?"
-    },
-    {
-        "role": "user",
-        "content": "i am 70 years old"
-    },
-    {
-        "role": "assistant",
-        "content": "Thank you, Sreelekshmi. Could you let me know your gender?"
-    },
-    {
-        "role": "user",
-        "content": "no"
-    },
-    {
-        "role": "assistant",
-        "content": "No problem at all. Let's move on. Could you provide your email address, please?"
-    },
-    {
-        "role": "user",
-        "content": "ok"
-    },
-    {
-        "role": "assistant",
-        "content": "Great! Please go ahead and share your email address when you're ready."
-    },
-    {
-        "role": "user",
-        "content": "hello"
-    },
-    {
-        "role": "assistant",
-        "content": "Hello again! When you're ready, you can provide your email address, or let me know how you'd like to proceed with building your resume."
-    },
-    {
-        "role": "user",
-        "content": "how are you"
-    },
-    {
-        "role": "assistant",
-        "content": "I'm here and ready to help you with your resume! How can I assist you further today? If you're ready, you could share your email address, or let me know what you'd like to do next."
-    },
-    {
-        "role": "user",
-        "content": "hi"
-    },
-    {
-        "role": "assistant",
-        "content": "Hi! Just let me know how you'd like to continue building your resume. We can work on your contact details, education, experience, or any other section you need."
-    },
-    {
-        "role": "user",
-        "content": "hello"
-    },
-    {
-        "role": "assistant",
-        "content": "Hello again! Whenever you're ready, feel free to share any information you'd like to include in your resume, or let me know how I can assist you further."
-    },
-    {
-        "role": "user",
-        "content": "yes start it"
-    },
-    {
-        "role": "assistant",
-        "content": "Great! Let's begin with your personal details. Could you please provide your full name?"
-    },
-    {
-        "role": "user",
-        "content": "stiya"
-    },
-    {
-        "role": "assistant",
-        "content": "Thanks, Stiya. Could you share your age with me?"
-    },
-    {
-        "role": "user",
-        "content": "hi"
-    },
-    {
-        "role": "assistant",
-        "content": "Hi, Stiya! Please let me know your age when you're ready, or if you'd like to skip to another part of building your resume, just let me know!"
-    },
-    {
-        "role": "user",
-        "content": ",,,,"
-    },
-    {
-        "role": "assistant",
-        "content": "No worries, Stiya. Just let me know when you're ready to continue, or if there's a specific section you'd like to work on next."
-    },
-    {
-        "role": "user",
-        "content": "jkhjhjkh"
-    },
-    {
-        "role": "assistant",
-        "content": "If there's anything specific you'd like help with, feel free to let me know. We can continue with your resume whenever you're ready. Just say the word!"
+        "content": "Hi again! Do you have a GitHub profile URL you could share? If not, that's okay too."
     }
 ]
