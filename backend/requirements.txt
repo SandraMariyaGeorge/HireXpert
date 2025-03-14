@@ -10,3 +10,7 @@ requests
 pymongo
 openai
 google-genai
+SpeechRecognition
+beautifulsoup4
+requests
+google-genai
