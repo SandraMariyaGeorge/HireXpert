@@ -12,10 +12,7 @@ import base64
 api_key = "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"  # Replace with your actual OpenAI API key
 client = OpenAI(api_key=api_key)
 
-# MongoDB connection string
-mongo_client = MongoClient("mongodb+srv://user:user123@cluster0.q30qd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-db = mongo_client["interview_database"]
-collection = db["interview_responses"]
+
 
 MEMORY_FILE = "interview_memory.txt"
 
@@ -28,7 +25,7 @@ class InterviewResponse(BaseModel):
     bot_audio: str  # Base64 encoded audio response
 
 
-class Interview:
+class Interview(Base):
     def clear_memory(self):
         """Clears the conversation memory."""
         with open(MEMORY_FILE, "w", encoding="utf-8") as file:

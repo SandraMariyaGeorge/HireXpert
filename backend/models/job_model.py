@@ -9,10 +9,6 @@ from bson import ObjectId
 # Initialize Gemini client
 gemini_client = genai.Client(api_key="AIzaSyBhwkZ1_Ro1ilYsRkkkUt0leeOLhK-w7Og")
 
-# Initialize MongoDB
-mongo_client = MongoClient("mongodb+srv://user:user123@cluster0.q30qd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-db = mongo_client["job_database"]
-collection = db["job_embeddings"]
 
 
 class Jobs(Base):
@@ -40,7 +36,7 @@ class Jobs(Base):
         pipeline = [
             {
                 "$vectorSearch": {
-                    "index": "job_index",
+                    "index": "vector_index",
                     "path": "values",
                     "queryVector": query_embedding,
                     "numCandidates": 100,
@@ -60,7 +56,7 @@ class Jobs(Base):
         
         try:
             # Execute the search
-            results = list(collection.aggregate(pipeline))
+            results = list(self.db.aggregate(pipeline))
             return [{"id": str(doc["_id"]), "metadata": doc["metadata"], "score": doc["score"]} for doc in results]
         except Exception as e:
             return []
@@ -68,7 +64,7 @@ class Jobs(Base):
     def get_job_by_id(self, id: str) -> dict:
         """Get job details by ID."""
         try:
-            result = collection.find_one({"_id": id})
+            result = self.db.find_one({"_id": id})
             if not result:
                 return {"error": "Job not found"}
             return {

@@ -9,13 +9,6 @@ from pymongo import MongoClient
 api_key = "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"  # Replace with your actual OpenAI API key
 client = OpenAI(api_key=api_key)
 
-# MongoDB connection string
-mongo_client = MongoClient("mongodb+srv://user:user123@cluster0.q30qd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-db = mongo_client["resume_database"]
-collection = db["resumes"]
-
-MEMORY_FILE = "memory.txt"
-SUMMARY_FILE = "summary.txt"
 
 class EducationItem(BaseModel):
     institution: str 
@@ -70,31 +63,38 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     bot_response: str
 
+class BotResponse(BaseModel):
+    bot_response: str
+    is_complete: bool
 
-class Chat:
-    def clear_memory(self):
-        """Clears the conversation memory at the start of each run."""
-        with open(MEMORY_FILE, "w", encoding="utf-8") as file:
+
+class Chat(Base):
+    def clear_memory(self, username):
+        """Clears the conversation memory for a specific user at the start of each run."""
+        memory_file = f"memory_{username}.txt"
+        with open(memory_file, "w", encoding="utf-8") as file:
             json.dump([], file)
 
-    def load_memory(self):
-        """Load conversation history from memory file."""
+    def load_memory(self, username):
+        """Load conversation history from memory file specific to a user."""
+        memory_file = f"memory_{username}.txt"
         try:
-            with open(MEMORY_FILE, "r", encoding="utf-8") as file:
+            with open(memory_file, "r", encoding="utf-8") as file:
                 return json.load(file)
         except (FileNotFoundError, json.JSONDecodeError):
             return []
 
-    def save_memory(self, memory):
-        """Save conversation history to memory file."""
-        with open(MEMORY_FILE, "w", encoding="utf-8") as file:
+    def save_memory(self, memory, username):
+        """Save conversation history to memory file specific to a user."""
+        memory_file = f"memory_{username}.txt"
+        with open(memory_file, "w", encoding="utf-8") as file:
             json.dump(memory, file, indent=4)
 
     def save_to_mongo(self, resume):
         """Save the generated resume to MongoDB."""
-        collection.insert_one(resume.dict())
+        self.db.insert_one(resume.dict())
 
-    def generate_summary(self, conversation):
+    def generate_summary(self, conversation, username):
         """Generate a formal summary of the conversation."""
         if not conversation:
             return "No conversation history found."
@@ -104,38 +104,35 @@ class Chat:
         completion = client.beta.chat.completions.parse(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "You are an expert user details summeriser. "},
+                {"role": "system", "content": "You are an expert user details summeriser. The chat has ended...let the user know that and give summary"},
                 {"role": "user", "content": conversation_text},
             ],
             response_format=Resume,
         )
         optimized_resume = completion.choices[0].message.parsed
-        
+
+        optimized_resume["username"] = username
+
         # Save the resume to MongoDB
         self.save_to_mongo(optimized_resume)
         return optimized_resume
 
-    def save_summary(self, summary):
-        """Save the generated summary to a file."""
-        with open(SUMMARY_FILE, "w", encoding="utf-8") as file:
-            file.write(summary)
-
-    def process_chat(self, user_input: str):
+    def process_chat(self, user_input: str, username):
         # Load existing conversation
-        conversation_memory = self.load_memory()
+        conversation_memory = self.load_memory(username)
         
         # Append user input to memory
         conversation_memory.append({"role": "user", "content": user_input})
 
         # Get model response
-        completion = client.chat.completions.create(
+        completion = client.beta.chat.completions.parse(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": """You are an intelligent and structured AI assistant designed to help candidates build a complete and professional resume. 
-                Your primary task is to engage in a dynamic conversation to collect all necessary details from the user and organize them into a well-structured resume.
+                {"role": "system", "content": """You are an intelligent and structured AI assistant designed to help candidates build a complete and professional user details.
+                Your primary task is to engage in a dynamic conversation to collect all necessary details from the user and organize them into a well-structured user data.
                 
                 Your approach should be methodical, ensuring that no critical detail is missed while keeping the conversation natural and engaging. 
-                You should guide the candidate step by step through various sections of their resume.
+                You should guide the candidate step by step through various sections of their resume. Only ask about one item at a time and provide clear instructions to the user.
 
                 Here is how you should gather information:
 
@@ -177,21 +174,28 @@ class Chat:
                 - Cloud Platforms  
                 - Generative AI Experience (if any)  
 
-                Your goal is to ensure that the resume generated is complete and structured, making it easy for the candidate to apply for jobs quickly. 
+                Your goal is to ensure that the user data collected is complete and structured, making it easy for the candidate to apply for jobs quickly. 
                 Keep the conversation interactive, ask for clarification when needed, and provide guidance if the candidate is unsure about what to enter. 
                 Your responses should be clear, concise, and supportive to help the candidate present themselves effectively.
                 Only ask the questions one by one in a short and breif way
+                Once all the data has been received set is_complete to True
                 """}
-            ] + conversation_memory
+            ] + conversation_memory,
+            response_format=BotResponse,
         )
             
-        bot_response = completion.choices[0].message.content
+        msg = completion.choices[0].message.parsed
 
         # Append bot response to memory
-        conversation_memory.append({"role": "assistant", "content": bot_response})
+        conversation_memory.append({"role": "assistant", "content": msg.bot_response})
 
         # Save updated conversation memory
-        self.save_memory(conversation_memory)
+        self.save_memory(conversation_memory, username)
+
+        if msg.is_complete:
+            # Generate a formal summary of the conversation
+            summary = self.generate_summary(conversation_memory, username)
+            return summary
         
-        return bot_response
+        return msg.bot_response
 

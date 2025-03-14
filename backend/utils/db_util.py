@@ -5,7 +5,7 @@ from pymongo import MongoClient
 load_dotenv()
 
 class DBUtil:
-    def __init__(self, db_name="Prathibhimb"):
+    def __init__(self, db_name="HireXpert"):
         self.client = MongoClient(os.getenv("MONGO_URI"))
         self.db = self.client[db_name]
 

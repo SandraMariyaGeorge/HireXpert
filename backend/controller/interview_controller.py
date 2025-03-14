@@ -27,3 +27,14 @@ async def clear_interview():
         return {"message": "Interview history cleared successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error clearing interview history: {str(e)}")
+    
+
+@router.post("/create")
+async def create_interview():
+    """Create a new interview."""
+    try:
+        interview_instance = Interview()
+        interview_instance.clear_memory()
+        return {"message": "New interview created successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creating interview: {str(e)}")
