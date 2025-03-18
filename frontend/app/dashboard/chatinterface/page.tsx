@@ -8,16 +8,9 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Bot, Image, Video, FileText, HomeIcon, SkipBackIcon, SkipForwardIcon, LogOutIcon } from "lucide-react";
-import { FloatingDock } from "../../../components/floating-dock";
+import { FloatingDock } from "@/components/floating-dock";
 import { ShootingStars } from "@/components/ShootingStars";
 import { StarsBackground } from "@/components/stars-background";
-import router from "next/router";
-import Link from "next/link";
-
-const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
-  router.push(path);
-};
-
 
 
 export default function Home() {
@@ -33,10 +26,8 @@ export default function Home() {
     }
   }, [messages]); // Add messages as a dependency
 
-  
 
   return (
-    
     <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto p-4 max-w-5xl">
       <div>
@@ -50,7 +41,6 @@ export default function Home() {
               <ShootingStars /> {/* Add ShootingStars component */}
             </>
           )}
-         
 
           <Tabs defaultValue="chat" className="w-full" onValueChange={(value) => setActiveTab(value)}>
             <TabsList className="grid w-full grid-cols-4 bg-black/40">
@@ -106,19 +96,18 @@ export default function Home() {
           </Tabs>
         </Card>
         <FloatingDock 
-      items={[
-        { title: "Home", icon: <HomeIcon className="text-black" />, href: "/" }, 
-        { title: "Back", icon: <SkipBackIcon className="text-black" />, href: "/dashboard" },
-        { title: "Next", icon: <SkipForwardIcon className="text-black" />, href: "/dashboard" }
-      ]}
-    />
-    <Link href="/dashboard">
-      <Button 
-        className="bg-white hover:bg-white text-black p-2 rounded-lg mt-4" 
-      >
-        End chat and go Dashboard
-      </Button>
-    </Link>
+          items={[
+            { title: "Home", icon: <HomeIcon className="text-black" />, href: "/" }, 
+            { title: "Back", icon: <SkipBackIcon className="text-black" />, href: "/signin" },
+            { title: "Next", icon: <SkipForwardIcon className="text-black" />, href: "/dashboard" }
+          ]}
+        />
+        <Button 
+          className="bg-white hover:bg-white text-black p-2 rounded-lg mt-4" 
+          onClick={() => router.push('/dashboard')}
+        >
+          End chat and go Dashboard
+        </Button>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { Apple, Github, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const API_BASE_URL = "http://127.0.0.1:8000";
 
@@ -15,6 +16,7 @@ export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,11 +48,13 @@ export default function SignIn() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("API Response:", data); // Debugging log
+        console.log("API Response:", data); 
         if (data.token) {
           // Store token in localStorage or cookie
           localStorage.setItem("token", data.token);
-          console.log("Token stored:", data.token); // Debugging log
+          console.log("Token stored:", data.token); 
+          const role = data.role || "hr";
+          login(data.token,role);
           router.push("/hrdash");
         } else {
           setError("Signin failed");
@@ -138,7 +142,7 @@ export default function SignIn() {
           </CardContent>
           <CardFooter className="text-center">
             <div className="mt-8 text-center text-sm text-slate-500 font-inter">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/signup" className="text-black-600 hover:text-black-300 font-medium transition-colors">
                 Sign up
               </Link>

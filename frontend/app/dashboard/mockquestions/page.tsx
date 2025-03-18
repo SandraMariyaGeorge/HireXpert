@@ -24,12 +24,10 @@ export default function MockQuestions() {
     setSidebarOpen(!sidebarOpen);
   };
   const handleGenerateQuestions = () => {
-    // Logic to generate questions based on job description
     console.log("Generating questions for:", jobDescription);
   };
 
   const handleAttendMockInterview = () => {
-    // Logic to attend mock interview
     console.log("Attending mock interview for:", jobDescription);
     router.push('/dashboard/mockinterview');
   };
@@ -46,17 +44,15 @@ export default function MockQuestions() {
   return (
 
     <div className="flex min-h-screen bg-black">
-      {loading && <LoadingOverlayComponent />}
       {/* Sidebar */}
       <Dashboard_Sidebar
         sidebarOpen={sidebarOpen}
         toggleSidebar={toggleSidebar}
-        handleResumeGenerationClick={handleResumeGenerationClick}
       />
       {/*Header */}
       <div className="flex-1 flex flex-col">
         {/* Navbar */}
-        <Dashboard_Header toggleSidebar={toggleSidebar} setIsDialogOpen={setIsDialogOpen} />
+        <Dashboard_Header toggleSidebar={toggleSidebar}/>
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <Card className="w-full max-w-lg bg-white shadow-xl">
         <CardHeader>

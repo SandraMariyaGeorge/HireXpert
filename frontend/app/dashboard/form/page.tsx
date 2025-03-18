@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import router, { useRouter } from "next/navigation";
-import DashboardLayout from "../layout";
+import DashboardLayout from "../../layout";
 // import { SparklesEffect } from "@/components/sparkles"; // Import the sparkles effect
 
 // Function to handle routing

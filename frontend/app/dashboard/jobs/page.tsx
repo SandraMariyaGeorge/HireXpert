@@ -10,24 +10,12 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import Dashboard_Header from "@/components/dashboard_header";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
-import LoadingOverlayComponent from "@/components/loading-overlay";
 
 export default function JobsPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
+  const [sidebarOpen, setSidebarOpen] = useState(false);  
     const toggleSidebar = () => {
       setSidebarOpen(!sidebarOpen);
-    };
-  
-    const handleResumeGenerationClick = () => {
-      setLoading(true);
-      // Simulate a delay for the loading effect
-      setTimeout(() => {
-        setLoading(false);
-        // Add any additional logic here if needed
-      }, 2000);
     };
 
   interface Job {
@@ -83,17 +71,16 @@ export default function JobsPage() {
 
   return (
     <div className="flex min-h-screen bg-black">
-      {loading && <LoadingOverlayComponent />}
+      {loading}
       {/* Sidebar */}
       <Dashboard_Sidebar
         sidebarOpen={sidebarOpen}
         toggleSidebar={toggleSidebar}
-        handleResumeGenerationClick={handleResumeGenerationClick}
       />
       {/*Header */}
       <div className="flex-1 flex flex-col">
         {/* Navbar */}
-        <Dashboard_Header toggleSidebar={toggleSidebar} setIsDialogOpen={setIsDialogOpen} />
+        <Dashboard_Header toggleSidebar={toggleSidebar} />
 
         <div className="container mx-auto py-8 px-4">
           <div className="flex flex-col space-y-8">
@@ -153,7 +140,7 @@ export default function JobsPage() {
                             </div>
                           </div>
                         </div>
-                        <Link href={`dashboard/jobs/id=${job.id}`}>
+                        <Link href={"/dashboard/jobs/id=${job.id}"}>
                           <Button>Quick Apply</Button>
                         </Link>
                       </div>

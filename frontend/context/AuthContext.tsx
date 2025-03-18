@@ -1,14 +1,17 @@
+"use client"; // Add this directive since this is a Client Component
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // Define the shape of the user object
 interface User {
   token: string;
+  role: string; 
 }
 
 // Define the shape of the context value
 interface AuthContextType {
   user: User | null;
-  login: (token: string) => void;
+  login: (token: string, role: string) => void; 
   logout: () => void;
 }
 
@@ -26,19 +29,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // Check if the user is logged in on initial load
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      // Fetch user data or validate token
-      setUser({ token });
+    const role = localStorage.getItem('role'); // Retrieve role from localStorage
+    if (token && role) {
+      setUser({ token, role });
     }
   }, []);
 
-  const login = (token: string) => {
+  const login = (token: string, role: string) => {
     localStorage.setItem('token', token);
-    setUser({ token });
+    localStorage.setItem('role', role); // Save role to localStorage
+    setUser({ token, role });
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('role'); 
+    window.location.href = '/';
     setUser(null);
   };
 

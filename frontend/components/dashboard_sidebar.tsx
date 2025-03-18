@@ -8,13 +8,11 @@ import Link from "next/link"; // Import next/link for client-side navigation
 interface SidebarProps {
   sidebarOpen: boolean;
   toggleSidebar: () => void;
-  handleResumeGenerationClick: () => void;
 }
 
 export default function Dashboard_Sidebar({
   sidebarOpen,
   toggleSidebar,
-  handleResumeGenerationClick,
 }: SidebarProps) {
   return (
     <div
@@ -55,13 +53,14 @@ export default function Dashboard_Sidebar({
 
           {/* Resume Generation Button */}
           <li className="p-4 hover:bg-gray-700">
+          <Link href="/dashboard/resumegeneration" passHref>
             <Button
               className="flex items-center space-x-2 w-full text-left"
-              onClick={handleResumeGenerationClick}
             >
               <FileText className="w-5 h-5 text-white" />
               <span>Resume Generation</span>
             </Button>
+          </Link>
           </li>
         </ul>
       </nav>

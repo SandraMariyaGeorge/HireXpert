@@ -7,7 +7,6 @@ import { Mic, MicOff, Video, VideoOff, PhoneOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import Dashboard_Header from "@/components/dashboard_header";
-import LoadingOverlayComponent from "@/components/loading-overlay";
 
 export default function InterviewPage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -18,20 +17,10 @@ export default function InterviewPage() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const handleResumeGenerationClick = () => {
-    setLoading(true);
-    // Simulate a delay for the loading effect
-    setTimeout(() => {
-      setLoading(false);
-      // Add any additional logic here if needed
-    }, 2000);
-  };
 
   useEffect(() => {
     if (permissionGranted) {
@@ -102,17 +91,15 @@ export default function InterviewPage() {
 
   return (
     <div className="flex min-h-screen bg-black">
-      {loading && <LoadingOverlayComponent />}
       {/* Sidebar */}
       <Dashboard_Sidebar
         sidebarOpen={sidebarOpen}
         toggleSidebar={toggleSidebar}
-        handleResumeGenerationClick={handleResumeGenerationClick}
       />
       {/*Header */}
       <div className="flex-1 flex flex-col">
         {/* Navbar */}
-        <Dashboard_Header toggleSidebar={toggleSidebar} setIsDialogOpen={setIsDialogOpen} />
+        <Dashboard_Header toggleSidebar={toggleSidebar}/>
       <section className="flex justify-center items-center min-h-screen bg-gray-900 text-white p-6">
         {permissionGranted === null ? (
           <div className="text-center">
