@@ -11,8 +11,9 @@ async def signup(
     username: str = Form(...),
     email: str = Form(...),
     password: str = Form(...),
+    role: str = Form(...),
 ):
-    userdata = UserBase(username=username, email=email, password=password)
+    userdata = UserBase(username=username, email=email, password=password,role=role)
     user = Users()
     return user.create_user(userdata)
 

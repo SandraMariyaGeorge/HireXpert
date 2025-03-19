@@ -117,4 +117,3 @@ class Interview(Base):
         self.db.insert_one(interview_data)
 
         return {"status": "success", "interview_id": interview_id}
-

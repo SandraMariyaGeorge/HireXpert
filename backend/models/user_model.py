@@ -10,6 +10,7 @@ class UserBase(BaseModel):
     username: str
     email: str
     password: str
+    role: str
 
 class Users(Base):
     def create_user(self, user: UserBase):
@@ -34,10 +35,11 @@ class Users(Base):
         payload = {
             "user_id": str(user["_id"]),
             "username": user["username"],
+            "role": user["role"],
             "exp": datetime.now(timezone.utc) +timedelta(hours=1)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-        return {"token": token}
+        return {"token": token,"role": user["role"]}
 
     def verify_jwt(self, token: str):
         try:
