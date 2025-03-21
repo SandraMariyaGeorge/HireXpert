@@ -19,7 +19,7 @@ async def chat(request: ChatRequest,token):
         payload = users.verify_jwt(token)
         username = payload["username"]
         chat_instance = Chat()
-        bot_response = chat_instance.process_chat(request.user_input)
+        bot_response = chat_instance.process_chat(request.user_input,username)
         return ChatResponse(bot_response=bot_response)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Chat processing error: {str(e)}")

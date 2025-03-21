@@ -1,0 +1,18 @@
+[
+    {
+        "role": "user",
+        "content": "hi just checking if it's working or not"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you provide more details about the specific issue you are encountering with the system?"
+    },
+    {
+        "role": "user",
+        "content": "I was actually walking through a street where a dog came to bite me what should I do now"
+    },
+    {
+        "role": "assistant",
+        "content": "Have you sought medical attention or considered consulting with a healthcare professional following the dog bite incident?"
+    }
+]
