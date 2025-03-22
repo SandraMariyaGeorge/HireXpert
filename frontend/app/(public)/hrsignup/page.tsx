@@ -23,14 +23,15 @@ export default function SignUp() {
     const usernameElement = form.elements.namedItem("username") as HTMLInputElement;
     const emailElement = form.elements.namedItem("email") as HTMLInputElement;
     const passwordElement = form.elements.namedItem("password") as HTMLInputElement;
-
+    const role = "hr";
    
 
     const formData = new URLSearchParams();
     formData.append("username", usernameElement.value);
     formData.append("email", emailElement.value);
     formData.append("password", passwordElement.value);
-
+    formData.append("role", role);
+    
     try {
       const response = await fetch(`${API_BASE_URL}/auth/signup`, {
         method: "POST",
@@ -60,14 +61,15 @@ export default function SignUp() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-400 to-gray-300 flex items-center justify-center p-4">
-      <div className="w-full max-w-[1100px] grid md:grid-cols-2 gap-8 items-center">
-        {/* Sign-up form */}
-        <Card className="w-full max-w-md mx-auto p-8 bg-white shadow-lg rounded-2xl border-0">
-          <CardHeader className="space-y-2 text-center pb-8">
-            <CardTitle className="text-4xl font-bold tracking-tight font-poppins bg-gradient-to-r from-black-900 to-black-600 bg-clip-text text-transparent">
-              Welcome to HireXpert!
-            </CardTitle>
+    <main className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900 flex items-center justify-center p-4">
+      <Card className="w-full max-w-[1200px] p-12 bg-white shadow-lg rounded-2xl border-0">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Sign-up form */}
+          <Card className="w-full max-w-lg mx-auto p-12 bg-white shadow-lg rounded-3xl border border-gray-300">
+            <CardHeader className="space-y-2 text-center pb-8">
+              <CardTitle className="text-4xl font-bold tracking-tight font-poppins bg-gradient-to-r from-black via-gray-700 to-gray-500 bg-clip-text text-transparent">
+                Welcome to HireXpert!
+              </CardTitle>
             <CardDescription className="text-black-300 text-base font-inter">
             Optimize Recruitment, Elevate Careers—Experience HireXpert
             </CardDescription>
@@ -140,6 +142,7 @@ export default function SignUp() {
           </div>
         </div>
       </div>
+      </Card>
     </main>
   );
 }

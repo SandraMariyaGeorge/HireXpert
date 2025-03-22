@@ -5,6 +5,7 @@ from typing import List
 from pydantic import BaseModel, Field
 from openai import OpenAI
 from pymongo import MongoClient
+from models.userdetails_model import UserDetails
 
 api_key = "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"  # Replace with your actual OpenAI API key
 client = OpenAI(api_key=api_key)
@@ -49,6 +50,7 @@ class TechnicalSkills(BaseModel):
 
 class Resume(BaseModel):
     name: str  
+    username: str
     contact_info: ContactInfo = Field(..., description="Contact information")
     education: List[EducationItem] = Field(..., description="List of Education entries")
     experience: List[ExperienceItem] = Field(..., description="List of Experience entries")
@@ -90,11 +92,15 @@ class Chat(Base):
         with open(memory_file, "w", encoding="utf-8") as file:
             json.dump(memory, file, indent=4)
 
-    def save_to_mongo(self, resume):
-        """Save the generated resume to MongoDB."""
-        self.db.insert_one(resume.dict())
+    # def save_to_mongo(self, resume):
+    #     """Save the generated resume to MongoDB."""
+    #     self.db.insert_one(resume.dict())
+
+
 
     def generate_summary(self, conversation, username):
+        print("Generating summary")
+        print(conversation)
         """Generate a formal summary of the conversation."""
         if not conversation:
             return "No conversation history found."
@@ -111,11 +117,14 @@ class Chat(Base):
         )
         optimized_resume = completion.choices[0].message.parsed
 
-        optimized_resume["username"] = username
+        # Convert the Resume object to a dictionary to add the username
+        optimized_resume_dict = optimized_resume.model_dump()
+        optimized_resume_dict["username"] = username
 
-        # Save the resume to MongoDB
-        self.save_to_mongo(optimized_resume)
-        return optimized_resume
+        print(optimized_resume_dict)
+
+        user = UserDetails()
+        user.save_to_mongo(optimized_resume_dict)  # Save the dictionary to MongoDB
 
     def process_chat(self, user_input: str, username):
         # Load existing conversation
@@ -136,7 +145,7 @@ class Chat(Base):
 
                 Here is how you should gather information:
 
-                **1. Personal Details:**  
+                1. Personal Details:  
                 - Full Name  
                 - Age  
                 - Gender  
@@ -145,13 +154,13 @@ class Chat(Base):
                 - GitHub Profile (if available)  
                 - LinkedIn Profile (if available)  
 
-                **2. Education Details:**  
+                2. Education Details:  
                 - School Name  
                 - Time Period (Start Year - End Year)  
                 - Percentage/Grade Achieved  
                 - Board Affiliation (CBSE, State, ICSE, etc.)  
 
-                **3. Experience Details:**  
+                3. Experience Details:  
                 - First, ask whether the candidate is a fresher or an experienced professional.  
                 - If **fresher**, ask about internship experiences (if any). If none, store the value as "N/A".  
                 - If **experienced**, ask for:  
@@ -160,13 +169,13 @@ class Chat(Base):
                 - Job role/position  
                 - Responsibilities and key contributions  
 
-                **4. Project Details:**  
+                4. Project Details:
                 - Project Title  
                 - Project Description  
                 - Duration of the project  
                 - Technology stack used  
 
-                **5. Skills Section:**  
+                5. Skills Section: 
                 - Frontend Technologies  
                 - Backend Technologies  
                 - Databases Used  
@@ -186,6 +195,7 @@ class Chat(Base):
             
         msg = completion.choices[0].message.parsed
 
+
         # Append bot response to memory
         conversation_memory.append({"role": "assistant", "content": msg.bot_response})
 
@@ -194,8 +204,10 @@ class Chat(Base):
 
         if msg.is_complete:
             # Generate a formal summary of the conversation
-            summary = self.generate_summary(conversation_memory, username)
-            return summary
+            self.generate_summary(conversation_memory, username)
+            return "over"
+        
+
         
         return msg.bot_response
 

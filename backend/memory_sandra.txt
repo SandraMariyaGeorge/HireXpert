@@ -1,0 +1,122 @@
+[
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! I'm here to help you build a comprehensive user profile. Let's start with your personal details. Can you please provide your full name?"
+    },
+    {
+        "role": "user",
+        "content": "Sandra Mariya George"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you, Sandra. Could you please tell me your age?"
+    },
+    {
+        "role": "user",
+        "content": "\"age\": \"17\",         \"gender\": \"male\",         \"phone\": \"8590449717\",         \"email\": \"vishnuhari.anup@gmail.com\",         \"linkedin\": \"linkedin.com/in/vishnuhari17\",         \"github\": \"github.com/vishnuhari17\""
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for providing those details. Let's move on to your education details. Could you please tell me the name of your school?"
+    },
+    {
+        "role": "user",
+        "content": "\"institution\": \"Bharathiya Vidya Bhavan Kodungallur\",             \"degree\": \"Higher Secondary\",             \"dates\": \"2020-2022\",             \"percentage\": \"93.4\""
+    },
+    {
+        "role": "assistant",
+        "content": "Great! For your education details, could you also provide the board affiliation (CBSE, State, ICSE, etc.) for your Higher Secondary education?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "That's okay, we'll leave it as unspecified for now. Are you currently a fresher or do you have any work experience?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "Got it, we'll mark your experience as \"N/A\". Let's move on to any projects you might have worked on. Can you share the title of a project and a brief description? If there are no projects yet, let me know."
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "That's alright, we'll mark projects as \"N/A\" for now. Let's move on to your skills. Please share any frontend technologies you are familiar with."
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "No problem, we'll skip that for now. Do you have experience with any backend technologies?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "Understood, we'll leave that section empty for now. Do you have experience with any databases?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "That's fine, we'll skip the databases section for now. Are there any frameworks you have worked with?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "Alright, we'll move past frameworks. Do you have any experience with cloud platforms?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "Understood, we'll skip cloud platforms. Lastly, have you worked with Generative AI technologies?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you, Sandra, for providing all the information you could. If you need to update or add anything in the future, feel free to reach out. Your profile is complete for now. Best of luck with your endeavors!"
+    },
+    {
+        "role": "user",
+        "content": "i need to change my phone number"
+    },
+    {
+        "role": "assistant",
+        "content": "Of course! Please provide your new phone number, and I'll make the update for you."
+    },
+    {
+        "role": "user",
+        "content": "9874859546"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for the update. I've changed your phone number to 9874859546. If there's anything else you need to adjust or add, feel free to let me know!"
+    }
+]

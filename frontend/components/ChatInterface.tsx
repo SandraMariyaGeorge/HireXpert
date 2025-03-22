@@ -108,13 +108,16 @@
 
 "use client";
 
+<<<<<<< HEAD
 import { useState, useRef, useEffect } from "react";
+=======
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send } from "lucide-react";
 import { PlaceholdersAndVanishInput } from "@/components/placeholders-and-vanish-input";
-import axios from "axios";
 
 interface Message {
   id: number;
@@ -125,6 +128,7 @@ interface Message {
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+<<<<<<< HEAD
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -135,6 +139,9 @@ export default function ChatInterface() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+=======
+  const router = useRouter();
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -157,17 +164,32 @@ export default function ChatInterface() {
           "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
+<<<<<<< HEAD
           "user_input": input,
         })
+=======
+          user_input: input,
+        }),
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
       });
       const responseData = await response.json();
+
       const botMessage: Message = {
         id: Date.now() + 1,
         text: responseData.bot_response,
         sender: "bot",
       };
 
+      // Check if botMessage is "over" and navigate
+      if (botMessage.text.toLowerCase() === "over") {
+        router.push("/dashboard");
+      }
+
+      
+
       setMessages((prev) => [...prev, botMessage]);
+
+      
     } catch (error) {
       console.error("Error fetching bot response:", error);
     }

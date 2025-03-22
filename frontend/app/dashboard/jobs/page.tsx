@@ -141,7 +141,7 @@ export default function JobsPage() {
                             </div>
                           </div>
                         </div>
-                        <Link href={"/dashboard/jobs/id=${job.id}"}>
+                        <Link href={`/dashboard/jobs/id=${job.id}`}>
                           <Button>Quick Apply</Button>
                         </Link>
                       </div>
@@ -166,6 +166,7 @@ export default function JobsPage() {
                 !loading && <p className="text-center">No jobs found.</p>
               )}
             </div>
+            
           </div>
         </div>
       </div>

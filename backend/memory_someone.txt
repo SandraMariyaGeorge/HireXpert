@@ -217,6 +217,7 @@
     },
     {
         "role": "user",
+<<<<<<< HEAD
         "content": "cfgdg"
     },
     {
@@ -281,11 +282,17 @@
     },
     {
         "role": "user",
+=======
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
         "content": "hi"
     },
     {
         "role": "assistant",
+<<<<<<< HEAD
         "content": "Hello! How can I assist you today? If you need help with creating or updating a profile, I'm here to help."
+=======
+        "content": "Hello again! If you need any assistance or want to update your profile details, just let me know!"
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
     },
     {
         "role": "user",
@@ -293,7 +300,11 @@
     },
     {
         "role": "assistant",
+<<<<<<< HEAD
         "content": "Hello again! I'm here to assist you with building or updating your professional profile. Let me know what you'd like to do next!"
+=======
+        "content": "Hello! Ready to continue? If you need help with anything or want to provide more details, just let me know!"
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
     },
     {
         "role": "user",
@@ -301,7 +312,11 @@
     },
     {
         "role": "assistant",
+<<<<<<< HEAD
         "content": "Hello! How can I help you today? If you're looking to build or update your profile, I'm here to assist."
+=======
+        "content": "Hello there! Is there anything you'd like to update or add to your profile? Let me know how I can assist you!"
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
     },
     {
         "role": "user",
@@ -309,7 +324,11 @@
     },
     {
         "role": "assistant",
+<<<<<<< HEAD
         "content": "Hello! How can I assist you today? If you're working on your profile or have questions, feel free to let me know."
+=======
+        "content": "Hello! How can I assist you today? If you need help with your profile or anything else, just let me know!"
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
     },
     {
         "role": "user",
@@ -317,6 +336,7 @@
     },
     {
         "role": "assistant",
+<<<<<<< HEAD
         "content": "Hello! How can I help you today? If you need assistance with building a profile or anything else, just let me know."
     },
     {
@@ -526,5 +546,8 @@
     {
         "role": "assistant",
         "content": "Thank you! Do you have a GitHub profile you'd like to share? If not, that's alright too."
+=======
+        "content": "Hello! If you need assistance with building or updating your profile, feel free to let me know!"
+>>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
     }
 ]
