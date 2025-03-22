@@ -214,5 +214,317 @@
     {
         "role": "assistant",
         "content": "Thank you for providing all your details, Vishnu. If there's anything more you'd like to add or if you have questions, feel free to ask. Your profile is now complete!"
+    },
+    {
+        "role": "user",
+        "content": "cfgdg"
+    },
+    {
+        "role": "assistant",
+        "content": "It seems like there was an error. Should you need further assistance, feel free to ask!"
+    },
+    {
+        "role": "user",
+        "content": "hey"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi! How can I assist you today?"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! How can I assist you today? If you're looking to update or review your profile details, feel free to let me know."
+    },
+    {
+        "role": "user",
+        "content": "i cant give"
+    },
+    {
+        "role": "assistant",
+        "content": "That's perfectly okay. If there's anything else you need help with or if you decide to provide more information later, just let me know!"
+    },
+    {
+        "role": "user",
+        "content": "jhqjskqw"
+    },
+    {
+        "role": "assistant",
+        "content": "It seems like there might have been a bit of a mix-up. If you have any questions or need assistance, feel free to let me know!"
+    },
+    {
+        "role": "user",
+        "content": "hey"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi! How can I assist you today?"
+    },
+    {
+        "role": "user",
+        "content": "hwllo"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! How can I assist you today? If you need help with your profile or anything else, feel free to ask."
+    },
+    {
+        "role": "user",
+        "content": "qho r u"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm an AI assistant here to help you build a complete and professional user profile. If there's anything specific you need assistance with or any questions you have, feel free to ask!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If you need help with creating or updating a profile, I'm here to help."
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! I'm here to assist you with building or updating your professional profile. Let me know what you'd like to do next!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I help you today? If you're looking to build or update your profile, I'm here to assist."
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If you're working on your profile or have questions, feel free to let me know."
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I help you today? If you need assistance with building a profile or anything else, just let me know."
+    },
+    {
+        "role": "user",
+        "content": "uk"
+    },
+    {
+        "role": "assistant",
+        "content": "If you need any assistance or have specific questions, feel free to ask. I'm here to help!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If you're looking to work on your profile, feel free to tell me what you'd like to do next."
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! If there's anything specific you need help with or would like to discuss, just let me know."
+    },
+    {
+        "role": "user",
+        "content": "nothing"
+    },
+    {
+        "role": "assistant",
+        "content": "Alright! If you ever need assistance or decide you'd like to work on your profile, feel free to reach out. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "hellooo can you hear me"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Yes, I can respond to you. How can I assist you today?"
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Alright! If you have any questions or need assistance later, feel free to reach out. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "done"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! If there's anything else you need help with, just let me know."
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If you're looking to update your profile or have any questions, feel free to ask."
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! How can I assist you today? If you're looking to build or update your professional profile, I'm here to help."
+    },
+    {
+        "role": "user",
+        "content": "hiiii"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If you need help with your profile or have any questions, just let me know."
+    },
+    {
+        "role": "user",
+        "content": "how are you"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm just a program, but thank you for asking! How can I assist you today?"
+    },
+    {
+        "role": "user",
+        "content": "i am dull"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm sorry to hear that. If there's anything specific you'd like to talk about or if I can help in any way, feel free to let me know."
+    },
+    {
+        "role": "user",
+        "content": "who are you"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm an AI assistant designed to help you build a complete and professional user profile. If there's anything specific you need assistance with, feel free to ask!"
+    },
+    {
+        "role": "user",
+        "content": "nice"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! If there's anything you'd like to do next, such as building or updating your profile, just let me know. I'm here to help!"
+    },
+    {
+        "role": "user",
+        "content": "good"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm glad to hear that! If you need any help or have questions, feel free to reach out."
+    },
+    {
+        "role": "user",
+        "content": "its ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Alright! If you ever need assistance or have any questions, feel free to ask. I'm here to help."
+    },
+    {
+        "role": "user",
+        "content": "can you hear me"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, I can respond to you. How can I assist you today?"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If you're looking to build or update your profile, feel free to let me know how I can help."
+    },
+    {
+        "role": "user",
+        "content": "yes "
+    },
+    {
+        "role": "assistant",
+        "content": "Great! Let's get started. Can you please provide your full name?"
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Whenever you're ready, please let me know your full name so we can proceed with creating your profile."
+    },
+    {
+        "role": "user",
+        "content": "stiya johnson"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you, Stiya! How old are you?"
+    },
+    {
+        "role": "user",
+        "content": "12"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you. Could you please let me know your gender?"
+    },
+    {
+        "role": "user",
+        "content": "f"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! Could you please provide your email address?"
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Whenever you're ready, please share your email address."
+    },
+    {
+        "role": "user",
+        "content": "stiya@gmail.com"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! What's your phone number?"
+    },
+    {
+        "role": "user",
+        "content": "8075603686"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! Do you have a GitHub profile you'd like to share? If not, that's alright too."
     }
 ]

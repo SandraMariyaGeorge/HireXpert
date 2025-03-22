@@ -6,7 +6,7 @@ import HiringInsights from '@/components/hrdashboard/HiringInsights';
 import ActivityFeed from '@/components/hrdashboard/ActivityFeed';
 import Header from '@/components/common/Header'; // Common header component
 import Footer from '@/components/common/Footer'; // Common footer component
-import ProtectedRoute from '@/components/ProtectedRoute';
+//import ProtectedRoute from '@/components/ProtectedRoute';
 
 function HRDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -17,7 +17,7 @@ function HRDashboard() {
   ];
 
   return (
-    <ProtectedRoute role="hr">
+   // <ProtectedRoute role="hr">
       <div className="flex flex-col h-screen bg-gray-50">
         <Header /> {/* Common header */}
         <div className="flex flex-1">
@@ -35,7 +35,7 @@ function HRDashboard() {
         </div>
         <Footer /> {/* Common footer */}
       </div>
-    </ProtectedRoute>
+   // </ProtectedRoute>
   );
 }
 

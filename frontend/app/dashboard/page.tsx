@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@
 import Dashboard_Header from "@/components/dashboard_header";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import { AuthProvider } from "@/context/AuthContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
+//import ProtectedRoute from "@/components/ProtectedRoute";
 
 
 export default function Dashboard() {
@@ -25,7 +25,7 @@ export default function Dashboard() {
   };
 
   return (
-    <ProtectedRoute role="candidate">
+   // <ProtectedRoute role="candidate">
       <div className="flex min-h-screen bg-black">
         {loading && <LoadingOverlayComponent />}
         {/* Sidebar */}
@@ -131,6 +131,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-    </ProtectedRoute> 
+   // </ProtectedRoute> 
   );
 }
