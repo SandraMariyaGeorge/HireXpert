@@ -69,17 +69,19 @@ export default function SignIn() {
   };
 
   return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-400 to-gray-300 flex items-center justify-center p-4">
-        <div className="w-full max-w-[1100px] grid md:grid-cols-2 gap-8 items-center">
-          {/* Sign-in form */}
-          <Card className="w-full max-w-md mx-auto p-8 bg-white shadow-lg rounded-2xl border-0">
+    <main className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900 flex items-center justify-center p-4">
+      <Card className="w-full max-w-[1200px] p-12 bg-white shadow-lg rounded-2xl border-0">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Sign-up form */}
+          <Card className="w-full max-w-lg mx-auto p-12 bg-white shadow-lg rounded-3xl border border-gray-300">
             <CardHeader className="space-y-2 text-center pb-8">
-              <CardTitle className="text-4xl font-bold tracking-tight font-poppins bg-gradient-to-r from-black-900 to-black-600 bg-clip-text text-transparent">
+              <CardTitle className="text-4xl font-bold tracking-tight font-poppins bg-gradient-to-r from-black via-gray-700 to-gray-500 bg-clip-text text-transparent">
                 Welcome to HireXpert!
               </CardTitle>
               <CardDescription className="text-black-300 text-base font-inter">
                 Simplify hiring, empower careers—welcome to HireXpert
               </CardDescription>
+   
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -114,42 +116,17 @@ export default function SignIn() {
                   {isLoading ? "Signing in..." : "Sign in"}
                 </Button>
               </form>
-
               {error && <div className="text-gray-500 text-center mt-4">{error}</div>}
-
-              <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                  <Separator />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-black-500">or continue with</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3">
-                <Button variant="outline" className="h-12">
-                  <Github className="h-5 w-5" />
-                </Button>
-                <Button variant="outline" className="h-12">
-                  <Apple className="h-5 w-5" />
-                </Button>
-                <Button variant="outline" className="h-12">
-                  <Mail className="h-5 w-5" />
-                </Button>
-              </div>
-            </CardContent>
-            <CardFooter className="text-center">
               <div className="mt-8 text-center text-sm text-slate-500 font-inter">
-                Don&apos;t have an account?{" "}
+                Already have an account?{" "}
                 <Link href="/signup" className="text-black-600 hover:text-black-300 font-medium transition-colors">
                   Sign up
                 </Link>
               </div>
-            </CardFooter>
+            </CardContent>
           </Card>
-
           {/* Side information */}
-          <div className="hidden md:block bg-white p-8 rounded-2xl shadow-lg">
+          <Card className="hidden md:block bg-white p-12 rounded-2xl shadow-lg">
             <div className="relative h-[500px] w-full">
               <Image
                 src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aHJ8ZW58MHx8MHx8fDA%3D"
@@ -166,8 +143,9 @@ export default function SignIn() {
                 </p>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
-      </main>
+      </Card>
+    </main>
   );
 }
