@@ -23,14 +23,15 @@ export default function SignUp() {
     const usernameElement = form.elements.namedItem("username") as HTMLInputElement;
     const emailElement = form.elements.namedItem("email") as HTMLInputElement;
     const passwordElement = form.elements.namedItem("password") as HTMLInputElement;
-
+    const role = "hr";
    
 
     const formData = new URLSearchParams();
     formData.append("username", usernameElement.value);
     formData.append("email", emailElement.value);
     formData.append("password", passwordElement.value);
-
+    formData.append("role", role);
+    
     try {
       const response = await fetch(`${API_BASE_URL}/auth/signup`, {
         method: "POST",

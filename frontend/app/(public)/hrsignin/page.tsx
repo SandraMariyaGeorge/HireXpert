@@ -53,8 +53,7 @@ export default function SignIn() {
           // Store token in localStorage or cookie
           localStorage.setItem("token", data.token);
           console.log("Token stored:", data.token); 
-          const role = data.role || "hr";
-          login(data.token,role);
+          login(data.token,data.role);
           router.push("/hrdash");
         } else {
           setError("Signin failed");
