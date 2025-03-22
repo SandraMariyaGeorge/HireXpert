@@ -38,5 +38,61 @@
     {
         "role": "assistant",
         "content": "Can you elaborate on how having the German flag contributed to you being a top student during your studies in Germany?"
+    },
+    {
+        "role": "user",
+        "content": "hello hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you elaborate further on your previous statement \"hello hello\" and how it relates to your experience in project management?"
+    },
+    {
+        "role": "user",
+        "content": "hello hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you elaborate on how you typically approach communication in a professional setting?"
+    },
+    {
+        "role": "user",
+        "content": "hello can you hear me hello hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you please elaborate on your communication style and how you ensure effective communication in a team environment?"
+    },
+    {
+        "role": "user",
+        "content": "hello can you hear me"
+    },
+    {
+        "role": "assistant",
+        "content": "What specific experience do you have in effectively communicating with others, particularly in challenging or noisy environments?"
+    },
+    {
+        "role": "user",
+        "content": "hello can you hear me"
+    },
+    {
+        "role": "assistant",
+        "content": "What specific experience do you have that makes you well-suited for this role?"
+    },
+    {
+        "role": "user",
+        "content": "hello can you hear me hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you elaborate on your experience with communication skills in a professional setting?"
+    },
+    {
+        "role": "user",
+        "content": "I don't have any professional skills as of now"
+    },
+    {
+        "role": "assistant",
+        "content": "What steps are you currently taking to develop and acquire new professional skills?"
     }
 ]

@@ -98,6 +98,7 @@ class Chat(Base):
 
 
 
+
     def generate_summary(self, conversation, username):
         print("Generating summary")
         print(conversation)
@@ -210,4 +211,3 @@ class Chat(Base):
 
         
         return msg.bot_response
-
