@@ -131,9 +131,9 @@ export default function ProfilePage() {
                   </div>
                   {/* Add other fields as needed */}
                   <div className="flex items-center justify-between">
-                    <Button
+                  <Button
                       type="submit"
-                      className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
                       Save
                     </Button>

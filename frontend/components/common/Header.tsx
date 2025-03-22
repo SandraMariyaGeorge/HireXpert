@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Button } from '../ui/button';
 import { LogOut, Menu } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import Sidebar from '@/components/hrdashboard/Sidebar';
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -11,6 +10,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   const { logout } = useAuth();
+
   return (
     <header className="bg-gray-900 text-white p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">

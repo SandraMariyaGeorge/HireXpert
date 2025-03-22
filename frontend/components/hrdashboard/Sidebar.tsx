@@ -18,11 +18,15 @@ const Sidebar: React.FC<SidebarProps> = ({ items, activeTab, setActiveTab }) => 
 
   const handleItemClick = (id: string) => {
     setActiveTab(id);
-    if (id === 'create-interview') {
+    if(id =='home'){
+      router.push('/hrdash');
+    }
+    else if (id === 'create-interview') {
       router.push('/hrdash/create-interview');
     } else if (id === 'view-interview-details') {
       router.push('/hrdash/view-interview-details');
     }
+    
     // Add more navigation logic for other tabs if needed
   };
 

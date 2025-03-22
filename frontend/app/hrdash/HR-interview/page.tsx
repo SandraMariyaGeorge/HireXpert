@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 
 function CreateInterview() {
   const [jobTitle, setJobTitle] = useState('');
@@ -21,7 +19,7 @@ function CreateInterview() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      <Header />
+      
       <main className="flex-1 overflow-y-auto p-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <header className="mb-8">
@@ -68,7 +66,7 @@ function CreateInterview() {
           </div>
         </div>
       </main>
-      <Footer />
+      
     </div>
   );
 }
