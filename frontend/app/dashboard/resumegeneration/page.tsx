@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import LoadingOverlayComponent from "@/components/loading-overlay";
 import Dashboard_Header from "@/components/dashboard_header";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
+import axios from "axios";
 
 export default function ResumeGenerationPage() {
   const [loading, setLoading] = useState(false);
@@ -13,13 +14,37 @@ export default function ResumeGenerationPage() {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const handleResumeGenerationClick = () => {
+  const handleResumeGenerationClick = async () => {
     setLoading(true);
-    // Simulate a delay for the loading effect
-    setTimeout(() => {
+    try {
+      const jobDesc = "Backend Engineer"; // Replace with actual job description input
+      const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
+      const response = await axios.post(
+        "http://127.0.0.1:8000/generate",
+        { job_desc: jobDesc },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: "blob", // Ensure the response is treated as a binary file
+        }
+      );
+
+      // Create a URL for the PDF file and trigger download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "resume.pdf");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error generating resume:", error);
+      alert("Failed to generate resume. Please try again.");
+    } finally {
       setLoading(false);
-      // Add any additional logic here if needed
-    }, 2000);
+    }
   };
 
   return (
