@@ -14,5 +14,29 @@
     {
         "role": "assistant",
         "content": "Have you sought medical attention or considered consulting with a healthcare professional following the dog bite incident?"
+    },
+    {
+        "role": "user",
+        "content": "hello can you hear me"
+    },
+    {
+        "role": "assistant",
+        "content": "What specific skills or experiences do you believe make you a strong candidate for this position?"
+    },
+    {
+        "role": "user",
+        "content": "I was a top student in college I got 10 on 10 sgpa"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you provide an example of a project or assignment from your college experience where you excelled and achieved this top performance?"
+    },
+    {
+        "role": "user",
+        "content": "I was studying in Germany I had German flag so I was top student"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you elaborate on how having the German flag contributed to you being a top student during your studies in Germany?"
     }
 ]
