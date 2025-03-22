@@ -32,13 +32,20 @@ export default function ChatInterface() {
     setInput("");
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/chat/chat", {
-        user_input: input,
+      const response = await fetch("http://127.0.0.1:8000/chat/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+        body:JSON.stringify({
+          "user_input": input,
+        })
       });
-
+      const responseData = await response.json();
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: response.data.bot_response,
+        text: responseData.bot_response,
         sender: "bot",
       };
 

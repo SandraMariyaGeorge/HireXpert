@@ -58,13 +58,6 @@ export default function Home() {
                 <Image className="mr-2 h-4 w-4" />
                 Image
               </TabsTrigger>
-              {/* <TabsTrigger
-                value="video"
-                className="data-[state=active]:bg-white/10"
-              >
-                <Video className="mr-2 h-4 w-4" />
-                Video
-              </TabsTrigger> */}
               <TabsTrigger
                 value="document"
                 className="data-[state=active]:bg-white/10"

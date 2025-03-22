@@ -6,6 +6,7 @@ router = APIRouter(
     tags=["user"],
 )
 
+
 @router.post("/signup")
 async def signup(
     username: str = Form(...),

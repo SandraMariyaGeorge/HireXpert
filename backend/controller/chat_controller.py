@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, HTTPException, Header, Depends
 from models.user_model import Users
 from pydantic import BaseModel
 from models.chat_model import Chat, ChatRequest, ChatResponse
@@ -13,7 +13,7 @@ def get_token(authorization: str = Header(...)):
 
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest,token):
+async def chat(request: ChatRequest,token: str = Depends(get_token)):
     try:
         users = Users()
         payload = users.verify_jwt(token)

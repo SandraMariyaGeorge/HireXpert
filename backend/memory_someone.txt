@@ -1,0 +1,218 @@
+[
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Let's get started on building your user profile. Could you please provide your full name?"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! Let's begin creating your professional profile. Can you please tell me your full name?"
+    },
+    {
+        "role": "user",
+        "content": "vishnu is pottan"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks, Vishnu! How old are you?"
+    },
+    {
+        "role": "user",
+        "content": "50"
+    },
+    {
+        "role": "assistant",
+        "content": "Great, and could you let me know your gender?"
+    },
+    {
+        "role": "user",
+        "content": "transgender"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for sharing. Could you please provide your email address?"
+    },
+    {
+        "role": "user",
+        "content": "uganda"
+    },
+    {
+        "role": "assistant",
+        "content": "It seems like you mentioned a location instead of an email address. Could you please provide your email address?"
+    },
+    {
+        "role": "user",
+        "content": "vishu.anup@gmail.com"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks! What's your phone number?"
+    },
+    {
+        "role": "user",
+        "content": "1234567890"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! Do you have a GitHub profile you would like to include? If not, just let me know."
+    },
+    {
+        "role": "user",
+        "content": "vishnuhariva"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! Do you have a LinkedIn profile you'd like to share? If not, feel free to skip this."
+    },
+    {
+        "role": "user",
+        "content": "vishnuhariva"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for sharing your LinkedIn profile. Let's move on to your education details. Can you please tell me the name of your school?"
+    },
+    {
+        "role": "user",
+        "content": "notbhgs kodungaloor"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks! What was your time period of study at [School Name] (please provide start year to end year)?"
+    },
+    {
+        "role": "user",
+        "content": "1975"
+    },
+    {
+        "role": "assistant",
+        "content": "Could you please specify the end year or duration you attended the school?"
+    },
+    {
+        "role": "user",
+        "content": "1989 and 14 years i attended"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for that information. Could you tell me the percentage or grade you achieved?"
+    },
+    {
+        "role": "user",
+        "content": "2%"
+    },
+    {
+        "role": "assistant",
+        "content": "Got it, thanks for sharing. Which board was your school affiliated with (e.g., CBSE, State, ICSE, etc.)?"
+    },
+    {
+        "role": "user",
+        "content": "govt state"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! Are you a fresher or do you have some professional experience?"
+    },
+    {
+        "role": "user",
+        "content": "i dont have experience"
+    },
+    {
+        "role": "assistant",
+        "content": "No worries! Do you have any internship experiences that you would like to mention? If none, just let me know."
+    },
+    {
+        "role": "user",
+        "content": "i had one but because of my kylirip i lost it and they fired me"
+    },
+    {
+        "role": "assistant",
+        "content": "Understood, let's proceed to the project details. Could you tell me about any project you've worked on? For instance, the project title?"
+    },
+    {
+        "role": "user",
+        "content": "prathibhimb"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! Could you provide a description of your project, Prathibhimb?"
+    },
+    {
+        "role": "user",
+        "content": "it is an ai driven chart generation tool "
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks for sharing that! Can you tell me the duration of the project?"
+    },
+    {
+        "role": "user",
+        "content": "19/3/24-12/4/24"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for that. What technology stack did you use for the Prathibhimb project?"
+    },
+    {
+        "role": "user",
+        "content": "react and fastapi"
+    },
+    {
+        "role": "assistant",
+        "content": "Perfect! Now let's talk about your skills. What frontend technologies are you proficient in?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "That's alright. How about backend technologies? Are there any you're proficient in?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "No problem. Are there any databases you have experience with?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "That's okay! Have you worked with any frameworks?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "That's perfectly fine. Do you have any experience with cloud platforms?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "No worries! Finally, do you have any experience with Generative AI?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for providing all your details, Vishnu. If there's anything more you'd like to add or if you have questions, feel free to ask. Your profile is now complete!"
+    }
+]

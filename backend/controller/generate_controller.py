@@ -15,7 +15,7 @@ def get_token(authorization: str = Header(...)):
     return authorization.split(" ")[1]
 
 @router.post("/")
-async def get_user_details(token, job_desc):
+async def get_user_details(job_desc,token: str = Depends(get_token)):
     print(token)
     try:
         users = Users()
