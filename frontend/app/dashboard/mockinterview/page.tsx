@@ -16,11 +16,11 @@ export default function InterviewPage() {
   const [videoEnabled, setVideoEnabled] = useState(true);
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
 
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   useEffect(() => {
     if (permissionGranted) {
@@ -30,13 +30,8 @@ export default function InterviewPage() {
 
   const requestPermissions = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       setPermissionGranted(true);
-
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
@@ -52,20 +47,17 @@ export default function InterviewPage() {
   };
 
   const startCamera = () => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then((stream) => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
       })
-      .catch(() => {
-        setError("Unable to access camera.");
-      });
+      .catch(() => setError("Unable to access camera."));
   };
 
   const toggleAudio = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
+    if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
       stream.getAudioTracks().forEach((track) => (track.enabled = !track.enabled));
       setAudioEnabled(!audioEnabled);
@@ -73,7 +65,7 @@ export default function InterviewPage() {
   };
 
   const toggleVideo = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
+    if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
       stream.getVideoTracks().forEach((track) => (track.enabled = !track.enabled));
       setVideoEnabled(!videoEnabled);
@@ -81,90 +73,88 @@ export default function InterviewPage() {
   };
 
   const endCall = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
+    if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
       stream.getTracks().forEach((track) => track.stop());
       videoRef.current.srcObject = null;
     }
-    router.push("/"); // Redirect to home or another page after ending the call
+    router.push("/");
+  };
+
+  const startRecording = () => {
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      const audioStream = new MediaStream(stream.getAudioTracks());
+      const mediaRecorder = new MediaRecorder(audioStream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (event) => audioChunksRef.current.push(event.data);
+
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
+    }
+  };
+
+  const stopRecording = () => {
+    mediaRecorderRef.current?.stop();
+    setIsRecording(false);
   };
 
   return (
     <div className="flex min-h-screen bg-black">
-      {/* Sidebar */}
-      <Dashboard_Sidebar
-        sidebarOpen={sidebarOpen}
-        toggleSidebar={toggleSidebar}
-      />
-      {/*Header */}
+      <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
-        <Dashboard_Header toggleSidebar={toggleSidebar}/>
-      <section className="flex justify-center items-center min-h-screen bg-gray-900 text-white p-6">
-        {permissionGranted === null ? (
-          <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-4">
-              Allow Camera & Microphone for Interview
-            </h2>
-            <div className="flex space-x-4">
-              <Button className="bg-grey-600 hover:bg-grey-700 px-6 py-3 text-lg" onClick={requestPermissions}>
-                Grant Permission
-              </Button>
-              <Button className="bg-grey-600 hover:bg-grey-700 px-6 py-3 text-lg" onClick={denyPermissions}>
-                Deny Permission
-              </Button>
+        <Dashboard_Header toggleSidebar={toggleSidebar} />
+        <section className="flex justify-center items-center min-h-screen bg-gray-900 text-white p-6">
+          {permissionGranted === null ? (
+            <div className="text-center">
+              <h2 className="text-2xl font-semibold mb-4">Allow Camera & Microphone for Interview</h2>
+              <div className="flex space-x-4">
+                <Button onClick={requestPermissions}>Grant Permission</Button>
+                <Button onClick={denyPermissions}>Deny Permission</Button>
+              </div>
+              {error && <p className="mt-4 text-red-500">{error}</p>}
             </div>
-            {error && <p className="mt-4 text-red-500">{error}</p>}
-          </div>
-        ) : permissionGranted ? (
-          <div className="flex w-full h-screen">
-            {/* Candidate (User's Camera) on the Left */}
-            <div className="flex-1 flex flex-col justify-center items-center relative">
-              <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
-              <div className="absolute bottom-4 flex space-x-4">
-                <Button onClick={toggleAudio} className="bg-gray-800 hover:bg-gray-700 p-2 rounded-full">
-                  {audioEnabled ? <Mic className="text-white" /> : <MicOff className="text-red-500" />}
-                </Button>
-                <Button onClick={toggleVideo} className="bg-gray-800 hover:bg-gray-700 p-2 rounded-full">
-                  {videoEnabled ? <Video className="text-white" /> : <VideoOff className="text-red-500" />}
-                </Button>
-                <Button onClick={endCall} className="bg-red-600 hover:bg-red-700 p-2 rounded-full">
-                  <PhoneOff className="text-white" />
-                </Button>
+          ) : permissionGranted ? (
+            <div className="flex w-full h-screen">
+              <div className="flex-1 flex flex-col justify-center items-center relative">
+                <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
+                <div className="absolute bottom-4 flex space-x-4">
+                  <Button onClick={toggleAudio}>{audioEnabled ? <Mic /> : <MicOff className="text-red-500" />}</Button>
+                  <Button onClick={toggleVideo}>{videoEnabled ? <Video /> : <VideoOff className="text-red-500" />}</Button>
+                  <Button onClick={endCall}><PhoneOff className="text-white" /></Button>
+                  <Button onClick={startRecording} className={`bg-blue-600 hover:bg-blue-700 p-2 rounded-full ${isRecording ? 'hidden' : ''}`}>
+                    Start Recording
+                  </Button>
+                  <Button onClick={stopRecording} className={`bg-blue-600 hover:bg-blue-700 p-2 rounded-full ${!isRecording ? 'hidden' : ''}`}>
+                    Stop Recording
+                  </Button>
+                  <Button className="bg-blue-600 hover:bg-blue-700 p-2 rounded-full">
+                    Send
+                  </Button>
+                </div>
+              </div>
+              <div className="flex-1 flex flex-col justify-center items-center bg-gray-800 p-6">
+                <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
+                  <img src="/assets/avatarinterview.jpg" alt="AI Interviewer" className="w-40 h-40 rounded-full border-4 border-white shadow-lg" />
+                  <h3 className="text-xl font-semibold mt-4">AI Interviewer</h3>
+                  <p className="text-gray-300 mt-2">Tell me about yourself</p>
+                </motion.div>
               </div>
             </div>
-
-            {/* AI Interviewer on the Right */}
-            <div className="flex-1 flex flex-col justify-center items-center bg-gray-800 p-6">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1 }}
-                className="text-center"
-              >
-                <img
-                  src="/assets/avatarinterview.jpg" // Replace with interviewer avatar
-                  alt="AI Interviewer"
-                  className="w-40 h-40 rounded-full border-4 border-white shadow-lg"
-                />
-                <h3 className="text-xl font-semibold mt-4">AI Interviewer</h3>
-                <p className="text-gray-300 mt-2">&quot;Tell me about yourself...&quot;</p>
-              </motion.div>
-            </div>
-          </div>
-        ) : (
-          <div className="text-center">
-            <h2 className="text-xl font-semibold text-red-500">
-              Interview cant be conducted unless the camera & audio are enabled.
-            </h2>
-          </div>
-        )}
-      </section>
-    </div>
+          ) : (
+            <h2 className="text-xl font-semibold text-red-500">Interview cant be conducted unless the camera & audio are enabled.</h2>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
-function setLoading(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
-
