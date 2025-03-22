@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, MapPin, Calendar, DollarSign, Briefcase } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Search, MapPin, Calendar, DollarSign, Briefcase, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,11 +13,12 @@ import Dashboard_Header from "@/components/dashboard_header";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 
 export default function JobsPage() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);  
-    const toggleSidebar = () => {
-      setSidebarOpen(!sidebarOpen);
-    };
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   interface Job {
     id: string;
@@ -69,6 +71,10 @@ export default function JobsPage() {
     fetchJobs(searchTerm);
   };
 
+  const handleBackClick = () => {
+    router.push('/dashboard');
+  };
+
   return (
     <div className="flex min-h-screen bg-black">
       {loading}
@@ -85,7 +91,13 @@ export default function JobsPage() {
         <div className="container mx-auto py-8 px-4">
           <div className="flex flex-col space-y-8">
             <div className="flex flex-col space-y-4">
-              <h1 className="text-4xl font-bold">Find Your Next Opportunity</h1>
+              <div className="flex justify-between items-center">
+                <h1 className="text-4xl font-bold">Find Your Next Opportunity</h1>
+                <Button onClick={handleBackClick} className="flex items-center gap-2">
+                  <ArrowLeft className="h-5 w-5" />
+                  Back to Dashboard
+                </Button>
+              </div>
               <div className="flex gap-4">
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
@@ -140,7 +152,7 @@ export default function JobsPage() {
                             </div>
                           </div>
                         </div>
-                        <Link href={`/dashboard/jobs/id=${job.id}`}>
+                        <Link href={"/dashboard/jobs/id=${job.id}"}>
                           <Button>Quick Apply</Button>
                         </Link>
                       </div>
@@ -165,7 +177,6 @@ export default function JobsPage() {
                 !loading && <p className="text-center">No jobs found.</p>
               )}
             </div>
-            
           </div>
         </div>
       </div>

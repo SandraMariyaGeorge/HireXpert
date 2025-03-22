@@ -1,11 +1,13 @@
-"use client"; // Add this directive since we're using client-side features
+"use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import Dashboard_Header from "@/components/dashboard_header";
 
 export default function ProfilePage() {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userDetails, setUserDetails] = useState({
     name: "John Doe",
@@ -31,20 +33,18 @@ export default function ProfilePage() {
     e.preventDefault();
     // Handle form submission (e.g., update user details in the backend)
     console.log("Updated User Details:", userDetails);
-};
+    router.push('/dashboard');
+  };
 
   return (
     <div className="flex min-h-screen bg-black">
       {/* Sidebar */}
-      <Dashboard_Sidebar
-        sidebarOpen={sidebarOpen}
-        toggleSidebar={toggleSidebar}
-      />
+      <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <Dashboard_Header toggleSidebar={toggleSidebar}/>
+        <Dashboard_Header toggleSidebar={toggleSidebar} />
 
         {/* Profile Update Form */}
         <div className="flex-1 p-6 bg-gray-100">
@@ -133,7 +133,7 @@ export default function ProfilePage() {
                   <div className="flex items-center justify-between">
                     <Button
                       type="submit"
-                      className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
                       Save
                     </Button>

@@ -1,4 +1,3 @@
-// src/components/Sidebar.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -33,16 +32,6 @@ export default function Dashboard_Sidebar({
         <ul>
           {/* Mock Interview Link */}
           <li className="p-3 hover:bg-gray-700">
-            <Link href="/dashboard" passHref>
-              <Button className="flex items-center space-x-2 w-full text-left">
-                <Briefcase className="w-5 h-5 text-white" />
-                <span>HOME</span>
-              </Button>
-            </Link>
-          </li>
-          
-          {/* Mock Interview Link */}
-          <li className="p-3 hover:bg-gray-700">
             <Link href="/dashboard/mockquestions" passHref>
               <Button className="flex items-center space-x-2 w-full text-left">
                 <Briefcase className="w-5 h-5 text-white" />
@@ -52,10 +41,10 @@ export default function Dashboard_Sidebar({
           </li>
 
           {/* Job Listings Link */}
-          <li className="p-3 hover:bg-gray-700">
+          <li className="p-4 hover:bg-gray-700">
             <Link href="/dashboard/jobs" passHref>
-              <Button className="flex items-center space-x-3 w-full text-left">
-                <Briefcase className="w-5 h-6 text-white" />
+              <Button className="flex items-center space-x-1 w-full text-left">
+                <Briefcase className="w-3 h-3 text-white" />
                 <span>Job Listings</span>
               </Button>
             </Link>
@@ -63,17 +52,23 @@ export default function Dashboard_Sidebar({
 
           {/* Resume Generation Button */}
           <li className="p-4 hover:bg-gray-700">
-          <Link href="/dashboard/resumegeneration" passHref>
-            <Button
-              className="flex items-center space-x-2 w-full text-left"
-            >
-              <FileText className="w-5 h-5 text-white" />
-              <span>Resume Generation</span>
-            </Button>
-          </Link>
+            <Link href="/dashboard/resumegeneration" passHref>
+              <Button className="flex items-center space-x-2 w-full text-left">
+                <FileText className="w-5 h-5 text-white" />
+                <span>Resume Generation</span>
+              </Button>
+            </Link>
           </li>
-          
-          
+
+          {/* Back to Dashboard Button */}
+          <li className="p-4 hover:bg-gray-700">
+            <Link href="/dashboard" passHref>
+              <Button className="flex items-center space-x-2 w-full text-left">
+                <ArrowLeft className="w-5 h-5 text-white" />
+                <span>Back to Home</span>
+              </Button>
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

@@ -10,18 +10,24 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 
 function HRDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   const sidebarItems = [
     { id: 'create-interview', label: 'Create Interview', icon: CalendarPlus },
     { id: 'view-interview-details', label: 'View Interview Details', icon: FileSpreadsheet },
+    { id: 'manage-candidates', label: 'Manage Candidates', icon: Users },
   ];
 
   return (
-    <ProtectedRoute role="hr">
+    //<ProtectedRoute role="hr">
       <div className="flex flex-col h-screen bg-gray-50">
-        <Header /> {/* Common header */}
+        <Header toggleSidebar={toggleSidebar} /> {/* Common header */}
         <div className="flex flex-1">
-          <Sidebar items={sidebarItems} activeTab={activeTab} setActiveTab={setActiveTab} />
+          {sidebarOpen && <Sidebar items={sidebarItems} activeTab={activeTab} setActiveTab={setActiveTab} />}
           <main className="flex-1 overflow-y-auto p-8 bg-white">
             <div className="max-w-7xl mx-auto">
               <header className="mb-8">
@@ -35,7 +41,7 @@ function HRDashboard() {
         </div>
         <Footer /> {/* Common footer */}
       </div>
-    </ProtectedRoute>
+    //</ProtectedRoute>
   );
 }
 
