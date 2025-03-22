@@ -338,5 +338,13 @@
     {
         "role": "assistant",
         "content": "Thanks for letting me know! Your user profile is fully set up. If you ever need to make any updates or have any questions, you know where to find me. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! If you need any help or want to update your details, feel free to let me know."
     }
 ]
