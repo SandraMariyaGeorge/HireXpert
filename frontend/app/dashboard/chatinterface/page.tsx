@@ -3,7 +3,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import  ChatComponent from "@/components/ChatInterface";
-// import { FileUpload } from "@/components/file-upload";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,7 @@ export default function Home() {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
-  }, [messages]); // Add messages as a dependency
+  }, [messages]);
 
 
   return (
@@ -37,8 +36,8 @@ export default function Home() {
         <Card className="p-6 bg-black/90 text-white relative">
           {activeTab === "chat" && (
             <>
-              <StarsBackground /> {/* Add StarsBackground component */}
-              <ShootingStars /> {/* Add ShootingStars component */}
+              <StarsBackground /> 
+              <ShootingStars /> 
             </>
           )}
 

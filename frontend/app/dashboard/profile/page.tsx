@@ -1,9 +1,11 @@
-"use client"; // Add this directive since we're using client-side features
+"use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import Dashboard_Header from "@/components/dashboard_header";
+import Link from "next/link";
+import { Inter } from 'next/font/google';
 
 export default function ProfilePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,7 +31,6 @@ export default function ProfilePage() {
 
   const handleUserDetailsSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission (e.g., update user details in the backend)
     console.log("Updated User Details:", userDetails);
 };
 
@@ -43,9 +44,7 @@ export default function ProfilePage() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Header */}
         <Dashboard_Header toggleSidebar={toggleSidebar}/>
-
         {/* Profile Update Form */}
         <div className="flex-1 p-6 bg-gray-100">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
@@ -60,8 +59,18 @@ export default function ProfilePage() {
                     className="w-24 h-24 rounded-full mb-4"
                   />
                   <h2 className="text-xl font-semibold">{userDetails.name}</h2>
+                <div className="mt-4 mb-4" >
+                <Link href="/dashboard/chatinterface">
+                    <Button
+                      className="black black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                      Update Professional Details /
+                      <br />
+                      Go to Chat Interface
+                    </Button>
+                </Link>
                 </div>
-
+              </div>
                 {/* User Details Form */}
                 <div className="w-2/3">
                   <div className="mb-4">
@@ -129,7 +138,6 @@ export default function ProfilePage() {
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
                   </div>
-                  {/* Add other fields as needed */}
                   <div className="flex items-center justify-between">
                   <Button
                       type="submit"
