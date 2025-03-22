@@ -12,9 +12,8 @@ def get_token(authorization: str = Header(...)):
     return authorization.split(" ")[1]
 
 @router.post("/")
-# async def get_user_details(token: str = Depends(get_token)):
-async def get_user_details(token):
-    print(token)
+async def get_user_details(token: str = Depends(get_token)):
+# async def get_user_details(token):
     try:
         users = Users()
         payload = users.verify_jwt(token)

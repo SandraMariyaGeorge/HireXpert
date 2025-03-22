@@ -7,6 +7,7 @@ router = APIRouter(
 )
 
 
+
 @router.post("/")
 async def do_scrape():
     job = Jobs()
