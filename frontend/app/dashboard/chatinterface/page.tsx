@@ -32,7 +32,6 @@ export default function Home() {
       <div>
           <h2>Eagerly waiting to generate the resume.Move ahead to see something special</h2>
           </div>
-
         <Card className="p-6 bg-black/90 text-white relative">
           {activeTab === "chat" && (
             <>
@@ -40,7 +39,6 @@ export default function Home() {
               <ShootingStars /> 
             </>
           )}
-
           <Tabs defaultValue="chat" className="w-full" onValueChange={(value) => setActiveTab(value)}>
             <TabsList className="grid w-full grid-cols-4 bg-black/40">
               <TabsTrigger
