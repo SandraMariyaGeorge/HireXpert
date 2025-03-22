@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -23,11 +22,10 @@ export default function SignUp() {
     const usernameElement = form.elements.namedItem("username") as HTMLInputElement;
     const emailElement = form.elements.namedItem("email") as HTMLInputElement;
     const passwordElement = form.elements.namedItem("password") as HTMLInputElement;
-    const aadhaarElement = form.elements.namedItem("aadhaar") as HTMLInputElement;
     const role = "candidate";
 
-    if (!usernameElement || !emailElement || !passwordElement || !aadhaarElement) {
-      setError("Please fill out the username, email, password, and Aadhaar fields");
+    if (!usernameElement || !emailElement || !passwordElement) {
+      setError("Please fill out the username, email, and password");
       setIsLoading(false);
       return;
     }
@@ -36,7 +34,6 @@ export default function SignUp() {
     formData.append("username", usernameElement.value);
     formData.append("email", emailElement.value);
     formData.append("password", passwordElement.value);
-    formData.append("aadhaar", aadhaarElement.value);
     formData.append("role", role);
 
     try {
@@ -69,94 +66,87 @@ export default function SignUp() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-400 to-gray-300 flex items-center justify-center p-4">
-      <div className="w-full max-w-[1100px] grid md:grid-cols-2 gap-8 items-center">
-        {/* Sign-up form */}
-        <Card className="w-full max-w-md mx-auto p-8 bg-white shadow-lg rounded-2xl border-0">
-          <CardHeader className="space-y-2 text-center pb-8">
-            <CardTitle className="text-4xl font-bold tracking-tight font-poppins bg-gradient-to-r from-black-900 to-black-600 bg-clip-text text-transparent">
-              Welcome to HireXpert!
-            </CardTitle>
-            <CardDescription className="text-black-300 text-base font-inter">
-              Simplify hiring, empower careers—welcome to HireXpert
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Username"
-                  required
-                  className="h-12 w-full px-4 py-2 border border-black-300 rounded-md"
-                />
+    <main className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900 flex items-center justify-center p-4">
+      <Card className="w-full max-w-[1200px] p-12 bg-white shadow-lg rounded-2xl border-0">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Sign-up form */}
+          <Card className="w-full max-w-lg mx-auto p-12 bg-white shadow-lg rounded-3xl border border-gray-300">
+            <CardHeader className="space-y-2 text-center pb-8">
+              <CardTitle className="text-4xl font-bold tracking-tight font-poppins bg-gradient-to-r from-black via-gray-700 to-gray-500 bg-clip-text text-transparent">
+                Welcome to HireXpert!
+              </CardTitle>
+              <CardDescription className="text-black-300 text-base font-inter">
+                Simplify hiring, empower careers—welcome to HireXpert
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    required
+                    className="h-12 w-full px-4 py-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email address"
+                    required
+                    className="h-12 w-full px-4 py-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                    className="h-12 w-full px-4 py-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full h-12 text-base bg-black hover:bg-gray-700 text-white"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Signing up..." : "Sign up"}
+                </Button>
+              </form>
+              {error && <div className="text-gray-500 text-center mt-4">{error}</div>}
+              <div className="mt-8 text-center text-sm text-slate-500 font-inter">
+                Already have an account?{" "}
+                <Link href="/signin" className="text-black-600 hover:text-black-300 font-medium transition-colors">
+                  Sign in
+                </Link>
               </div>
-              <div className="space-y-2">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email address"
-                  required
-                  className="h-12 w-full px-4 py-2 border border-black-300 rounded-md"
-                />
-              </div>
-              <div className="space-y-2">
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  required
-                  className="h-12 w-full px-4 py-2 border border-black-300 rounded-md"
-                />
-              </div>
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  name="aadhaar"
-                  placeholder="Aadhaar number"
-                  required
-                  className="h-12 w-full px-4 py-2 border border-black-300 rounded-md"
-                />
-              </div>
-              <Button
-                type="submit"
-                className="w-full h-12 text-base bg-black hover:bg-gray-700 text-white"
-                disabled={isLoading}
-              >
-                {isLoading ? "Signing up..." : "Sign up"}
-              </Button>
-            </form>
-            {error && <div className="text-gray-500 text-center mt-4">{error}</div>}
-            <div className="mt-8 text-center text-sm text-slate-500 font-inter">
-              Already have an account?{" "}
-              <Link href="/signin" className="text-black-600 hover:text-black-300 font-medium transition-colors">
-                Sign in
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Side information */}
-        <div className="hidden md:block bg-white p-8 rounded-2xl shadow-lg">
-          <div className="relative h-[500px] w-full">
-            <Image
-              src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Coal mining operations"
-              fill
-              className="object-cover rounded-xl"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/0 rounded-xl" />
-            <div className="absolute bottom-0 left-0 p-6 text-white">
-              <h2 className="text-2xl font-bold font-poppins mb-2">Digitize Your Operations</h2>
-              <p className="text-slate-200 font-inter">
-                Enhance productivity and safety with real-time digital tools.
-              </p>
+          {/* Side information */}
+          <Card className="hidden md:block bg-white p-16 rounded-2xl shadow-lg">
+            <div className="relative h-[500px] w-full">
+              <Image
+                src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Coal mining operations"
+                fill
+                className="object-cover rounded-xl"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/0 rounded-xl" />
+              <div className="absolute bottom-0 left-0 p-6 text-white">
+                <h2 className="text-2xl font-bold font-poppins mb-2">Digitize Your Operations</h2>
+                <p className="text-slate-200 font-inter">
+                  Enhance productivity and safety with real-time digital tools.
+                </p>
+              </div>
             </div>
-          </div>
+          </Card>
         </div>
-      </div>
+      </Card>
     </main>
   );
 }

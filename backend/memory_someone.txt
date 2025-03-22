@@ -214,5 +214,45 @@
     {
         "role": "assistant",
         "content": "Thank you for providing all your details, Vishnu. If there's anything more you'd like to add or if you have questions, feel free to ask. Your profile is now complete!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! If you need any assistance or want to update your profile details, just let me know!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Ready to continue? If you need help with anything or want to provide more details, just let me know!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello there! Is there anything you'd like to update or add to your profile? Let me know how I can assist you!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If you need help with your profile or anything else, just let me know!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! If you need assistance with building or updating your profile, feel free to let me know!"
     }
 ]

@@ -42,7 +42,7 @@ export default function ResumeGenerationPage() {
                     <Button
                     onClick={handleResumeGenerationClick}
                     disabled={loading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
+                    className="w-full black black-300 text-white font-semibold py-2 rounded"
                     >
                     {loading ? "Generating..." : "Generate Resume"}
                     </Button>

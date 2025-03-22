@@ -37,7 +37,7 @@ export default function Dashboard() {
   ];
 
   return (
-    //<ProtectedRoute role="candidate">
+    <ProtectedRoute role="candidate">
     <div className="min-h-screen bg-gray-100 text-gray-900">
       {loading && <LoadingOverlayComponent />}
       
@@ -94,6 +94,6 @@ export default function Dashboard() {
         </main>
       </div>
     </div>
-    //</ProtectedRoute>
+    </ProtectedRoute>
   );
 }

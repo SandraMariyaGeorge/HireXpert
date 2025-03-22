@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AI Interview Platform',
+  title: 'HireXpert',
   description: 'Turbocharge your interviewing process with AI-powered interviews in 50+ languages',
 };
 
