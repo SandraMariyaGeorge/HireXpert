@@ -16,9 +16,10 @@ class JobSearchRequest(BaseModel):
     query: str
 
 @router.post("/search")
-async def search(request: JobSearchRequest,token: str = Depends(get_token)):
+async def search(token: str = Depends(get_token)):
     job = Jobs()
-    return job.search_jobs_vector(request.query)
+    return job.search_jobs_vector("")
+    # return job.search_jobs_vector(request.query)
 
 @router.get("/{id}")
 async def get_job_by_id(id: str):
