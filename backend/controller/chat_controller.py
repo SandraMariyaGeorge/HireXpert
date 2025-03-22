@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Header, Depends
 from models.user_model import Users
 from pydantic import BaseModel
-from models.chat_model import Chat, ChatRequest, ChatResponse
+from models.chat_model import ChatRequest, ChatResponse, Chat
 
 router = APIRouter(
     prefix="/chat",

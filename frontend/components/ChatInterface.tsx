@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -17,6 +18,7 @@ interface Message {
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const router = useRouter();
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -38,18 +40,28 @@ export default function ChatInterface() {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
-        body:JSON.stringify({
-          "user_input": input,
-        })
+        body: JSON.stringify({
+          user_input: input,
+        }),
       });
       const responseData = await response.json();
+
       const botMessage: Message = {
         id: Date.now() + 1,
         text: responseData.bot_response,
         sender: "bot",
       };
 
+      // Check if botMessage is "over" and navigate
+      if (botMessage.text.toLowerCase() === "over") {
+        router.push("/dashboard");
+      }
+
+      
+
       setMessages((prev) => [...prev, botMessage]);
+
+      
     } catch (error) {
       console.error("Error fetching bot response:", error);
     }

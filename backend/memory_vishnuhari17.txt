@@ -138,5 +138,205 @@
     {
         "role": "assistant",
         "content": "That's okay! If you currently have no skills to list, we can leave this section as is. If you develop skills in the future, you can always update it. Is there anything else you'd like to add?"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Let's wrap up the skills section. Are there any backend technologies, databases, frameworks, cloud platforms, or generative AI experience you have that you'd like to mention?"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for your time, Vishnuhari. Your user profile is now complete with the information provided."
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! It seems like we've covered most of the details. If there's anything else you'd like to add or any updates you have, feel free to share!"
+    },
+    {
+        "role": "user",
+        "content": "nothing"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for confirming. If you need to update your profile in the future, you can always come back. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! If you need assistance with anything else or want to update any details, just let me know!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! If there's anything you would like to update or if you need further assistance, feel free to ask!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today?"
+    },
+    {
+        "role": "user",
+        "content": "what is my name"
+    },
+    {
+        "role": "assistant",
+        "content": "Your name is Vishnuhari Va."
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! If there's anything else you need help with or more details you'd like to update, just let me know."
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks for confirming. If you ever have more information to add or need further help, feel free to reach out anytime!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! If there's anything new you'd like to update or discuss, just let me know!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! If there's anything specific you'd like to update or ask about, feel free to let me know."
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Alright! If you need anything else, don't hesitate to ask."
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If there's anything you'd like to update or any questions you have, feel free to ask."
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! Let me know if there's anything else you need."
+    },
+    {
+        "role": "user",
+        "content": "nothing"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for your time, and feel free to reach out if you need any assistance in the future!"
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "its complete"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for confirming! Your user profile setup is complete. If you need further assistance or want to update any information in the future, feel free to reach out. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! If you have any updates or need assistance, just let me know!"
+    },
+    {
+        "role": "user",
+        "content": "ok"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! If you need anything else, don't hesitate to reach out."
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today?"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! If there's anything you'd like to update or inquire about, feel free to let me know."
+    },
+    {
+        "role": "user",
+        "content": "nithing"
+    },
+    {
+        "role": "assistant",
+        "content": "Alright! If there's nothing else now, just reach out whenever you need assistance in the future. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "its complete"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! Your user profile setup is complete. If you have any more updates or need further assistance in the future, feel free to reach out. Have a wonderful day!"
+    },
+    {
+        "role": "user",
+        "content": "jits complete"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks for letting me know! Your user profile is fully set up. If you ever need to make any updates or have any questions, you know where to find me. Have a great day!"
     }
 ]

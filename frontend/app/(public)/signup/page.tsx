@@ -24,6 +24,7 @@ export default function SignUp() {
     const emailElement = form.elements.namedItem("email") as HTMLInputElement;
     const passwordElement = form.elements.namedItem("password") as HTMLInputElement;
     const aadhaarElement = form.elements.namedItem("aadhaar") as HTMLInputElement;
+    const role = "candidate";
 
     if (!usernameElement || !emailElement || !passwordElement || !aadhaarElement) {
       setError("Please fill out the username, email, password, and Aadhaar fields");
@@ -36,6 +37,7 @@ export default function SignUp() {
     formData.append("email", emailElement.value);
     formData.append("password", passwordElement.value);
     formData.append("aadhaar", aadhaarElement.value);
+    formData.append("role", role);
 
     try {
       const response = await fetch(`${API_BASE_URL}/auth/signup`, {
