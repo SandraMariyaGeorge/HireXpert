@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import LoadingOverlayComponent from "@/components/loading-overlay";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Dashboard_Header from "@/components/dashboard_header";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import axios from "axios";
@@ -10,6 +12,7 @@ import axios from "axios";
 export default function ResumeGenerationPage() {
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [jobDesc, setJobDesc] = useState("");
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -17,7 +20,6 @@ export default function ResumeGenerationPage() {
   const handleResumeGenerationClick = async () => {
     setLoading(true);
     try {
-      const jobDesc = "Backend Engineer"; // Replace with actual job description input
       const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
       const response = await axios.post(
         "http://127.0.0.1:8000/generate",
@@ -49,34 +51,39 @@ export default function ResumeGenerationPage() {
 
   return (
     <div className="flex min-h-screen bg-black">
-          {/* Sidebar */}
-          <Dashboard_Sidebar
-            sidebarOpen={sidebarOpen}
-            toggleSidebar={toggleSidebar}
-          />
-          {/*Header */}
-          <div className="flex-1 flex flex-col">
-            {/* Navbar */}
-            <Dashboard_Header toggleSidebar={toggleSidebar} />
-                <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-                <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
-                    <h1 className="text-2xl font-bold mb-4">Resume Generation</h1>
-                    <p className="text-gray-600 mb-6">
-                    Click the button below to generate your resume. This process may take a few moments.
-                    </p>
-                    <Button
-                    onClick={handleResumeGenerationClick}
-                    disabled={loading}
-                    className="w-full black black-300 text-white font-semibold py-2 rounded"
-                    >
-                    {loading ? "Generating..." : "Generate Resume"}
-                    </Button>
-                </div>
+      {/* Sidebar */}
+      <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      {/* Header */}
+      <div className="flex-1 flex flex-col">
+        {/* Navbar */}
+        <Dashboard_Header toggleSidebar={toggleSidebar} />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
+          <Card className="bg-white p-16 rounded-lg shadow-lg max-w-3xl w-full text-center">
+            <CardHeader>
+              <CardTitle className="text-5xl font-buld text-black  mb-6">Resume Generation</CardTitle>
+              
+            </CardHeader>
+            <CardContent>
+            <textarea
+                value={jobDesc}
+                onChange={(e) => setJobDesc(e.target.value)}
+                placeholder="Enter job description"
+                className="mb-8 h-40 w-full px-8 py-6 border border-gray-300 rounded-md text-xl"
+              />
+              <Button
+                onClick={handleResumeGenerationClick}
+                disabled={loading}
+                className="w-full h-14 bg-black hover:bg-gray-800 text-white font-semibold py-3 rounded-lg text-lg"
+              >
+                {loading ? "Generating..." : "Generate Resume"}
+              </Button>
+            </CardContent>
+          </Card>
 
-                {/* Show loading overlay when loading is true */}
-                {loading && <LoadingOverlayComponent />}
-                </div>
-          </div>
+          {/* Show loading overlay when loading is true */}
+          {loading && <LoadingOverlayComponent />}
+        </div>
+      </div>
     </div>
   );
 }
