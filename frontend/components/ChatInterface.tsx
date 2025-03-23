@@ -108,16 +108,16 @@
 
 "use client";
 
-<<<<<<< HEAD
 import { useState, useRef, useEffect } from "react";
-=======
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
->>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PlaceholdersAndVanishInput } from "@/components/placeholders-and-vanish-input";
+import { useRouter } from "next/navigation";
+
+const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
+  router.push(path);
+ };
 
 interface Message {
   id: number;
@@ -126,9 +126,9 @@ interface Message {
 }
 
 export default function ChatInterface() {
+  const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-<<<<<<< HEAD
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -139,9 +139,6 @@ export default function ChatInterface() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-=======
-  const router = useRouter();
->>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -164,13 +161,8 @@ export default function ChatInterface() {
           "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
-<<<<<<< HEAD
           "user_input": input,
         })
-=======
-          user_input: input,
-        }),
->>>>>>> 6fcb37c56b886c65c206e0137f82153be7d90ecf
       });
       const responseData = await response.json();
 
