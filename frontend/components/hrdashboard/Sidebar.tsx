@@ -1,54 +1,66 @@
-import { useRouter } from 'next/navigation';
-import { CalendarPlus, Users, FileSpreadsheet } from 'lucide-react';
+"use client";
 
-interface SidebarItem {
-  id: string;
-  label: string;
-  icon: React.ElementType;
-}
+import { Button } from "@/components/ui/button";
+import { X, Briefcase, FileText, ArrowLeft } from "lucide-react";
+import Link from "next/link"; // Import next/link for client-side navigation
 
 interface SidebarProps {
-  items: SidebarItem[];
-  activeTab: string;
-  setActiveTab: (id: string) => void;
+  sidebarOpen: boolean;
+  toggleSidebar: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ items, activeTab, setActiveTab }) => {
-  const router = useRouter();
-
-  const handleItemClick = (id: string) => {
-    setActiveTab(id);
-    if(id =='home'){
-      router.push('/hrdash');
-    }
-    else if (id === 'create-interview') {
-      router.push('/hrdash/create-interview');
-    } else if (id === 'view-interview-details') {
-      router.push('/hrdash/view-interview-details');
-    }
-    
-    // Add more navigation logic for other tabs if needed
-  };
-
+export default function HrDash_Sidebar({
+  sidebarOpen,
+  toggleSidebar,
+}: SidebarProps) {
   return (
-    <div className="w-64 bg-gray-900 text-gray-100">
-      <div className="p-4 text-xl font-semibold border-b border-gray-700">HR Dashboard</div>
-      <ul className="mt-4">
-        {items.map((item) => (
-          <li
-            key={item.id}
-            className={`p-4 cursor-pointer flex items-center space-x-2 hover:bg-gray-700 transition-colors duration-200 ${
-              activeTab === item.id ? 'bg-gray-700' : ''
-            }`}
-            onClick={() => handleItemClick(item.id)}
-          >
-            <item.icon className="h-5 w-5" />
-            <span>{item.label}</span>
+    <div
+      className={`fixed inset-y-0 left-0 bg-black text-white w-64 transform ${
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+      } transition-transform duration-300 ease-in-out z-20`}
+    >
+      <div className="flex items-center justify-between p-4">
+        <h2 className="text-xl font-semibold">HireXpert</h2>
+        <Button
+          className="bg-gray-100 hover:bg-gray-300 p-2 rounded-full"
+          onClick={toggleSidebar}
+        >
+          <X className="text-black" />
+        </Button>
+      </div>
+      <nav className="mt-4">
+        <ul>
+          {/* Home Link */}
+          <li className="p-3 hover:bg-gray-700">
+            <Link href="/hrdash" passHref>
+              <Button className="flex items-center space-x-2 w-full text-left bg-white hover:bg-gray-200 text-black">
+                <Briefcase className="w-5 h-5 text-black" />
+                <span>Home</span>
+              </Button>
+            </Link>
           </li>
-        ))}
-      </ul>
+
+          {/* Job Listings Link */}
+          <li className="p-3 hover:bg-gray-700">
+            <Link href="/hrdash/create-interview" passHref>
+              <Button className="flex items-center space-x-3 w-full text-left bg-white hover:bg-gray-200 text-black">
+                <Briefcase className="w-5 h-6 text-black" />
+                <span>Create Interview</span>
+              </Button>
+            </Link>
+          </li>
+
+          {/* Resume Generation Button */}
+          <li className="p-4 hover:bg-gray-700">
+            <Link href="/hrdash/view-interview-details" passHref>
+              <Button className="flex items-center space-x-2 w-full text-left bg-white hover:bg-gray-200 text-black">
+                <FileText className="w-5 h-5 text-black" />
+                <span>View All Interviews</span>
+              </Button>
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
-};
-
-export default Sidebar;
+}

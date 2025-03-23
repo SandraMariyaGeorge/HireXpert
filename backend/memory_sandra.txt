@@ -118,5 +118,13 @@
     {
         "role": "assistant",
         "content": "Thank you for the update. I've changed your phone number to 9874859546. If there's anything else you need to adjust or add, feel free to let me know!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! If you need to update any information or have any questions, feel free to let me know!"
     }
 ]
