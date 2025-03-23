@@ -418,5 +418,29 @@
     {
         "role": "assistant",
         "content": "Thank you for your patience. If you need anything else in the future, feel free to reach out. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If there's anything specific you need help with, feel free to let me know."
+    },
+    {
+        "role": "user",
+        "content": "nothing just stop"
+    },
+    {
+        "role": "assistant",
+        "content": "Understood! I'll pause here. If you ever need assistance in the future, feel free to reach out. Take care!"
+    },
+    {
+        "role": "user",
+        "content": "its complete"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for confirming that everything is complete. If you need any updates or have further questions in the future, feel free to reach out. Have a great day!"
     }
 ]
