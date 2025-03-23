@@ -11,9 +11,17 @@ const JobPage = ({ params }: { params: { id: string } }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const decodedId = decodeURIComponent(params.id); // id=1809223
+    const numericId = decodedId.match(/\d+/)?.[0];
     const fetchJobDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/job/${params.id}`);
+        const response = await fetch(`http://127.0.0.1:8000/job/${numericId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
         if (!response.ok) {
           throw new Error('Failed to fetch job details');
         }
@@ -40,7 +48,6 @@ const JobPage = ({ params }: { params: { id: string } }) => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
   return job ? <ApplyPageClient job={job} /> : <div>No job details available</div>;
 };
 

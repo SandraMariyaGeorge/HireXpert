@@ -13,10 +13,12 @@ import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 
 export default function JobsPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useState(false);  
-    const toggleSidebar = () => {
-      setSidebarOpen(!sidebarOpen);
-    };
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   interface Job {
     id: string;
@@ -29,7 +31,6 @@ export default function JobsPage() {
       type: string;
       posted: string;
       description: string;
-      responsibilities: string[];
     };
   }
 
@@ -48,7 +49,7 @@ export default function JobsPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ query }),
       });
@@ -70,15 +71,22 @@ export default function JobsPage() {
     fetchJobs(searchTerm);
   };
 
+  const toggleDescription = (jobId: string) => {
+    setExpandedJobId(expandedJobId === jobId ? null : jobId);
+  };
+
+  const getTruncatedDescription = (description: string, jobId: string) => {
+    const sentences = description.split('. ');
+    const truncated = sentences.slice(0, 4).join('. ') + (sentences.length > 4 ? '...' : '');
+    return expandedJobId === jobId ? description : truncated;
+  };
+
   return (
     <div className="flex min-h-screen bg-black">
       {loading}
       {/* Sidebar */}
-      <Dashboard_Sidebar
-        sidebarOpen={sidebarOpen}
-        toggleSidebar={toggleSidebar}
-      />
-      {/*Header */}
+      <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      {/* Header */}
       <div className="flex-1 flex flex-col">
         {/* Navbar */}
         <Dashboard_Header toggleSidebar={toggleSidebar} />
@@ -149,15 +157,16 @@ export default function JobsPage() {
                       <Separator className="my-4" />
 
                       <div className="space-y-4">
-                        <p className="text-muted-foreground">{job.metadata.description}</p>
-                        <div>
-                          <h4 className="font-semibold mb-2">Key Responsibilities:</h4>
-                          <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                            {(Array.isArray(job.metadata?.responsibilities) ? job.metadata.responsibilities : []).map((resp, index) => (
-                              <li key={index}>{resp}</li>
-                            ))}
-                          </ul>
-                        </div>
+                        <p className="text-muted-foreground">
+                          {getTruncatedDescription(job.metadata.description, job.id)}
+                        </p>
+                        <Button
+                          variant="link"
+                          className="text-black-500"
+                          onClick={() => toggleDescription(job.id)}
+                        >
+                          {expandedJobId === job.id ? "Read Less" : "Read More"}
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -166,7 +175,6 @@ export default function JobsPage() {
                 !loading && <p className="text-center">No jobs found.</p>
               )}
             </div>
-            
           </div>
         </div>
       </div>
