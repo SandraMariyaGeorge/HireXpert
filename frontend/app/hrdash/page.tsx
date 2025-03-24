@@ -23,7 +23,7 @@ function HRDashboard() {
   const [activeTab, setActiveTab] = React.useState('Dashboard'); // Example state for active tab
 
   return (
-   <ProtectedRoute role="hr">
+   //<ProtectedRoute role="hr">
       <div className="flex flex-col h-screen bg-gray-50">
         <Header toggleSidebar={toggleSidebar} />
         <div className="flex flex-1">
@@ -41,7 +41,7 @@ function HRDashboard() {
         </div>
         <Footer /> {/* Common footer */}
       </div>
-    </ProtectedRoute>
+    //</ProtectedRoute>
   );
 }
 

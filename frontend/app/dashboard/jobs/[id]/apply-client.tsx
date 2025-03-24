@@ -29,25 +29,18 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
   };
 
   const handleMockInterview = () => {
-    router.push('/dashboard/mockinterview');
+    router.push('/dashboard/mockquestions');
   };
 
-  const handleApplyWithExistingResume = () => {
-    if (job?.applyLink) {
-      window.location.href = job.metadata.applyLink;
+  const handleApply = () => {
+    if (job?.id) {
+      window.location.href = `https://jobs.careers.microsoft.com/global/en/job/${job.id}`;
     } else {
-      alert('Application link not available.');
+      alert('Job ID not available.');
     }
   };
 
-  const handleSubmitApplication = () => {
-    if (job?.applyLink) {
-      window.location.href = job.metadata.applyLink;
-    } else {
-      alert('Application link not available.');
-    }
-  };
-
+  
   if (!job) {
     return (
       <div className="container mx-auto py-16 px-4 text-center">
@@ -101,12 +94,9 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
                   <CardContent className="space-y-4">
                     <div className="flex flex-col items-center space-y-4">
                       <Button onClick={handleCustomizeResume} className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Customize Resume with AI</Button>
-                      <Button onClick={handleApplyWithExistingResume} className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Apply with Existing Resume</Button>
+                      <Button onClick={handleApply} className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Apply for Job</Button>
                     </div>
-                    <div className="flex justify-end space-x-4">
-                      <Button variant="outline" className="bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Save Draft</Button>
-                      <Button onClick={handleSubmitApplication} className="bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Submit Application</Button>
-                    </div>
+                    
                   </CardContent>
                 </Card>
               </TabsContent>

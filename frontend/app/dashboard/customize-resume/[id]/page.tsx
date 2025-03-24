@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import LoadingOverlayComponent from "@/components/loading-overlay";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -89,22 +90,28 @@ export default function ResumeGenerationPage() {
                 <Dashboard_Header toggleSidebar={toggleSidebar} />
                 <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
                     <Card className="bg-white p-16 rounded-lg shadow-lg max-w-3xl w-full text-center">
-                        <CardHeader>
-                            <CardTitle className="text-5xl font-buld text-black  mb-6">Resume Generation</CardTitle>
-                        </CardHeader>
                         <CardContent>
-                            <Button
-                                onClick={handleResumeGenerationClick}
-                                disabled={loading}
-                                className="w-full h-14 bg-black hover:bg-gray-800 text-white font-semibold py-3 rounded-lg text-lg"
-                            >
-                                {loading ? "Generating..." : "Generate Resume"}
-                            </Button>
+                            <Link href={`/dashboard/jobs/id=${id}`}>
+                                <Button variant="ghost" className="mb-4 text-gray-400">← Back to Jobs</Button>
+                            </Link>
+                            <Card className="bg-white p-16 rounded-lg shadow-lg max-w-3xl w-full text-center">
+                                <CardHeader>
+                                    <CardTitle className="text-5xl font-buld text-black  mb-6">Resume Generation</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <Button
+                                        onClick={handleResumeGenerationClick}
+                                        disabled={loading}
+                                        className="w-full h-14 bg-black hover:bg-gray-800 text-white font-semibold py-3 rounded-lg text-lg"
+                                    >
+                                        {loading ? "Generating..." : "Generate Resume"}
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                            {/* Show loading overlay when loading is true */}
+                            {loading && <LoadingOverlayComponent />}
                         </CardContent>
                     </Card>
-
-                    {/* Show loading overlay when loading is true */}
-                    {loading && <LoadingOverlayComponent />}
                 </div>
             </div>
         </div>

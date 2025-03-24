@@ -150,5 +150,13 @@
     {
         "role": "assistant",
         "content": "Can you elaborate on the specific skills or techniques you utilized to create the flight on the site that ultimately saved your life in that challenging situation?"
+    },
+    {
+        "role": "user",
+        "content": "hello can you hear me"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you please elaborate on your experience with communication skills in previous roles?"
     }
 ]
