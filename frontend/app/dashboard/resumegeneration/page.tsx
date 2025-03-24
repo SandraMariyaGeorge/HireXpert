@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import Dashboard_Header from "@/components/dashboard_header";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import axios from "axios";
+import Link from "next/link";
 
 export default function ResumeGenerationPage() {
   const [loading, setLoading] = useState(false);
@@ -61,6 +62,9 @@ export default function ResumeGenerationPage() {
           <Card className="bg-white p-16 rounded-lg shadow-lg max-w-3xl w-full text-center">
             <CardHeader>
               <CardTitle className="text-5xl font-buld text-black  mb-6">Resume Generation</CardTitle>
+              <Link href={`/dashboard`}>
+                                <Button variant="ghost" className="mb-4 text-gray-400">← Back to Dashboard</Button>
+              </Link>
               
             </CardHeader>
             <CardContent>
