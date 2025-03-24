@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from controller import user_controller, job_controller, chat_controller,resumeeval_controller, interview_controller, userdetails_controller, generate_controller, scraping_controller
+from controller import user_controller, job_controller, chat_controller,resumeeval_controller,interviewresult_controller, interview_controller, userdetails_controller, generate_controller, scraping_controller
 load_dotenv()
 
 app = FastAPI()
@@ -24,3 +24,4 @@ app.include_router(userdetails_controller.router)
 app.include_router(generate_controller.router)
 app.include_router(scraping_controller.router)
 app.include_router(resumeeval_controller.router)
+app.include_router(interviewresult_controller.router)
