@@ -15,3 +15,7 @@ beautifulsoup4
 requests
 google-genai
 pydub
+docx
+PyPDF2
+numpy
+scikit-learn

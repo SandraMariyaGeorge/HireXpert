@@ -46,5 +46,21 @@
     {
         "role": "assistant",
         "content": "I understand! If you need any further assistance or want to update your details, feel free to reach out. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "over"
+    },
+    {
+        "role": "assistant",
+        "content": "Alright, when you are ready to share your details and continue, just let me know. I'm here to help!"
+    },
+    {
+        "role": "user",
+        "content": "finish"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for reaching out. If you need any further assistance in the future, feel free to contact me. Have a wonderful day!"
     }
 ]
