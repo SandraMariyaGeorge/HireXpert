@@ -31,6 +31,11 @@ from models.interview_model import Interview
 from fastapi import Depends
 from models.interview_model import Interview_entry
 from fastapi import File, UploadFile, Form
+from models.user_model import Users
+
+def get_token(authorization: str = Header(...)):
+    return authorization.split(" ")[1]
+
 
 # Replace @app.post with @router.post
 @router.post("/process-audio/")
@@ -59,14 +64,32 @@ async def create_interview(
     Create an interview entry.
     """
     try:
+        users = Users()
+        payload = users.verify_jwt(token)
+        username = payload["username"]
         interview_instance = Interview()
         interview_entry = Interview_entry(
             interview_title=interview_title,
             desc=desc,
             qualities=qualities,
-            job_type=job_type
+            job_type=job_type,
+            username=username
         )
         return interview_instance.create_interview(interview_entry, csv)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/get-interviews/")
+async def get_interviews(token: str = Depends(get_token)):
+    """
+    Get all interview entries.
+    """
+    try:
+        users = Users()
+        payload = users.verify_jwt(token)
+        username = payload["username"]
+        interview_instance = Interview()
+        return interview_instance.get_interviews(username)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     

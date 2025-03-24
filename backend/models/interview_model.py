@@ -19,6 +19,7 @@ class Interview_entry(BaseModel):
     desc: str
     qualities: str
     job_type: str
+    username: str
 
 # Directory to save uploaded files
 UPLOAD_DIR = Path("uploaded_audio")
@@ -235,6 +236,16 @@ class Interview(Base):
             return emails
         except Exception as e:
             raise HTTPException(status_code=400, detail=f"Error reading CSV file: {e}")
+        
+    def get_interviews(self,username):
+        print(username)
+        interviews = self.db.find({"username": username})
+        interview_list = []
+        for interview in interviews:
+            interview["_id"] = str(interview["_id"])
+            interview_list.append(interview)
+        return interview_list
+
 
         
 
