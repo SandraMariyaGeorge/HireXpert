@@ -11,6 +11,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+
 const CandidateDashboardLayout: React.FC<LayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
