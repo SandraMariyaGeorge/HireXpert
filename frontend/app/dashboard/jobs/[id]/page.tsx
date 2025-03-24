@@ -11,7 +11,7 @@ const JobPage = ({ params }: { params: { id: string } }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const decodedId = decodeURIComponent(params.id); // id=1809223
+    const decodedId = decodeURIComponent(params.id); 
     const numericId = decodedId.match(/\d+/)?.[0];
     const fetchJobDetails = async () => {
       try {

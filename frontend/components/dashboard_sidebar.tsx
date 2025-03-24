@@ -69,6 +69,17 @@ export default function Dashboard_Sidebar({
               </Button>
             </Link>
           </li>
+
+        {/*Interview Link */}
+        <li className="p-3 hover:bg-gray-700">
+            <Link href="/dashboard/attend-interview" passHref>
+              <Button className="flex items-center space-x-2 w-full text-left bg-white hover:bg-gray-200 text-black">
+                <Briefcase className="w-5 h-5 text-black" />
+                <span>Attend Interview</span>
+              </Button>
+            </Link>
+          </li>
+
         </ul>
       </nav>
     </div>

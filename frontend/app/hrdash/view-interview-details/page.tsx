@@ -7,8 +7,8 @@ import HrDash_Sidebar from '@/components/hrdashboard/Sidebar';
 import Link from 'next/link';
 
 interface Interview {
-  id: number;
-  interview_title: string;
+  id: string;
+  interview_title: string;  
   desc: string;
   qualities: string;
   salary: string;
@@ -20,7 +20,7 @@ function ViewInterviewDetails() {
   const [interviews, setInterviews] = useState<Interview[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // const router = useRouter();
+  const router = useRouter();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -42,7 +42,12 @@ function ViewInterviewDetails() {
         }
 
         const data = await response.json();
-        setInterviews(data);
+        // Ensure the data has proper IDs (convert _id to id if needed)
+        const formattedInterviews = data.map((interview: any) => ({
+          ...interview,
+          id: interview._id ? interview._id : interview.id
+        }));
+        setInterviews(formattedInterviews);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       } finally {
@@ -101,7 +106,7 @@ function ViewInterviewDetails() {
                   <p className="text-gray-700">Qualities: {interview.qualities}</p>
                   {interview.salary && <p className="text-gray-700">Salary: {interview.salary}</p>}
                   <p className="text-gray-700">Job Type: {interview.job_type}</p>
-                  <Link href={`/hrdash/view-interview-details/id=${interview.id}`}>
+                  <Link href={`/hrdash/view-interview-details/${interview.id}`}>
                     <button
                       className="mt-2 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition duration-300"
                     >
