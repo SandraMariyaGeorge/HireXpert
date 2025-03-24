@@ -6,10 +6,8 @@ export default function CandidateDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-   // <ProtectedRoute role="candidate">
-      <div>
+        <ProtectedRoute role="candidate">
         {children}
-      </div>
-  //  </ProtectedRoute>
+        </ProtectedRoute>
   );
 }

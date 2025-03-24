@@ -94,7 +94,7 @@ export default function JobsPage() {
         <div className="container mx-auto py-8 px-4">
           <div className="flex flex-col space-y-8">
             <div className="flex flex-col space-y-4">
-              <h1 className="text-4xl font-bold">Find Your Next Opportunity</h1>
+              <h1 className="text-4xl font-italic text-white">Find Your Next Opportunity</h1>
               <div className="flex gap-4">
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />

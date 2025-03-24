@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CircularProgress } from '../../components/ui/CircularProgress';
 import { Card } from '@/components/ui/card';
@@ -16,7 +16,35 @@ export default function Dashboard() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userDetails, setUserDetails] = useState({name: ""});
 
+  useEffect(() => {
+      const fetchUserDetails = async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:8000/userdetails", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+  
+          if (!response.ok) {
+            throw new Error("Failed to fetch user details");
+          }
+  
+          const data = await response.json();
+          setUserDetails({
+            name: data.name,
+          });
+        } catch (error) {
+          console.error("Error fetching user details:", error);
+        }
+      };
+  
+      fetchUserDetails();
+    }, []);
+  
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -38,7 +66,6 @@ export default function Dashboard() {
   ];
 
   return (
-    //<ProtectedRoute role="candidate">
     <div className="min-h-screen bg-gray-300 text-gray-900">
       {loading && <LoadingOverlayComponent />}
       
@@ -54,7 +81,7 @@ export default function Dashboard() {
         {/* Main Content */}
         <main className="flex-1 p-6">
           <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-5xl font-bold mb-14">Welcome back, John!</h1>
+            <h1 className="text-5xl font-bold mb-14">Welcome back, {userDetails.name}!</h1>
 
     
             
@@ -95,6 +122,5 @@ export default function Dashboard() {
         </main>
       </div>
     </div>
-    //</ProtectedRoute>
   );
 }

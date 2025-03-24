@@ -96,7 +96,6 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
                       <Button onClick={handleCustomizeResume} className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Customize Resume with AI</Button>
                       <Button onClick={handleApply} className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Apply for Job</Button>
                     </div>
-                    
                   </CardContent>
                 </Card>
               </TabsContent>

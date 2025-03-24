@@ -1,4 +1,5 @@
 export interface Job {
+  metadata: any;
   qualification: string;
   id: string;
   title: string;

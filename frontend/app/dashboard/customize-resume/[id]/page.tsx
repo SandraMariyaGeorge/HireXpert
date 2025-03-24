@@ -15,7 +15,6 @@ export default function ResumeGenerationPage() {
     const [loading, setLoading] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [jobDesc, setJobDesc] = useState("");
-    const router = useRouter();
     const { id } = useParams(); // Get the job ID from the URL
 
     useEffect(() => {
