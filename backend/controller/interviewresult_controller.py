@@ -22,6 +22,6 @@ async def get_interview_result_by_id(id: str):
 @router.post("/add")
 async def add_interview_result(interview_id: str, user_id: str, score: int, feedback: str):
     interviewresult = InterviewResult()
-    interviewresult_entry = InterviewResult_entry(id=str(uuid.uuid4()), interview_id=interview_id, user_id=user_id, score=score, feedback=feedback)
+    interviewresult_entry = InterviewResult_entry(interview_id=interview_id, user_id=user_id, score=score, feedback=feedback)
     interviewresult.add_interview_result(interviewresult_entry)
     return interviewresult_entry

@@ -4,7 +4,6 @@ from fastapi import HTTPException
 from pydantic import BaseModel
 
 class InterviewResult_entry(BaseModel):
-    id: str
     interview_id: str
     user_id: str
     score: int

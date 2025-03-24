@@ -242,7 +242,7 @@ class Interview(Base):
         interviews = self.db.find({"username": username})
         interview_list = []
         for interview in interviews:
-            interview["id"] = str(interview["_id"])
+            interview["_id"] = str(interview["_id"])
             interview_list.append(interview)
         return interview_list
     
