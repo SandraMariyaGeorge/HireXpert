@@ -9,6 +9,12 @@ router = APIRouter(
     tags=["interview"],
 )
 
+class Interview_entry(BaseModel):
+    interview_title: str
+    desc: str
+    qualities: str
+    job_type: str
+
 def get_token(authorization: str = Header(...)):
     return authorization.split(" ")[1]
 
@@ -23,6 +29,8 @@ import requests
 from pydub import AudioSegment
 from models.interview_model import Interview
 from fastapi import Depends
+from models.interview_model import Interview_entry
+from fastapi import File, UploadFile, Form
 
 # Replace @app.post with @router.post
 @router.post("/process-audio/")
@@ -36,3 +44,30 @@ async def process_audio(file: UploadFile = File(...),token: str = Depends(get_to
     """
     interview = Interview()
     return interview.process_audio(file)
+
+
+@router.post("/create-interview/")
+async def create_interview(
+    interview_title: str = Form(...),
+    desc: str = Form(...),
+    qualities: str = Form(...),
+    job_type: str = Form(...),
+    csv: UploadFile = File(...),
+    token: str = Depends(get_token)
+    ) -> JSONResponse:
+    """
+    Create an interview entry.
+    """
+    try:
+        interview_instance = Interview()
+        interview_entry = Interview_entry(
+            interview_title=interview_title,
+            desc=desc,
+            qualities=qualities,
+            job_type=job_type
+        )
+        return interview_instance.create_interview(interview_entry, csv)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+

@@ -8,6 +8,17 @@ from pydub import AudioSegment
 import json
 from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
+import csv
+import io
+from fastapi import UploadFile
+from fastapi import HTTPException
+from models.base_model import Base
+
+class Interview_entry(BaseModel):
+    interview_title: str
+    desc: str
+    qualities: str
+    job_type: str
 
 # Directory to save uploaded files
 UPLOAD_DIR = Path("uploaded_audio")
@@ -20,7 +31,7 @@ openai.api_key = "sk-proj-ukspFfY6tmDnk_Fod3jDaDnJHvxfouQ9EPCkKyxecuM04EPFpUuc_O
 ELEVENLABS_API_KEY = "sk_709ae82286f467cb97d0f50ab65ba80dce143d625e913a94"
 VOICE_ID = "21m00Tcm4TlvDq8ikWAM"  # Example voice ID
 
-class Interview(BaseModel):
+class Interview(Base):
         
     def upload_audio(self,file):
         file_path = UPLOAD_DIR / file.filename
@@ -200,3 +211,30 @@ class Interview(BaseModel):
             })
         except Exception as e:
             return JSONResponse({"error": f"Error ending interview: {e}"}, status_code=500)
+        
+    def create_interview(self, interview_entry, csv):
+        extracted_emails = self.extract_emails_from_csv(csv)
+        interview_entry = interview_entry.dict()
+        interview_entry["emails"] = extracted_emails
+        self.db.insert_one(interview_entry)
+        return JSONResponse({"message": "Interview created successfully."})
+
+
+
+    def extract_emails_from_csv(self,file: UploadFile):
+        try:
+            contents = file.file.read().decode("utf-8")
+            file.file.seek(0)  # Reset file pointer
+            reader = csv.reader(io.StringIO(contents))
+            emails = []
+            
+            for row in reader:
+                if row:  # Ensure row is not empty
+                    emails.append(row[0])  # Assuming emails are in the first column
+            
+            return emails
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Error reading CSV file: {e}")
+
+        
+

@@ -442,5 +442,29 @@
     {
         "role": "assistant",
         "content": "Thank you for confirming that everything is complete. If you need any updates or have further questions in the future, feel free to reach out. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "over"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for confirming. If you ever need further assistance, feel free to contact me. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! If there's anything you need assistance with, just let me know."
+    },
+    {
+        "role": "user",
+        "content": "over"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for confirming. If there's anything else in the future, feel free to reach out. Have a good day!"
     }
 ]

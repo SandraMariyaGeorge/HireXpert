@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.5)  23 MAR 2025 12:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.5)  24 MAR 2025 10:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -395,7 +395,7 @@ Package rerunfilecheck Info: File `resume.out' has not changed.
 Here is how much of TeX's memory you used:
  10796 strings out of 474486
  173181 string characters out of 5743756
- 1939542 words of memory out of 5000000
+ 1944542 words of memory out of 5000000
  32953 multiletter control sequences out of 15000+600000
  563661 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -409,7 +409,7 @@ KTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/vishn/AppData/Local/Pr
 ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/vishn/AppData/
 Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
 Output written on C:\Users\vishn\OneDrive\Documents\HireXpert\backend\output\re
-sume.pdf (1 page, 100301 bytes).
+sume.pdf (1 page, 100027 bytes).
 PDF statistics:
  66 PDF objects out of 1000 (max. 8388607)
  6 named destinations out of 1000 (max. 500000)
