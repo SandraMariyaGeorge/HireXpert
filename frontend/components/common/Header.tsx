@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
   return (
     <header className="bg-black text-white p-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <div className="max-w-8xl mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <button className="p-2 rounded-md hover:bg-gray-900" onClick={toggleSidebar}>
             <Menu className="h-6 w-6 text-white" />
