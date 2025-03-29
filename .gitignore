@@ -7,3 +7,6 @@ __pycache__/
 **/__pycache__/
 backend/.venv/
 backend/.env
+backend/output/
+backend/uploaded_audio/
+backend/uploads/
