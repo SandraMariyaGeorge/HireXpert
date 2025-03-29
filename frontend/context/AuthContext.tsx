@@ -6,12 +6,13 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 interface User {
   token: string;
   role: string; 
+  name: string; 
 }
 
 // Define the shape of the context value
 interface AuthContextType {
   user: User | null;
-  login: (token: string, role: string) => void; 
+  login: (token: string, role: string,name: string) => void; 
   logout: () => void;
 }
 
@@ -29,21 +30,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // Check if the user is logged in on initial load
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role'); // Retrieve role from localStorage
-    if (token && role) {
-      setUser({ token, role });
+    const role = localStorage.getItem('role');
+    const name = localStorage.getItem('name'); // Retrieve role from localStorage
+    if (token && role && name) {
+      setUser({ token, role,name });
     }
   }, []);
 
-  const login = (token: string, role: string) => {
+  const login = (token: string, role: string, name: string) => {
     localStorage.setItem('token', token);
     localStorage.setItem('role', role); // Save role to localStorage
-    setUser({ token, role });
+    localStorage.setItem('name', name); // Save name to localStorage
+    setUser({ token, role, name });
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role'); 
+    localStorage.removeItem('name'); // Remove name from localStorage
     window.location.href = '/';
     setUser(null);
   };
