@@ -31,7 +31,8 @@ class Users(Base):
             return user
         return None
 
-    def generate_jwt(self, user: dict):
+    def generate_jwt(self, user: dict,name):
+
         payload = {
             "user_id": str(user["_id"]),
             "username": user["username"],
@@ -39,7 +40,7 @@ class Users(Base):
             "exp": datetime.now(timezone.utc) +timedelta(hours=1)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-        return {"token": token,"role": user["role"]}
+        return {"token": token,"role": user["role"],"name": name}
 
     def verify_jwt(self, token: str):
         try:

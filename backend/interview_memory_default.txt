@@ -158,5 +158,29 @@
     {
         "role": "assistant",
         "content": "Can you please elaborate on your experience with communication skills in previous roles?"
+    },
+    {
+        "role": "user",
+        "content": "hello can you hear me"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you please elaborate on your experience with communication in a professional setting?"
+    },
+    {
+        "role": "user",
+        "content": "yeah once I was communicating in my group project I was the leader of the group and we created project on hire expert which is an all in one platform for both the recruiters as well as the candidates to connect them and build the gap between them so yeah"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you provide an example of a specific challenge you faced while leading your group project on the \"Hire Expert\" platform and how you successfully overcame it?"
+    },
+    {
+        "role": "user",
+        "content": "yeah once you are doing we were stuck in a face where we were not sure if it will work out because the requirements of the college and the Teachers were changing like they were demanding the new and technologies like machine learning and other things while you are just starting out with the development so we had to actually brainstorm and like putting effort to make that work but we actually ended up making something great"
+    },
+    {
+        "role": "assistant",
+        "content": "Can you elaborate on the specific challenges you faced in incorporating new technologies like machine learning into your project while meeting the evolving requirements of the college and teachers?"
     }
 ]
