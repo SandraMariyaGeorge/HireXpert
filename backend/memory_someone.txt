@@ -62,5 +62,53 @@
     {
         "role": "assistant",
         "content": "Thank you for reaching out. If you need any further assistance in the future, feel free to contact me. Have a wonderful day!"
+    },
+    {
+        "role": "user",
+        "content": "hei"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Are you ready to begin entering your details? Let's get started with your full name."
+    },
+    {
+        "role": "user",
+        "content": "helo"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! Are you ready to proceed with providing your personal details, starting with your full name?"
+    },
+    {
+        "role": "user",
+        "content": "bie"
+    },
+    {
+        "role": "assistant",
+        "content": "Goodbye! If you need help in the future, don't hesitate to reach out. Take care!"
+    },
+    {
+        "role": "user",
+        "content": "no"
+    },
+    {
+        "role": "assistant",
+        "content": "I understand. If you need help or want to proceed with your details later on, feel free to let me know. I'm here whenever you're ready!"
+    },
+    {
+        "role": "user",
+        "content": "stop"
+    },
+    {
+        "role": "assistant",
+        "content": "No problem at all. If you need anything else at any time, just reach out. Have a great day!"
+    },
+    {
+        "role": "user",
+        "content": "hey"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Are you ready to get started? Let's begin with collecting your personal details. Can you please tell me your full name?"
     }
 ]
