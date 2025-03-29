@@ -19,7 +19,7 @@ async def get_user_details(token: str = Depends(get_token)):
         users = Users()
         payload = users.verify_jwt(token)
         username = payload["username"]
-        print(username)
+
         user_details = UserDetails().get_user_details(username)
         
         if isinstance(user_details, dict) and '_id' in user_details:

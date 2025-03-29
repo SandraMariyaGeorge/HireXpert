@@ -88,7 +88,6 @@ async def get_interviews(token: str = Depends(get_token)):
         users = Users()
         payload = users.verify_jwt(token)
         username = payload["username"]
-        print(username)
         interview_instance = Interview()
         return interview_instance.get_interviews(username)
     except Exception as e:
