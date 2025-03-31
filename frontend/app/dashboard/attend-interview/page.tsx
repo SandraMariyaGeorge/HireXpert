@@ -3,8 +3,10 @@
 import Dashboard_Header from '@/components/dashboard_header';
 import Dashboard_Sidebar from '@/components/dashboard_sidebar';
 import { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 export default function InterviewDashboard() {
+  const router = useRouter();
   const [interviewCode, setInterviewCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -40,21 +42,39 @@ export default function InterviewDashboard() {
     }
   ];
 
-  const handleJoinInterview = () => {
+  const handleJoinInterview = async () => {
     if (!interviewCode.trim()) {
       setError('Please enter an interview code');
       return;
     }
-    
+  
     setIsLoading(true);
     setError('');
-    
-    // Simulate API call
-    setTimeout(() => {
+  
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/interview/${interviewCode}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("No interview found with this code");
+      }
+      else{
+        router.push(`/dashboard/mockinterview?interviewId=${encodeURIComponent(interviewCode)}`);
+      }
+  
+      const data = await response.json();
+      alert(`Successfully fetched interview details: ${JSON.stringify(data)}`);
+      // In a real app, you would redirect to the interview page or handle the data
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'An unexpected error occurred');
+    } finally {
       setIsLoading(false);
-      alert(`Joining interview with code: ${interviewCode}`);
-      // In a real app, you would redirect to the interview page
-    }, 1000);
+    }
   };
 
   return (

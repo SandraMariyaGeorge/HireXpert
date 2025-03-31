@@ -21,6 +21,14 @@ export default function MockQuestions() {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const handleNavigate = () => {
+    if (jobDescription.trim()) {
+      router.push(`/dashboard/mockinterview?jobDescription=${encodeURIComponent(jobDescription)}`);
+    } else {
+      alert("Please enter a job description before proceeding.");
+    }
+  };
+
   return (
     <div className="flex min-h-screen h-screen w-screen overflow-hidden bg-black">
       <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
@@ -42,11 +50,12 @@ export default function MockQuestions() {
                 onChange={(e) => setJobDescription(e.target.value)}
               />
               <div className="flex justify-center space-x-4">
-                <Link href="/dashboard/mockinterview" passHref>
-                  <Button className="bg-white text-black hover:bg-gray-300 p-2 rounded-lg">
-                    Attend Mock Interview
-                  </Button>
-                </Link>
+                <Button
+                  onClick={handleNavigate}
+                  className="bg-white text-black hover:bg-gray-300 p-2 rounded-lg"
+                >
+                  Attend Mock Interview
+                </Button>
               </div>
             </CardContent>
           </Card>

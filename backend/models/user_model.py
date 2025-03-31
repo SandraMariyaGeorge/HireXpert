@@ -36,6 +36,8 @@ class Users(Base):
         payload = {
             "user_id": str(user["_id"]),
             "username": user["username"],
+            "email": user["email"],
+            "name": name,
             "role": user["role"],
             "exp": datetime.now(timezone.utc) +timedelta(hours=1)
         }

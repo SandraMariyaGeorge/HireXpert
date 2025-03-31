@@ -19,6 +19,11 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
 import io
+from models.userdetails_model import UserDetails
+import uuid
+from bson import ObjectId
+from models.interviewresult_model import InterviewResult_entry, InterviewResult
+
 
 load_dotenv()
 
@@ -35,6 +40,14 @@ class Interview_entry(BaseModel):
     job_type: str
     username: str
 
+class Question(BaseModel):
+    question: str
+
+class InterviewQuestions(BaseModel):
+    questions: list[Question]
+
+
+
 # Directory to save uploaded files
 UPLOAD_DIR = Path("uploaded_audio")
 UPLOAD_DIR.mkdir(exist_ok=True)
@@ -43,7 +56,7 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 openai.api_key = "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"  # Replace with your actual API key
 
 # ElevenLabs API Key and Voice ID
-ELEVENLABS_API_KEY = "sk_709ae82286f467cb97d0f50ab65ba80dce143d625e913a94"
+ELEVENLABS_API_KEY = "sk_9140701c6a1baac4124a0c2d7fb6231444a1b4a1b8a0f0a8"
 VOICE_ID = "21m00Tcm4TlvDq8ikWAM"  # Example voice ID
 
 class Interview(Base):
@@ -75,14 +88,22 @@ class Interview(Base):
         with open(memory_file, "w", encoding="utf-8") as file:
             json.dump(memory, file, indent=4)
     
-    def generate_summary(self, session_id):
+    def generate_summary(self, username):
         """Generate a formal summary of the interview conversation."""
-        conversation_memory = self.load_memory(session_id)
+        conversation_memory = self.load_memory(username)
         
         if not conversation_memory:
             return "No interview history found."
 
-        conversation_text = "\n".join([f"{'Interviewer' if msg['role'] == 'assistant' else 'Candidate'}: {msg['content']}" for msg in conversation_memory])
+        conversation_text = "\n".join([
+            f"Interviewer: {question}" + (
+            f"\nCandidate: {conversation_memory.get(f'response_{i}', '')}" 
+            if f"response_{i}" in conversation_memory else ""
+            )
+            for i, question in enumerate(conversation_memory.get("questions", []))
+        ])
+
+        print(f"Conversation text for summary: {conversation_text}")
         
         try:
             response = openai.chat.completions.create(
@@ -95,126 +116,135 @@ class Interview(Base):
                 temperature=0.7,
             )
             summary = response.choices[0].message.content.strip()
+            memory = self.load_memory(username)
+            if memory["interviewId"]:
+                inteviewresult = InterviewResult_entry(
+                    interview_id=memory["interviewId"],
+                    user_id=username,
+                    score=10,
+                    feedback=summary
+                )
+                interviewresult = InterviewResult()
+                interviewresult.add_interview_result(inteviewresult)
             return summary
         except Exception as e:
             return f"Error generating summary: {e}"
 
-    def process_audio(self, file, session_id="default"):
-        """
-        Process the uploaded audio file:
-        1. Transcribe the audio to text.
-        2. Generate a follow-up question using OpenAI.
-        3. Convert the follow-up question to speech using ElevenLabs.
-        4. Save the conversation to memory.
-        5. Return the generated audio file.
-        """
-        try:
-            # Save the uploaded file
-            file_path = UPLOAD_DIR / file.filename
-            with file_path.open("wb") as buffer:
-                shutil.copyfileobj(file.file, buffer)
+    # def process_audio(self, file, session_id):
+    #     """
+    #     Process the uploaded audio file:
+    #     1. Transcribe the audio to text.
+    #     2. Generate a follow-up question using OpenAI.
+    #     3. Convert the follow-up question to speech using ElevenLabs.
+    #     4. Save the conversation to memory.
+    #     5. Return the generated audio file.
+    #     """
+    #     try:
+    #         # Save the uploaded file
+    #         file_path = UPLOAD_DIR / file.filename
+    #         with file_path.open("wb") as buffer:
+    #             shutil.copyfileobj(file.file, buffer)
 
-            # Validate and convert the audio file to PCM WAV format
-            wav_file_path = file_path.with_suffix(".wav")
-            try:
-                audio = AudioSegment.from_file(file_path)
-                audio.export(wav_file_path, format="wav")
-            except Exception as e:
-                return JSONResponse({"error": f"Audio conversion error: {e}"}, status_code=400)
+    #         # Validate and convert the audio file to PCM WAV format
+    #         wav_file_path = file_path.with_suffix(".wav")
+    #         try:
+    #             audio = AudioSegment.from_file(file_path)
+    #             audio.export(wav_file_path, format="wav")
+    #         except Exception as e:
+    #             return JSONResponse({"error": f"Audio conversion error: {e}"}, status_code=400)
 
-            # Step 1: Transcribe the audio to text
-            recognizer = sr.Recognizer()
-            with sr.AudioFile(str(wav_file_path)) as source:
-                audio = recognizer.record(source)
-                try:
-                    transcription = recognizer.recognize_google(audio)
-                except sr.UnknownValueError:
-                    return JSONResponse({"error": "Could not understand the audio."}, status_code=400)
-                except sr.RequestError as e:
-                    return JSONResponse({"error": f"Speech recognition service error: {e}"}, status_code=500)
+    #         # Step 1: Transcribe the audio to text
+    #         recognizer = sr.Recognizer()
+    #         with sr.AudioFile(str(wav_file_path)) as source:
+    #             audio = recognizer.record(source)
+    #             try:
+    #                 transcription = recognizer.recognize_google(audio)
+    #             except sr.UnknownValueError:
+    #                 return JSONResponse({"error": "Could not understand the audio."}, status_code=400)
+    #             except sr.RequestError as e:
+    #                 return JSONResponse({"error": f"Speech recognition service error: {e}"}, status_code=500)
 
-            # Load conversation memory
-            conversation_memory = self.load_memory(session_id)
+    #         # Load conversation memory
+    #         conversation_memory = self.load_memory(session_id)
             
-            # Add candidate's response to memory
-            conversation_memory.append({"role": "user", "content": transcription})
+    #         # Add candidate's response to memory
+    #         conversation_memory.append({"role": "user", "content": transcription})
             
-            # Step 2: Generate a follow-up question using OpenAI
-            prompt = f"""
-                        You are an interviewer conducting a professional job interview. Your task is to ask a follow-up question based on the candidate's response
-                        1. The follow-up question naturally builds on the candidate's previous response.
-                        2. The question remains concise, professional, and directly relevant.
-                        Only return the qn only without formating.
-                        Candidate's response: {transcription}
-                        """
+    #         # Step 2: Generate a follow-up question using OpenAI
+    #         prompt = f"""
+    #                     You are an interviewer conducting a professional job interview. Your task is to ask a follow-up question based on the candidate's response and the qn generated beforehand.
+    #                     Only return the qn only without formating.
+    #                     Candidate's response: {transcription}
+    #                     Memory : {conversation_memory}
+    #                     """
 
-            print(prompt)
-            try:
-                response = openai.chat.completions.create(
-                    model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "system", "content": "You are a helpful assistant that generates interview questions."},
-                        {"role": "user", "content": prompt},
-                    ],
-                    max_tokens=100,
-                    temperature=0.7,
-                )
-                follow_up_question = response.choices[0].message.content.strip()
+    #         print(prompt)
+    #         try:
+    #             response = openai.chat.completions.create(
+    #                 model="gpt-3.5-turbo",
+    #                 messages=[
+    #                     {"role": "system", "content": "You are a helpful assistant that generates interview questions."},
+    #                     {"role": "user", "content": prompt},
+    #                 ],
+    #                 max_tokens=100,
+    #                 temperature=0.7,
+    #             )
+    #             follow_up_question = response.choices[0].message.content.strip()
                 
-                # Add interviewer's question to memory
-                conversation_memory.append({"role": "assistant", "content": follow_up_question})
+    #             # Add interviewer's question to memory
+    #             conversation_memory.append({"role": "assistant", "content": follow_up_question})
                 
-                # Save updated conversation memory
-                self.save_memory(conversation_memory, session_id)
+    #             # Save updated conversation memory
+    #             self.save_memory(conversation_memory, session_id)
                 
-            except Exception as e:
-                return JSONResponse({"error": f"OpenAI API error: {e}"}, status_code=500)
+    #         except Exception as e:
+    #             return JSONResponse({"error": f"OpenAI API error: {e}"}, status_code=500)
 
-            # Step 3: Convert the follow-up question to speech using ElevenLabs
-            API_URL = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
-            headers = {
-                "Accept": "audio/mpeg",
-                "xi-api-key": ELEVENLABS_API_KEY,
-                "Content-Type": "application/json",
-            }
-            data = {
-                "text": follow_up_question,
-                "voice_settings": {
-                    "stability": 0.5,
-                    "similarity_boost": 0.75,
-                },
-            }
-            try:
-                tts_response = requests.post(API_URL, headers=headers, json=data)
-                tts_response.raise_for_status()
-                output_audio_path = UPLOAD_DIR / "follow_up.mp3"
-                with open(output_audio_path, "wb") as f:
-                    f.write(tts_response.content)
-            except requests.exceptions.RequestException as e:
-                return JSONResponse({"error": f"Text-to-speech service error: {e}"}, status_code=500)
+    #         # Step 3: Convert the follow-up question to speech using ElevenLabs
+    #         API_URL = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
+    #         headers = {
+    #             "Accept": "audio/mpeg",
+    #             "xi-api-key": ELEVENLABS_API_KEY,
+    #             "Content-Type": "application/json",
+    #         }
+    #         data = {
+    #             "text": follow_up_question,
+    #             "voice_settings": {
+    #                 "stability": 0.5,
+    #                 "similarity_boost": 0.75,
+    #             },
+    #         }
+    #         try:
+    #             tts_response = requests.post(API_URL, headers=headers, json=data)
+    #             tts_response.raise_for_status()
+    #             output_audio_path = UPLOAD_DIR / "follow_up.mp3"
+    #             with open(output_audio_path, "wb") as f:
+    #                 f.write(tts_response.content)
+    #         except requests.exceptions.RequestException as e:
+    #             return JSONResponse({"error": f"Text-to-speech service error: {e}"}, status_code=500)
 
-            # Step 4: Return the generated audio file along with transcription and question
-            response_data = {
-                "audio_file": str(output_audio_path),
-                "transcription": transcription,
-                "follow_up_question": follow_up_question
-            }
+    #         # Step 4: Return the generated audio file along with transcription and question
+    #         response_data = {
+    #             "audio_file": str(output_audio_path),
+    #             "transcription": transcription,
+    #             "follow_up_question": follow_up_question
+    #         }
             
-            # Check if the interview should end (for example, after a certain number of exchanges)
-            if len(conversation_memory) >= 10:  # For example, after 5 back-and-forth exchanges
-                summary = self.generate_summary(session_id)
-                response_data["summary"] = summary
-                response_data["interview_complete"] = True
+    #         # Check if the interview should end (for example, after a certain number of exchanges)
+    #         if len(conversation_memory) >= 10:  # For example, after 5 back-and-forth exchanges
+    #             summary = self.generate_summary(session_id)
+    #             response_data["summary"] = summary
+    #             response_data["interview_complete"] = True
             
-            return FileResponse(
-                output_audio_path, 
-                media_type="audio/mpeg", 
-                filename="follow_up.mp3",
-                headers={"X-Interview-Data": json.dumps(response_data)}
-            )
+    #         return FileResponse(
+    #             output_audio_path, 
+    #             media_type="audio/mpeg", 
+    #             filename="follow_up.mp3",
+    #             headers={"X-Interview-Data": json.dumps(response_data)}
+    #         )
 
-        except Exception as e:
-            return JSONResponse({"error": f"An unexpected error occurred: {e}"}, status_code=500)
+    #     except Exception as e:
+    #         return JSONResponse({"error": f"An unexpected error occurred: {e}"}, status_code=500)
         
     def end_interview(self, session_id="default"):
         """End the interview and generate a summary."""
@@ -235,6 +265,18 @@ class Interview(Base):
         self.send_email(extracted_emails)
         return JSONResponse({"message": "Interview created successfully."})
 
+    def get_interview(self, interview_id, email):
+        try:
+            interview = self.db.find_one({"_id": ObjectId(interview_id)})
+            if not interview:
+                return JSONResponse({"error": "Interview not found."}, status_code=404)
+            if email in interview.get("emails", []):
+                return JSONResponse({"message": "Interview retrieved successfully."})
+            else:
+                return JSONResponse({"error": "Email not found in interview."}, status_code=404)
+        except Exception as e:
+            return JSONResponse({"error": f"Error retrieving interview: {e}"}, status_code=500)
+        
 
 
     def extract_emails_from_csv(self, file: UploadFile):
@@ -396,10 +438,238 @@ class Interview(Base):
         except Exception as e:
             return f"Error: {e}"
 
+    # def start_interview(self, request, username):
+    #     session_id = str(uuid.uuid4())
+    #     user = UserDetails()
+    #     user_details = user.get_user_details(username)
+    #     if request.jobDescription:
+    #         job_description = request.jobDescription
+    #         print(job_description)
+    #     else:
+    #         interviewid = request.interviewId
+    #         interview = self.db.find_one({"_id": ObjectId(interviewid)})
+    #         if not interview:
+    #             return JSONResponse({"error": "Interview not found."}, status_code=404)
+    #         job_description = interview.get("desc", "")
+        
+    #     prompt = f"""
+    #                 Generate 3 questions to test the candidate's 
+    #                 knowledge and skills based on the job description and candidate's profile provided.
+    #                 1. The questions should be relevant to the job title and qualities.
+    #                 2. The questions should be clear and concise.
+    #                 3. The questions should be open-ended to encourage detailed responses.
+    #                 Job Description: {job_description}
+    #                 Candidate's Profile: {user_details}
+    #              """
+    #     print(prompt)
+    #     try:
+    #         response = openai.beta.chat.completions.parse(
+    #             model="gpt-4o",
+    #             messages=[
+    #                     {"role": "system", "content": "You are a professional interviewer conducting a job interview"},
+    #                     {"role": "user", "content": prompt},
+    #                 ],
+    #             response_format=InterviewQuestions,
+    #         )
+    #         questions = response.choices[0].message.parsed
+    #         questions_list = [question.question for question in questions.questions]
+    #         print(questions_list)
+    #         # Save the initial questions to the session memory
+    #         self.save_memory(questions_list, session_id)
+    #         return session_id
+            
+    #     except Exception as e:
+    #         return f"Error: {e}"
+
+    def start_interview(self, request, username):
+        user = UserDetails()
+        user_details = user.get_user_details(username)
+
+        if request.jobDescription:
+            job_description = request.jobDescription
+        else:
+            interviewid = request.interviewId
+            interview = self.db.find_one({"_id": ObjectId(interviewid)})
+            if not interview:
+                return JSONResponse({"error": "Interview not found."}, status_code=404)
+            job_description = interview.get("desc", "") + " " + interview.get("qualities", "")
+            print(job_description)
+
+        prompt = f"""
+                    Generate exactly 3 questions tailored to the candidate based on their profile and the job description.
+                    - Ensure they are open-ended and logically sequenced.
+                    - The first question should be introductory, while the last should be the most complex.
+
+                    Job Description: {job_description}
+                    Candidate's Profile: {user_details}
+                """
+
+        try:
+            response = openai.beta.chat.completions.parse(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": "You are a professional interviewer conducting a job interview."},
+                    {"role": "user", "content": prompt},
+                ],
+                response_format=InterviewQuestions,
+            )
+            
+            questions = response.choices[0].message.parsed
+            questions_list = [question.question for question in questions.questions]  # Extract questions
+
+            if len(questions_list) != 3:
+                return JSONResponse({"error": "Failed to generate exactly 3 questions."}, status_code=500)
+
+            # Save the three questions in session memory
+            self.save_memory({"interviewId": interviewid,"questions": questions_list, "index": 0}, username)
+
+            # Convert the first question to speech
+            first_question = questions_list[0]
+            audio_file = UPLOAD_DIR / "questionfirst.mp3"
+            if not audio_file.exists():
+                raise Exception("Welcome audio file is missing.")
+
+            return FileResponse(
+                audio_file,
+                media_type="audio/mpeg",
+                filename="question_1.mp3",
+                headers={"X-Interview-Data": json.dumps({
+                    "question": first_question
+                })}
+            )
+        
+        except Exception as e:
+            return JSONResponse({"error": f"OpenAI API error: {e}"}, status_code=500)
+    
+    def process_audio(self, file,username):
+        print("Processing audio file...")
+        try:
+            file_path = UPLOAD_DIR / file.filename
+            with file_path.open("wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
+
+            # Convert to WAV format
+            wav_file_path = file_path.with_suffix(".wav")
+            try:
+                audio = AudioSegment.from_file(file_path)
+                audio.export(wav_file_path, format="wav")
+            except Exception as e:
+                return JSONResponse({"error": f"Audio conversion error: {e}"})
+
+            # Transcribe audio
+            recognizer = sr.Recognizer()
+            with sr.AudioFile(str(wav_file_path)) as source:
+                audio = recognizer.record(source)
+                try:
+                    transcription = recognizer.recognize_google(audio)
+                    print(f"Transcription: {transcription}")
+                except sr.UnknownValueError:
+                    return JSONResponse({"error": "Could not understand the audio."}, status_code=400)
+                except sr.RequestError as e:
+                    return JSONResponse({"error": f"Speech recognition service error: {e}"}, status_code=500)
+
+            # Load stored interview memory
+            print(f"Loading memory for session")
+            memory = self.load_memory(username)
+            print(f"Loaded memory for session {username}: {memory}")
+            questions_list = memory["questions"]
+            index = memory["index"]
 
 
+            # If all three questions have been asked, conclude the interview
+            if index >= 3:
+                print("All questions have been asked. Ending interview.")
+                summary = self.generate_summary(username)
+                return JSONResponse({
+                    "message": "Interview complete.",
+                    "summary": summary
+                })
 
+            # Store the candidate's response
+            memory[f"response_{index}"] = transcription
 
+            # Retrieve next question (if any)
+            next_question = questions_list[index]
+
+            # Modify the next question slightly based on the candidate's response
+            refinement_prompt = f"""
+                        You are a job interviewer. Modify the following question slightly based on the candidate's response, making it more relevant.
+                        
+                        Original Question: {next_question}
+                        Candidate's Response: {transcription}
+
+                        Provide only the improved question.
+                    """
+
+            try:
+                response = openai.chat.completions.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "system", "content": "You are a professional interviewer refining questions."},
+                        {"role": "user", "content": refinement_prompt},
+                    ],
+                    max_tokens=100,
+                    temperature=0.7,
+                )
+                refined_question = response.choices[0].message.content.strip()
+                print(f"Refined question: {refined_question}")
+            except Exception as e:
+                refined_question = next_question  # Fallback to original if refinement fails
+
+            # Store updated index
+            memory["index"] += 1
+            self.save_memory(memory, username)
+
+            print(f"Refined question: {refined_question}")
+
+            # Convert refined question to speech
+            # audio_file = self.convert_text_to_speech(refined_question)
+            audio_file = UPLOAD_DIR / "questionfirst.mp3"
+
+            # Return the generated audio file with next question
+            return FileResponse(
+                audio_file,
+                media_type="audio/mpeg",
+                filename=f"question_{index+1}.mp3",
+                headers={"X-Interview-Data": json.dumps({
+                    "audio_file": str(audio_file),
+                    "transcription": transcription,
+                    "follow_up_question": refined_question,
+                })}
+            )
+
+        except Exception as e:
+            return JSONResponse({"error": f"An unexpected error occurred: {e}"}, status_code=500)
+
+    def convert_text_to_speech(self, text):
+        print(f"Converting text to speech: {text}")
+        API_URL = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
+        headers = {
+            "Accept": "audio/mpeg",
+            "xi-api-key": ELEVENLABS_API_KEY,
+            "Content-Type": "application/json",
+        }
+        data = {
+            "text": text,
+            "voice_settings": {"stability": 0.5, "similarity_boost": 0.75},
+        }
+
+        try:
+            response = requests.post(API_URL, headers=headers, json=data)
+            response.raise_for_status()
+            output_audio_path = UPLOAD_DIR / f"question.mp3"
+            
+            # Write the audio file
+            with open(output_audio_path, "wb") as f:
+                f.write(response.content)
+            
+            # Verify the file size
+            if not output_audio_path.exists() or output_audio_path.stat().st_size == 0:
+                raise Exception("Generated audio file is empty or missing.")
+            
+            return output_audio_path
+        except requests.exceptions.RequestException as e:
+            raise Exception(f"Text-to-speech service error: {e}")
 
 
 

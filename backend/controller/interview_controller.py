@@ -36,10 +36,45 @@ from models.user_model import Users
 def get_token(authorization: str = Header(...)):
     return authorization.split(" ")[1]
 
+class StartInterviewRequest(BaseModel):
+    interviewId: Optional[str] = None
+    jobDescription: Optional[str] = None
+
+@router.get("/{interviewId}")
+async def get_interview(interviewId: str, token: str = Depends(get_token)):
+    """
+    Get interview details by ID.
+    """
+    try:
+        users = Users()
+        payload = users.verify_jwt(token)
+        email = payload["email"]
+        interview_instance = Interview()
+        return interview_instance.get_interview(interviewId, email)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/start-interview/")
+async def start_interview(request : StartInterviewRequest, token: str = Depends(get_token)):
+    """
+    Start an interview session.
+    """
+    print(request)
+    try:
+        users = Users()
+        payload = users.verify_jwt(token)
+        username = payload["username"]
+        interview_instance = Interview()
+        return interview_instance.start_interview(request, username)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 
 # Replace @app.post with @router.post
 @router.post("/process-audio/")
-async def process_audio(file: UploadFile = File(...),token: str = Depends(get_token)):
+async def process_audio(file: UploadFile = File(...), token: str = Depends(get_token)):
     """
     Process the uploaded audio file:
     1. Transcribe the audio to text.
@@ -47,8 +82,11 @@ async def process_audio(file: UploadFile = File(...),token: str = Depends(get_to
     3. Convert the follow-up question to speech using ElevenLabs.
     4. Return the generated audio file.
     """
+    users = Users()
+    payload = users.verify_jwt(token)
+    username = payload["username"]
     interview = Interview()
-    return interview.process_audio(file)
+    return interview.process_audio(file,username)
 
 
 @router.post("/create-interview/")
@@ -93,4 +131,3 @@ async def get_interviews(token: str = Depends(get_token)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-

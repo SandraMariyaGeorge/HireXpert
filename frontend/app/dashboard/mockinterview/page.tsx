@@ -8,6 +8,7 @@ import { Mic, MicOff, Video, VideoOff, PhoneOff } from "lucide-react";
 import { motion } from "framer-motion";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import Dashboard_Header from "@/components/dashboard_header";
+import { useSearchParams } from "next/navigation"; // Import useSearchParams
 
 // Dynamically import ReactMic with SSR disabled
 const ReactMic = dynamic(() => import("react-mic").then((mod) => mod.ReactMic), { ssr: false });
@@ -19,8 +20,39 @@ export default function InterviewPage() {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [videoEnabled, setVideoEnabled] = useState(true);
-  
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const searchParams = useSearchParams(); // Use useSearchParams to get query parameters
+  const jobDescription = searchParams.get("jobDescription"); // Retrieve jobDescription from query
+  const interviewId = searchParams.get("interviewId"); // Retrieve interviewId from query
+  useEffect(() => {
+    if (jobDescription || interviewId) {
+        const contextData = {
+            jobDescription: jobDescription || null,
+            interviewId: interviewId || null,
+        };
+
+        axios
+            .post("http://127.0.0.1:8000/interview/start-interview/", contextData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                responseType: "blob", // Expecting a file response
+            })
+            .then((response) => {
+
+                // Handle the audio file
+                const audioBlob = new Blob([response.data], { type: "audio/mpeg" });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audio = new Audio(audioUrl);
+                setAudioUrl(audioUrl);
+                audio.play(); // Automatically play the first question
+            })
+            .catch((error) => {
+                console.error("Error sending context to backend:", error);
+            });
+    }
+}, [jobDescription, interviewId]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -40,7 +72,7 @@ export default function InterviewPage() {
 
     const formData = new FormData();
     formData.append("file", blob, "recorded-audio.wav");
-
+    
     try {
       const response = await axios.post("http://127.0.0.1:8000/interview/process-audio/", formData, {
         headers: { 
@@ -50,13 +82,32 @@ export default function InterviewPage() {
         responseType: "blob"
       });
 
-      const audioBlob = new Blob([response.data], { type: "audio/mpeg" });
-      const url = URL.createObjectURL(audioBlob);
-      setAudioUrl(url);
+      console.log("Response from server:", response.data);
 
-      // Automatically play the audio once received
-      const audio = new Audio(url);
-      audio.play();
+      // Check if the response is JSON (message) or audio (blob)
+      const contentType = response.headers["content-type"];
+      if (contentType && contentType.includes("application/json")) {
+        // If the response is JSON, parse it and show the summary
+        const reader = new FileReader();
+        reader.onload = () => {
+          const jsonResponse = JSON.parse(reader.result as string);
+          if (jsonResponse.message) {
+            alert(jsonResponse.summary);
+          }
+        };
+        reader.readAsText(response.data);
+      } else if (contentType && contentType.includes("audio/mpeg")) {
+        // If the response is audio, play it
+        const audioBlob = new Blob([response.data], { type: "audio/mpeg" });
+        const url = URL.createObjectURL(audioBlob);
+        setAudioUrl(url);
+
+        // Automatically play the audio once received
+        const audio = new Audio(url);
+        audio.play();
+      } else {
+        alert("Unexpected response from the server.");
+      }
     } catch (error) {
       console.error("Error processing audio:", error);
       alert("Failed to process audio.");
@@ -193,11 +244,5 @@ export default function InterviewPage() {
             </div>
       </div>
   );
-}
-
-
-
-function setSidebarOpen(arg0: boolean) {
-  throw new Error("Function not implemented.");
 }
 
