@@ -22,7 +22,6 @@ import io
 from models.userdetails_model import UserDetails
 import uuid
 from bson import ObjectId
-from models.interviewresult_model import InterviewResult_entry, InterviewResult
 
 
 load_dotenv()
@@ -89,6 +88,8 @@ class Interview(Base):
             json.dump(memory, file, indent=4)
     
     def generate_summary(self, username):
+        from models.interviewresult_model import InterviewResult_entry, InterviewResult
+
         """Generate a formal summary of the interview conversation."""
         conversation_memory = self.load_memory(username)
         
@@ -109,7 +110,7 @@ class Interview(Base):
             response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are an expert interview analyzer. Provide a comprehensive summary of the interview, including the quality of answers, strengths, weaknesses, and overall performance."},
+                    {"role": "system", "content": "You are an expert interview analyzer. Provide a short and pointwise summary, including the quality of answers, strengths, weaknesses, and overall performance."},
                     {"role": "user", "content": conversation_text},
                 ],
                 max_tokens=500,
@@ -298,6 +299,14 @@ class Interview(Base):
         
     def get_interviews(self,username):
         interviews = self.db.find({"username": username})
+        interview_list = []
+        for interview in interviews:
+            interview["_id"] = str(interview["_id"])
+            interview_list.append(interview)
+        return interview_list
+
+    def get_scheduled_interviews(self,email):
+        interviews = self.db.find({"emails": email})
         interview_list = []
         for interview in interviews:
             interview["_id"] = str(interview["_id"])
@@ -521,11 +530,12 @@ class Interview(Base):
                 return JSONResponse({"error": "Failed to generate exactly 3 questions."}, status_code=500)
 
             # Save the three questions in session memory
-            self.save_memory({"interviewId": interviewid,"questions": questions_list, "index": 0}, username)
+            self.save_memory({"interviewId": interviewid if 'interviewid' in locals() else None, "questions": questions_list, "index": 0}, username)
 
             # Convert the first question to speech
             first_question = questions_list[0]
-            audio_file = UPLOAD_DIR / "questionfirst.mp3"
+            audio_file = self.convert_text_to_speech(first_question)
+            # audio_file = UPLOAD_DIR / "questionfirst.mp3"
             if not audio_file.exists():
                 raise Exception("Welcome audio file is missing.")
 
@@ -623,8 +633,8 @@ class Interview(Base):
             print(f"Refined question: {refined_question}")
 
             # Convert refined question to speech
-            # audio_file = self.convert_text_to_speech(refined_question)
-            audio_file = UPLOAD_DIR / "questionfirst.mp3"
+            audio_file = self.convert_text_to_speech(refined_question)
+            # audio_file = UPLOAD_DIR / "questionfirst.mp3"
 
             # Return the generated audio file with next question
             return FileResponse(

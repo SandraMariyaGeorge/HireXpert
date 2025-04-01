@@ -32,6 +32,7 @@ from fastapi import Depends
 from models.interview_model import Interview_entry
 from fastapi import File, UploadFile, Form
 from models.user_model import Users
+from models.interviewresult_model import InterviewResult
 
 def get_token(authorization: str = Header(...)):
     return authorization.split(" ")[1]
@@ -43,7 +44,7 @@ class StartInterviewRequest(BaseModel):
 @router.get("/{interviewId}")
 async def get_interview(interviewId: str, token: str = Depends(get_token)):
     """
-    Get interview details by ID.
+    Check if the candidate is in the email list or not
     """
     try:
         users = Users()
@@ -130,4 +131,66 @@ async def get_interviews(token: str = Depends(get_token)):
         return interview_instance.get_interviews(username)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
+@router.get("/dashboard-insights/")
+async def get_dashboard_insights(token: str = Depends(get_token)):
+    """
+    Get all necessary insights for the HR dashboard.
+    """
+    try:
+        user = Users().verify_jwt(token)
+        username = user["username"]
+
+        # Fetch total interviews
+        interview_instance = Interview()
+        interviews = interview_instance.get_interviews(username)
+        total_interviews = len(interviews)
+
+        # Fetch evaluated interviews
+        evaluated_count = 0
+        for interview_entry in interviews:
+            results = InterviewResult().get_interview_result_by_id(interview_entry["_id"])
+            evaluated_count += len(results)
+
+        return {
+            "total_interviews": total_interviews,
+            "evaluated_interviews": evaluated_count
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/dashboard-data/")
+async def get_dashboard_data(token: str = Depends(get_token)):
+    """
+    Fetch combined dashboard data: insights and recent interviews.
+    """
+    try:
+        user = Users().verify_jwt(token)
+        username = user["username"]
+
+        # Fetch total interviews and evaluated interviews
+        interview_instance = Interview()
+        interviews = interview_instance.get_interviews(username)
+        total_interviews = len(interviews)
+
+        evaluated_count = 0
+        for interview_entry in interviews:
+            results = InterviewResult().get_interview_result_by_id(interview_entry["_id"])
+            evaluated_count += len(results)
+
+        # Fetch recent interviews (limit to 5)
+        recent_interviews = interviews[:5]
+
+        return {
+            "insights": {
+                "total_interviews": total_interviews,
+                "evaluated_interviews": evaluated_count,
+            },
+            "recent_interviews": recent_interviews,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
+

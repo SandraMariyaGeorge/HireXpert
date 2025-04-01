@@ -1,12 +1,9 @@
 {
-    "interviewId": "67e7dd6c6634fe487a0c8695",
+    "interviewId": "67eabb2950ba51fa1fcbcb9f",
     "questions": [
-        "Vishnuhari, can you share with us how your educational background and personal interests have shaped your career aspirations in computer science and engineering?",
-        "In your experience as a Full Stack Developer, you've worked on projects that involve both front-end and back-end technologies. Could you describe a challenging technical problem you faced during one of your projects, and how you approached solving it?",
-        "Given your experience with building scalable applications and systems such as the Disaster Management System and Certificate Generation System, how do you approach system design to ensure scalability and reliability, especially when considering integration with new technologies?"
+        "Vishnuhari, your academic background and diverse project experiences show a strong foundation in computer science and software development. Could you start by telling us what inspired you to pursue a career in technology and software development?",
+        "You've developed various applications using technologies like Flutter, FastAPI, and React. Can you walk us through one of your projects, highlighting the most challenging aspect you faced and how you overcame it?",
+        "Considering your role as a developer and your involvement in creating AI-driven solutions, how do you envision the future integration of AI and technology advancing organizational innovation and efficiency, particularly in projects like the ones you've engaged in?"
     ],
-    "index": 3,
-    "response_0": "ok so this is a test find out whether it is working",
-    "response_1": "alright so if you can hear this then that means it",
-    "response_2": "just checking whether if it's working"
+    "index": 0
 }

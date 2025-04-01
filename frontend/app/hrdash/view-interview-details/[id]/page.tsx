@@ -67,7 +67,7 @@ function InterviewResults() {
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       } finally {
-        setLoading(false);
+        setTimeout(() => setLoading(false), 2000);
       }
     };
 

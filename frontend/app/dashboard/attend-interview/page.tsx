@@ -2,7 +2,7 @@
 
 import Dashboard_Header from '@/components/dashboard_header';
 import Dashboard_Sidebar from '@/components/dashboard_sidebar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
 
 export default function InterviewDashboard() {
@@ -11,36 +11,41 @@ export default function InterviewDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [pastInterviews, setPastInterviews] = useState([]);
+  const [scheduledInterviews, setScheduledInterviews] = useState([]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-  const pastInterviews = [
-    {
-      id: '1',
-      title: 'Frontend Developer Interview',
-      date: '2023-10-15',
-      score: 8.5,
-      feedback: 'Strong React skills but needs improvement in TypeScript',
-      improvements: [
-        'Practice advanced TypeScript patterns',
-        'Work on system design concepts',
-        'Improve time management during coding challenges'
-      ]
-    },
-    {
-      id: '2',
-      title: 'Technical Screening',
-      date: '2023-09-28',
-      score: 7.0,
-      feedback: 'Good problem-solving skills but could explain thought process better',
-      improvements: [
-        'Practice verbalizing your approach',
-        'Study common algorithms',
-        'Work on cleaner code organization'
-      ]
-    }
-  ];
+
+  useEffect(() => {
+    const fetchInterviewResults = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('http://127.0.0.1:8000/interviewresult/get', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch interview results');
+        }
+
+        const data = await response.json();
+        setPastInterviews(data.results || []);
+        setScheduledInterviews(data.scheduled || []);
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'An unexpected error occurred');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInterviewResults();
+  }, []);
 
   const handleJoinInterview = async () => {
     if (!interviewCode.trim()) {
@@ -77,6 +82,10 @@ export default function InterviewDashboard() {
     }
   };
 
+  const handleJoinScheduledInterview = (interviewId) => {
+    router.push(`/dashboard/mockinterview?interviewId=${encodeURIComponent(interviewId)}`);
+  };
+
   return (
 
     <div className="flex min-h-screen bg-black">
@@ -86,7 +95,7 @@ export default function InterviewDashboard() {
           {/* Main Content */}
           <div className="flex-1 flex flex-col">
             <Dashboard_Header toggleSidebar={toggleSidebar} />
-            <div className="container px-10 py-10">
+            <div className="container px-10 py-10 w-full mx-auto">
             {/* Interview Code Card */}
             <div className="bg-white rounded-xl shadow-md p-6 mb-8">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Join an Interview</h2>
@@ -113,17 +122,44 @@ export default function InterviewDashboard() {
                 )}
             </div>
 
+            {/* Scheduled Interviews Section */}
+            <div className="space-y-6 mb-8">
+            <h2 className="text-2xl font-italic text-white">Your Scheduled Interviews</h2>
+            {scheduledInterviews.length === 0 ? (
+              <p className="text-gray-500">No scheduled interviews found</p>
+            ) : (
+              scheduledInterviews.map((interview) => (
+                <div key={interview._id} className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 gap-4">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-gray-800">{interview.interview_title}</h3>
+                    <p className="text-gray-500 text-sm mt-1">{interview.desc}</p>
+                    <p className="text-gray-500 text-sm mt-1">Qualities: {interview.qualities}</p>
+                    <p className="text-gray-500 text-sm mt-1">Job Type: {interview.job_type}</p>
+                  </div>
+                  <button
+                    onClick={() => handleJoinScheduledInterview(interview._id)}
+                    className="px-4 py-2 bg-gray-800 text-white font-medium rounded-lg hover:bg-black transition-colors"
+                  >
+                    Attend the interview
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+
             {/* Past Interviews Section */}
             <div className="space-y-6">
                 <h2 className="text-2xl font-italic text-white">Your Past Interviews</h2>
                 
-                {pastInterviews.length === 0 ? (
-                <p className="text-gray-500">No past interviews found</p>
-                ) : (
-                pastInterviews.map((interview) => (
-                    <div key={interview.id} className="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div className="p-6">
-                        <div className="flex justify-between items-start">
+                {isLoading ? (
+              <p className="text-gray-500">Loading past interviews...</p>
+            ) : pastInterviews.length === 0 ? (
+              <p className="text-gray-500">No past interviews found</p>
+            ) : (
+              pastInterviews.map((interview) => (
+                <div key={interview.id} className="bg-white rounded-xl shadow-md overflow-hidden">
+                  <div className="p-6">
+                    <div className="flex justify-between items-start">
                         <div>
                             <h3 className="text-lg font-semibold text-gray-800">{interview.title}</h3>
                             <p className="text-gray-500 text-sm mt-1">
@@ -143,9 +179,11 @@ export default function InterviewDashboard() {
                         <div className="mt-4">
                         <h4 className="font-medium text-gray-700 mb-2">Areas for Improvement:</h4>
                         <ul className="list-disc list-inside space-y-1 text-gray-600">
-                            {interview.improvements.map((item, index) => (
-                            <li key={index}>{item}</li>
-                            ))}
+                          {interview.improvements && interview.improvements.length > 0 ? (
+                            interview.improvements.map((item, index) => <li key={index}>{item}</li>)
+                          ) : (
+                            <li>No specific improvements mentioned</li>
+                          )}
                         </ul>
                         </div>
                     </div>
