@@ -22,22 +22,26 @@ class JobSearchRequest(BaseModel):
 
 @router.post("/search")
 async def search(request: JobSearchRequest, token: str = Depends(get_token)):
-    job = Jobs()
-    if request.query == "":
-        users = Users()
-        payload = users.verify_jwt(token)
-        userdetails = UserDetails()
-        userdetails = userdetails.get_user_details(payload['username'])
-        details = (
-            str(userdetails['education']) +
-            str(userdetails['experience']) +
-            str(userdetails['projects']) +
-            str(userdetails['technical_skills'])
-        )
-        return job.search_jobs_vector(details)
-        # userdetails = payload['education']+payload['experience']+payload['projects']+payload['technical_skills']
-        # print(userdetails)
-    return job.search_jobs_vector(request.query)
+    try:
+
+        job = Jobs()
+        if request.query == "":
+            users = Users()
+            payload = users.verify_jwt(token)
+            userdetails = UserDetails()
+            userdetails = userdetails.get_user_details(payload['username'])
+            details = (
+                str(userdetails['education']) +
+                str(userdetails['experience']) +
+                str(userdetails['projects']) +
+                str(userdetails['technical_skills'])
+            )
+            return job.search_jobs_vector(details)
+            # userdetails = payload['education']+payload['experience']+payload['projects']+payload['technical_skills']
+            # print(userdetails)
+        return job.search_jobs_vector(request.query)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/{id}")
 async def get_job_by_id(id: str):

@@ -1,0 +1,18 @@
+[
+    {
+        "role": "user",
+        "content": "Hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! Let's build a complete user profile to help you effectively represent yourself professionally. We'll start with some personal details. Could you please provide your full name?"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Let's get started with your professional details. Can you please tell me your full name?"
+    }
+]

@@ -17,10 +17,13 @@ export default function ProtectedRoute({ children, role }: { children: React.Rea
     else {
       // User is authenticated and role matches, allow access
       setIsLoading(false);
-      if (user.role === 'candidate')
-        router.push('/dashboard');
-      else if (user.role === 'hr')
-        router.push('/hrdash');
+      if (user.role === 'candidate') {
+        const currentPath = window.location.pathname; // Capture the current path
+        router.push(currentPath); // Redirect to the current path
+      } else if (user.role === 'hr') {
+        const currentPath = window.location.pathname; // Capture the current path
+        router.push(currentPath);
+      }
     }
   }, [user, router, role]);
 
@@ -34,5 +37,3 @@ export default function ProtectedRoute({ children, role }: { children: React.Rea
 
   return <>{children}</>;
 }
-
-// Removed unnecessary useState function definition

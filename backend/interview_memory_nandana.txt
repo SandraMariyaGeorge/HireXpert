@@ -1,0 +1,12 @@
+{
+    "interviewId": "67eb7c1a71913582d8161672",
+    "questions": [
+        "Could you share a bit about your background and any skills or experiences you believe would make you a good fit as a unique companion for the three Mendi girls?",
+        "Given the context of the job, how would you creatively handle a situation where the Mendi girls struggle with differentiating tasks, such as identifying different colors?",
+        "In situations that require patience and a unique approach, like ensuring meals without certain ingredients or tasks that seem trivial, how do you adapt your problem-solving and personal support skills to maintain harmony and support the group effectively?"
+    ],
+    "index": 3,
+    "response_0": "I will cook well I know how to make Kanni and muthukutty and fried rice and paneer",
+    "response_1": "I am very honest caring I am not ugly I know how to book food I know without",
+    "response_2": "I am very honest caring I am not ugly I know how to book food I know without"
+}

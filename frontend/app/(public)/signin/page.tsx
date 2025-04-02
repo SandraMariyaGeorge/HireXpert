@@ -53,8 +53,8 @@ export default function SignIn() {
           // Determine the role based on the API response or user input
           const role = data.role || "candidate"; 
           const name = data.name || "User"; // Default name if not provided
-          login(data.token, role,name); // Pass both token and role to login
-          router.push("/dashboard/chatinterface");
+          login(data.token, role, name); // Pass both token and role to login
+          router.push("/dashboard/chatinterface"); // Use router.push for navigation
         } else {
           setError("Signin failed");
         }

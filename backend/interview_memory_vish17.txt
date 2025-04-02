@@ -1,9 +1,10 @@
 {
-    "interviewId": "67eabb2950ba51fa1fcbcb9f",
+    "interviewId": null,
     "questions": [
-        "Vishnuhari, your academic background and diverse project experiences show a strong foundation in computer science and software development. Could you start by telling us what inspired you to pursue a career in technology and software development?",
-        "You've developed various applications using technologies like Flutter, FastAPI, and React. Can you walk us through one of your projects, highlighting the most challenging aspect you faced and how you overcame it?",
-        "Considering your role as a developer and your involvement in creating AI-driven solutions, how do you envision the future integration of AI and technology advancing organizational innovation and efficiency, particularly in projects like the ones you've engaged in?"
+        "Can you walk us through your educational journey and how it has prepared you for a career in computer science and engineering?",
+        "You have significant experience as a Full Stack Developer and you\u2019ve worked on various projects. Could you describe a project you\u2019re particularly proud of and what your specific contributions were?",
+        "Considering your work on AI-powered and real-time systems, how do you approach the design and development of scalable and efficient software solutions while integrating cutting-edge technologies?"
     ],
-    "index": 0
+    "index": 1,
+    "response_0": "hi so I was a big curious about how technology works so that's what let me"
 }
