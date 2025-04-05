@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import Dashboard_Header from "@/components/dashboard_header";
 import Link from "next/link";
+import { ShootingStars } from "@/components/ShootingStars";
+import { StarsBackground } from "@/components/stars-background";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function ProfilePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,7 +35,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/userdetails", {
+        const response = await fetch(`${BASE_URL}/userdetails`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -83,21 +87,26 @@ export default function ProfilePage() {
 
   const renderListSection = (title: string, items: React.ReactNode[]) => {
     if (!items || items.length === 0) return null;
-    
+
     return (
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-3">{title}</h3>
         <div className="space-y-4">
           {items.map((item, index) => (
             <div key={index} className="border-l-4 border-gray-300 pl-4">
-              {item && typeof item === 'object' && Object.entries(item).map(([key, value]) => (
-                value && (
-                  <div key={key} className="mb-2">
-                    <span className="font-medium capitalize">{key.replace(/_/g, ' ')}: </span>
-                    <span>{value as string}</span>
-                  </div>
-                )
-              ))}
+              {item &&
+                typeof item === "object" &&
+                Object.entries(item).map(
+                  ([key, value]) =>
+                    value && (
+                      <div key={key} className="mb-2">
+                        <span className="font-medium capitalize">
+                          {key.replace(/_/g, " ")}:{" "}
+                        </span>
+                        <span>{value as string}</span>
+                      </div>
+                    )
+                )}
             </div>
           ))}
         </div>
@@ -107,7 +116,7 @@ export default function ProfilePage() {
 
   const renderSkillsSection = () => {
     if (!userDetails.technical_skills) return null;
-    
+
     const { languages, frameworks, developer_tools } = userDetails.technical_skills;
     if (!languages && !frameworks && !developer_tools) return null;
 
@@ -139,19 +148,17 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-black">
-      {/* Sidebar */}
+    <div className="flex min-h-screen bg-black relative">
+      <StarsBackground className="absolute inset-0 -z-10" />
+      <ShootingStars className="absolute inset-0 -z-10" />
       <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col">
         <Dashboard_Header toggleSidebar={toggleSidebar} />
-        {/* Profile Update Form */}
-        <div className="flex-1 p-6 bg-gray-100">
+        <div className="flex-1 p-6 bg-gray-900">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
             <h1 className="text-2xl font-bold mb-6">User Profile</h1>
             <div className="flex space-x-4">
-              {/* User Avatar and Name */}
               <div className="w-1/3 flex flex-col items-center">
                 <img
                   src="/assets/avatar.png"
@@ -161,9 +168,7 @@ export default function ProfilePage() {
                 <h2 className="text-xl font-semibold">{userDetails.name}</h2>
               </div>
 
-              {/* User Details Display */}
               <div className="w-2/3 space-y-4">
-                {/* Basic Info */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold mb-3">Contact Information</h3>
                   {renderField("Name", userDetails.name)}
@@ -173,16 +178,12 @@ export default function ProfilePage() {
                   {renderField("GitHub", userDetails.github)}
                 </div>
 
-                {/* Education */}
                 {renderListSection("Education", userDetails.education)}
 
-                {/* Experience */}
                 {renderListSection("Work Experience", userDetails.experience)}
 
-                {/* Projects */}
                 {renderListSection("Projects", userDetails.projects)}
 
-                {/* Technical Skills */}
                 {renderSkillsSection()}
 
                 <div className="flex items-center justify-between pt-4">

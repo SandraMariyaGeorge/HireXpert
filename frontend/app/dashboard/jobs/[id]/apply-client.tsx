@@ -10,6 +10,8 @@ import Dashboard_Sidebar from '@/components/dashboard_sidebar';
 import Dashboard_Header from '@/components/dashboard_header';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 
 export default function ApplyPageClient({ job }: { job?: Job }) {
       const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
 
         const fetchJobDetails = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/job/${id}`, {
+                const response = await fetch(`${BASE_URL}/job/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -55,7 +57,7 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
           try {
               const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
               const response = await axios.post(
-                  "http://127.0.0.1:8000/generate",
+                  `${BASE_URL}/generate`,
                   { job_desc: jobDesc },
                   {
                       headers: {
@@ -83,7 +85,7 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
       };
 
   const handleMockInterview = () => {
-    router.push('/dashboard/mockquestions');
+    router.push(`/dashboard/mockinterview?jobId=${encodeURIComponent(job.id)}`);
   };
 
   const handleApply = () => {

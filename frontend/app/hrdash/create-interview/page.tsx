@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useDropzone } from 'react-dropzone';
 import HrDash_Sidebar from '@/components/hrdashboard/Sidebar';
 import Header from '@/components/common/Header';
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 function CreateInterview() {
   const [interviewTitle, setInterviewTitle] = useState('');
   const [interviewDescription, setInterviewDescription] = useState('');
@@ -44,7 +44,7 @@ function CreateInterview() {
     formData.append('csv', csvFile);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/interview/create-interview/', {
+      const response = await fetch(`${BASE_URL}/interview/create-interview/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,

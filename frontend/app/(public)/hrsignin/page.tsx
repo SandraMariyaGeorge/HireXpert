@@ -9,8 +9,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-
-const API_BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+// const API_BASE_URL = "${BASE_URL}";
 
 export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +38,7 @@ export default function SignIn() {
     formData.append("password", passwordElement.value);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/signin`, {
+      const response = await fetch(`${BASE_URL}/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

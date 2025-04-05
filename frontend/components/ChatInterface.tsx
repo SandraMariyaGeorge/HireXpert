@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PlaceholdersAndVanishInput } from "@/components/placeholders-and-vanish-input";
 import { useRouter } from "next/navigation";
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
   router.push(path);
  };
@@ -17,9 +17,13 @@ interface Message {
   sender: "user" | "bot";
 }
 
-export default function ChatInterface() {
+type ChatInterfaceProps = {
+  messages: any[]; // Adjust the type as needed
+  setMessages: React.Dispatch<React.SetStateAction<any[]>>; // Adjust the type as needed
+};
+
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, setMessages }) => {
   const router = useRouter();
-  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +50,7 @@ export default function ChatInterface() {
     setInput("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/chat/chat", {
+      const response = await fetch(`${BASE_URL}/chat/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +93,7 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full bg-black/90 text-white relative">
+    <div className="flex flex-col h-full w-full text-white relative">
       <ScrollArea className="flex-1 p-4">
         <div className="space-y-4">
           {messages.map((message) => (
@@ -119,11 +123,11 @@ export default function ChatInterface() {
         <div className="flex gap-2">
           <PlaceholdersAndVanishInput
             placeholders={[
-              "Type your name...",
-              "Enter your text...",
+              "Hey there....",
+              "I am here to collect your information",
               "Start chatting...",
             ]}
-            value={input}
+            // value={input} // Removed as the component does not support this prop
             onChange={handleInputChange}
             onSubmit={handleInputSubmit}
           />
@@ -131,4 +135,6 @@ export default function ChatInterface() {
       </div>
     </div>
   );
-}
+};
+
+export default ChatInterface;

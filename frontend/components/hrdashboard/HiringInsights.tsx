@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ClipboardList, AlertCircle, Loader2 } from 'lucide-react'; // Changed icon
 import ActivityFeed from './ActivityFeed'; // Assuming this is the correct path
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 // Reusable InsightCard component (assuming it's in a separate file or above)
 const InsightCard = ({ icon: Icon, title, value, change }: {
   icon: React.ElementType; // More generic type for Lucide icons
@@ -41,7 +41,7 @@ const HiringInsights = () => {
       }
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/interview/dashboard-data/', {
+        const response = await fetch(`${BASE_URL}/interview/dashboard-data/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

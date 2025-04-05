@@ -7,6 +7,8 @@ import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import Dashboard_Header from "@/components/dashboard_header";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { ShootingStars } from "@/components/ShootingStars";
+import { StarsBackground } from "@/components/stars-background";
 
 const handleRouting = (router: ReturnType<typeof useRouter>, path: string) => {
   router.push(path);
@@ -30,11 +32,11 @@ export default function MockQuestions() {
   };
 
   return (
-    <div className="flex min-h-screen h-screen w-screen overflow-hidden bg-black">
+    <div className="flex min-h-screen h-screen w-screen overflow-hidden bg-black relative">
       <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="flex-1 flex flex-col">
         <Dashboard_Header toggleSidebar={toggleSidebar} />
-        <div className="flex items-center justify-center h-full w-full">
+        <div className="flex items-center justify-center p-20 w-full mx-auto h-full">
           <Card className="w-full h-full bg-black text-white shadow-xl flex flex-col">
             <div className="p-4">
               <ArrowLeft className="cursor-pointer text-white hover:text-gray-400" onClick={() => router.back()} />

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/common/Header';
 import HrDash_Sidebar from '@/components/hrdashboard/Sidebar';
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 interface Candidate {
   id: string;
   user_id: string;
@@ -37,7 +37,7 @@ function InterviewResults() {
 
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/interviewresult/${interviewId}`,
+          `${BASE_URL}/interviewresult/${interviewId}`,
           {
             method: 'GET',
             headers: {

@@ -10,6 +10,10 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import Dashboard_Header from "@/components/dashboard_header";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
+import { ShootingStars } from "@/components/ShootingStars";
+import { StarsBackground } from "@/components/stars-background";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function JobsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,7 +49,7 @@ export default function JobsPage() {
   const fetchJobs = async (query = "") => {
     setLoading(true);
     try {
-      const response = await fetch("http://127.0.0.1:8000/job/search", {
+      const response = await fetch(`${BASE_URL}/job/search`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,13 +86,9 @@ export default function JobsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-black">
-      {loading}
-      {/* Sidebar */}
+    <div className="flex min-h-screen bg-black relative">
       <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-      {/* Header */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
         <Dashboard_Header toggleSidebar={toggleSidebar} />
 
         <div className="container mx-auto py-8 px-4">

@@ -94,5 +94,21 @@
     {
         "role": "assistant",
         "content": "It looks like you've provided a generic link. If you have a specific GitHub username or profile link, please share it. Otherwise, shall we move on to your LinkedIn profile?"
+    },
+    {
+        "role": "user",
+        "content": "Hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again! If you have a GitHub profile, could you please provide the specific link? If not, do you have a LinkedIn profile you\u2019d like to share?"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! If you have a LinkedIn profile you\u2019d like to share, please let me know. Otherwise, we can move on to collecting your education details."
     }
 ]

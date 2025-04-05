@@ -40,7 +40,7 @@ export default function Dashboard_Header({ toggleSidebar }: HeaderProps) {
         </div>
         <div className="flex items-center space-x-3 cursor-pointer" onClick={() => router.push("/dashboard/profile")}>
           <User className="w-5 h-6 text-white" />
-          {name}
+          
           <Button className="bg-white-400 hover:bg-white p-2 rounded-full" onClick={() => logout()}>
             <LogOut className="text-white" />
           </Button>

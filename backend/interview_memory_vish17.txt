@@ -1,10 +1,9 @@
 {
     "interviewId": null,
     "questions": [
-        "Could you tell us about your journey into full-stack development and how your experience as a developer has prepared you for engaging in customer conversations and digital transformation initiatives?",
-        "With your strong technical skills and project experience, how would you approach identifying customer business needs and proposing suitable Microsoft-based solutions for digital transformation in their industry?",
-        "Considering the competitive landscape and your background in utilizing various technologies and tools, how would you analyze competitor products and develop strategies to position Microsoft services favorably and drive deal closures?"
+        "Can you tell us more about your project experiences, particularly Prathibhimb AI, and how they demonstrate your skills in building user-friendly interfaces and handling backend processes?",
+        "In your role as a Full Stack Developer, how have you applied your knowledge of data structures and algorithms to optimize API response and UI state management in the applications you\u2019ve developed?",
+        "Given our focus on enterprise data governance within a heterogeneous cloud environment and your interest in developing SaaS products, how would you approach designing an SDK or REST API for our Purview Data Governance team to better manage enterprise data? Could you describe your thought process and any design patterns you might employ?"
     ],
-    "index": 1,
-    "response_0": "hello hello"
+    "index": 0
 }

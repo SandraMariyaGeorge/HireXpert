@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Header from '@/components/common/Header';
 import HrDash_Sidebar from '@/components/hrdashboard/Sidebar';
 import Link from 'next/link';
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 interface Interview {
   id: string;
   interview_title: string;  
@@ -29,7 +29,7 @@ function ViewInterviewDetails() {
   useEffect(() => {
     const fetchInterviews = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/interview/get-interviews/', {
+        const response = await fetch(`${BASE_URL}/interview/get-interviews/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
