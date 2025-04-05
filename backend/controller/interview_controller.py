@@ -40,6 +40,7 @@ def get_token(authorization: str = Header(...)):
 class StartInterviewRequest(BaseModel):
     interviewId: Optional[str] = None
     jobDescription: Optional[str] = None
+    jobId: Optional[str] = None
 
 @router.get("/{interviewId}")
 async def get_interview(interviewId: str, token: str = Depends(get_token)):

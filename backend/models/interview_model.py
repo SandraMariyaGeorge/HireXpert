@@ -22,6 +22,7 @@ import io
 from models.userdetails_model import UserDetails
 import uuid
 from bson import ObjectId
+from models.job_model import Jobs
 
 
 load_dotenv()
@@ -484,6 +485,13 @@ class Interview(Base):
 
         if request.jobDescription:
             job_description = request.jobDescription
+        elif request.jobId:
+            job = Jobs()
+            job_description = job.get_job_by_id(request.jobId)
+            print(job_description)
+            if not job_description:
+                return JSONResponse({"error": "Job not found."}, status_code=404)
+            job_description = job_description["metadata"].get("description", "") + " " + job_description["metadata"].get("qualities", "") + " " + job_description["metadata"].get("responsibilities", "")
         else:
             interviewid = request.interviewId
             interview = self.db.find_one({"_id": ObjectId(interviewid)})

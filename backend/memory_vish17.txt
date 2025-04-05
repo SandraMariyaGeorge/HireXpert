@@ -14,5 +14,85 @@
     {
         "role": "assistant",
         "content": "Hello! Let's get started with your professional details. Can you please tell me your full name?"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hi there! Let's start working on your professional profile. Could you please share your full name with me?"
+    },
+    {
+        "role": "user",
+        "content": "Vishnuhari"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you, Vishnuhari! What's your age?"
+    },
+    {
+        "role": "user",
+        "content": "i am 15"
+    },
+    {
+        "role": "assistant",
+        "content": "Got it. Could you please tell me your gender?"
+    },
+    {
+        "role": "user",
+        "content": "what was my name?"
+    },
+    {
+        "role": "assistant",
+        "content": "Your name is Vishnuhari. Now, could you please tell me your gender?"
+    },
+    {
+        "role": "user",
+        "content": "i am male and what was my age"
+    },
+    {
+        "role": "assistant",
+        "content": "You mentioned that you are 15 years old. Now, could you please provide your email address?"
+    },
+    {
+        "role": "user",
+        "content": "hello.com"
+    },
+    {
+        "role": "assistant",
+        "content": "It seems there might be a typo in your email. Please provide a correct email address (e.g., example@example.com)."
+    },
+    {
+        "role": "user",
+        "content": "example@example.com"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! Could you please provide your phone number next?"
+    },
+    {
+        "role": "user",
+        "content": "7373"
+    },
+    {
+        "role": "assistant",
+        "content": "It seems the phone number is incomplete. Could you please provide the full phone number, including the area code if applicable?"
+    },
+    {
+        "role": "user",
+        "content": "i dont have phone no...can you give me one"
+    },
+    {
+        "role": "assistant",
+        "content": "Unfortunately, I can't provide a phone number, but it's okay if you don't have one right now. Let's move on. Do you have a GitHub profile link you'd like to share?"
+    },
+    {
+        "role": "user",
+        "content": "github.com"
+    },
+    {
+        "role": "assistant",
+        "content": "It looks like you've provided a generic link. If you have a specific GitHub username or profile link, please share it. Otherwise, shall we move on to your LinkedIn profile?"
     }
 ]
