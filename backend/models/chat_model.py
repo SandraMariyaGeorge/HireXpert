@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 from openai import OpenAI
 from pymongo import MongoClient
 from models.userdetails_model import UserDetails
+from models.user_model import Users
 
 api_key = "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"  # Replace with your actual OpenAI API key
 client = OpenAI(api_key=api_key)
@@ -77,6 +78,13 @@ class Chat(Base):
         with open(memory_file, "w", encoding="utf-8") as file:
             json.dump([], file)
 
+    def delete_memory(self, username):
+        memory_file = f"memory_{username}.txt"
+        try:
+            os.remove(memory_file)
+        except Exception as e:
+            print(f"Error deleting memory file: {e}")
+
     def load_memory(self, username):
         """Load conversation history from memory file specific to a user."""
         memory_file = f"memory_{username}.txt"
@@ -100,6 +108,7 @@ class Chat(Base):
 
 
     def generate_summary(self, conversation, username):
+        
         print("Generating summary")
         print(conversation)
         """Generate a formal summary of the conversation."""
@@ -126,6 +135,8 @@ class Chat(Base):
 
         user = UserDetails()
         user.save_to_mongo(optimized_resume_dict)  # Save the dictionary to MongoDB
+        Users().update_profile_completion(username)  # Update profile completion status
+        self.delete_memory(username)  # Clear memory after saving
 
     def process_chat(self, user_input: str, username):
         # Load existing conversation

@@ -3,6 +3,7 @@ from models.user_model import Users
 from pydantic import BaseModel
 from models.chat_model import ChatRequest, ChatResponse, Chat
 
+
 router = APIRouter(
     prefix="/chat",
     tags=["chat"],

@@ -1,0 +1,9 @@
+{
+    "interviewId": null,
+    "questions": [
+        "Can you start by telling us more about your recent educational experiences and any specific subjects or projects you've found most exciting during your time at Bharathiya Vidya Bhavan Vidya Mandir Kodungallur?",
+        "Given your experience with Python and various developer tools, how have you used these skills in any personal projects or learning experiences so far?",
+        "Considering your interest in AI and your technical skills, how would you approach a project that aims to utilize AI in a practical sense, and what aspects of AI technology would you be most interested in exploring further?"
+    ],
+    "index": 0
+}

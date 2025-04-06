@@ -19,11 +19,19 @@ class Users(Base):
             hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
             user_data = user.model_dump()
             user_data['password'] = hashed_password.decode('utf-8')
+            user_data['profile_completed'] = False
             
             self.db.insert_one(user_data)
             return {"message": "User created successfully"}
         except Exception as e:
             return {"error": str(e)}
+
+    def update_profile_completion(self, username: str):
+        user = self.db.find_one({"username": username})
+        if user:
+            self.db.update_one({"username": username}, {"$set": {"profile_completed": True}})
+            return {"message": "Profile updated successfully"}
+        return {"error": "User not found"}
 
     def verify_user(self, username: str, password: str):
         user = self.db.find_one({"username": username})
@@ -42,7 +50,7 @@ class Users(Base):
             "exp": datetime.now(timezone.utc) +timedelta(hours=1)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-        return {"token": token,"role": user["role"],"name": name}
+        return {"token": token,"role": user["role"],"name": name, "profile_completed": user["profile_completed"]}
 
     def verify_jwt(self, token: str):
         try:

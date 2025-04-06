@@ -56,7 +56,7 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 openai.api_key = "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"  # Replace with your actual API key
 
 # ElevenLabs API Key and Voice ID
-ELEVENLABS_API_KEY = "sk_9140701c6a1baac4124a0c2d7fb6231444a1b4a1b8a0f0a8"
+ELEVENLABS_API_KEY = "sk_ec07f1ab4cd8c1d97052530e51b9a9bb4f6ccaf7c0afa39e"
 VOICE_ID = "21m00Tcm4TlvDq8ikWAM"  # Example voice ID
 
 class Interview(Base):
@@ -539,7 +539,9 @@ class Interview(Base):
                 audio_file,
                 media_type="audio/mpeg",
                 filename="question_1.mp3",
-                headers={"X-Interview-Data": json.dumps({
+                headers={
+                    "Access-Control-Expose-Headers": "x-interview-data",
+                    "X-Interview-Data": json.dumps({
                     "question": first_question
                 })}
             )
@@ -637,10 +639,12 @@ class Interview(Base):
                 audio_file,
                 media_type="audio/mpeg",
                 filename=f"question_{index+1}.mp3",
-                headers={"X-Interview-Data": json.dumps({
+                headers={
+                    "Access-Control-Expose-Headers": "x-interview-data",
+                    "X-Interview-Data": json.dumps({
                     "audio_file": str(audio_file),
                     "transcription": transcription,
-                    "follow_up_question": refined_question,
+                    "question": refined_question,
                 })}
             )
 

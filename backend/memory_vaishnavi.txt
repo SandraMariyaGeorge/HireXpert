@@ -1,0 +1,186 @@
+[
+    {
+        "role": "user",
+        "content": "Hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Let's get started with building your user details. To begin, could you please provide your full name?"
+    },
+    {
+        "role": "user",
+        "content": "Vaishnavi V A"
+    },
+    {
+        "role": "assistant",
+        "content": "Great, thank you Vaishnavi. Could you please tell me your age?"
+    },
+    {
+        "role": "user",
+        "content": "16"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks! What is your gender?"
+    },
+    {
+        "role": "user",
+        "content": "Female"
+    },
+    {
+        "role": "assistant",
+        "content": "Got it. Could you please provide your email address?"
+    },
+    {
+        "role": "user",
+        "content": "vaishnavi2004@gmail.com"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you. Could I also have your phone number?"
+    },
+    {
+        "role": "user",
+        "content": "8585909044"
+    },
+    {
+        "role": "assistant",
+        "content": "Perfect. Do you have a GitHub profile? If so, could you please share the link? If you don't have one, that's perfectly fine too."
+    },
+    {
+        "role": "user",
+        "content": "i dont have it right now"
+    },
+    {
+        "role": "assistant",
+        "content": "No worries! How about a LinkedIn profile? If you have one, please share the link. If not, we can move on."
+    },
+    {
+        "role": "user",
+        "content": "No"
+    },
+    {
+        "role": "assistant",
+        "content": "That's perfectly fine. Let's move on to your education details. Could you please tell me the name of your school?"
+    },
+    {
+        "role": "user",
+        "content": "Bharathiya Vidya Bhavan Vidya Mandir Kodungallur"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you! Could you also provide the time period you attended this school, including the start year and end year?"
+    },
+    {
+        "role": "user",
+        "content": "2024-25"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks for that. What percentage or grade did you achieve, or are you expecting to achieve?"
+    },
+    {
+        "role": "user",
+        "content": "98%"
+    },
+    {
+        "role": "assistant",
+        "content": "Excellent! Which board is your school affiliated with (e.g., CBSE, State, ICSE)?"
+    },
+    {
+        "role": "user",
+        "content": "its cbse"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! Now, let's move on to your experience details. Are you a fresher, or do you have some work or internship experience?"
+    },
+    {
+        "role": "user",
+        "content": "I dont have any experience but i have many awards"
+    },
+    {
+        "role": "assistant",
+        "content": "That's impressive! Since you don't have any formal work experience, let's move on to project details. Could you tell me about a project you've worked on? Let's start with the project title."
+    },
+    {
+        "role": "user",
+        "content": "I have done a project of small volcano"
+    },
+    {
+        "role": "assistant",
+        "content": "Nice! Could you please provide a brief description of your volcano project?"
+    },
+    {
+        "role": "user",
+        "content": "Its a small volcano powered by soda powder and vinegar"
+    },
+    {
+        "role": "assistant",
+        "content": "That sounds fun and educational! How long did it take for you to complete this project?"
+    },
+    {
+        "role": "user",
+        "content": "2 weeks"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks. What technology, materials, or tools did you use for this project (like soda powder, vinegar, etc.)?"
+    },
+    {
+        "role": "user",
+        "content": "I used clay,soda powder food color and vinegar along with washing soap"
+    },
+    {
+        "role": "assistant",
+        "content": "Perfect, that covers your project details! Let's move on to the skills section. Could you list any frontend technologies you are familiar with?"
+    },
+    {
+        "role": "user",
+        "content": "i know html and css"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! How about backend technologies? Are there any you're familiar with? If not, that's okay too."
+    },
+    {
+        "role": "user",
+        "content": "i know python"
+    },
+    {
+        "role": "assistant",
+        "content": "Excellent! Do you have any experience with databases? If so, which ones?"
+    },
+    {
+        "role": "user",
+        "content": "mysql i have studied"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks! Are there any frameworks you've worked with or are familiar with?"
+    },
+    {
+        "role": "user",
+        "content": "i know windows and linux"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for sharing. Though Windows and Linux are operating systems, they add to your versatility. If you have worked with any coding frameworks specifically, feel free to mention them in the future.\n\nNext, do you have any experience with cloud platforms?"
+    },
+    {
+        "role": "user",
+        "content": "i know google colab"
+    },
+    {
+        "role": "assistant",
+        "content": "Great! Lastly, do you have any experience with Generative AI technologies or tools?"
+    },
+    {
+        "role": "user",
+        "content": "i know chatgpt and flux dev"
+    },
+    {
+        "role": "assistant",
+        "content": "Fantastic, that covers your skills section! We've completed all necessary details for your user profile. Feel free to review and use this information as you apply for opportunities. If there's anything more you'd like to add, I'm here to help!"
+    }
+]

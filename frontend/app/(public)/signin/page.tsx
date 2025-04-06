@@ -54,7 +54,11 @@ export default function SignIn() {
           const role = data.role || "candidate"; 
           const name = data.name || "User"; // Default name if not provided
           login(data.token, role, name); // Pass both token and role to login
-          router.push("/dashboard/chatinterface"); // Use router.push for navigation
+          if (data.profile_completed) {
+            router.push("/dashboard"); // Redirect to profile completion page
+          } else {
+            router.push("/dashboard/chatinterface"); // Redirect to chat interface
+          }
         } else {
           setError("Signin failed");
         }

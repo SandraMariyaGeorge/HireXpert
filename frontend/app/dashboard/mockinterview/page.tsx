@@ -8,27 +8,29 @@ import { Mic, MicOff, Video, VideoOff, PhoneOff } from "lucide-react";
 import { motion } from "framer-motion";
 import Dashboard_Sidebar from "@/components/dashboard_sidebar";
 import Dashboard_Header from "@/components/dashboard_header";
-import { useSearchParams } from "next/navigation"; // Import useSearchParams
+import { useSearchParams } from "next/navigation";
 import { ShootingStars } from "@/components/ShootingStars";
 import { StarsBackground } from "@/components/stars-background";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-// Dynamically import ReactMic with SSR disabled
-const ReactMic = dynamic(() => import("react-mic").then((mod) => mod.ReactMic), { ssr: false });
 
 export default function InterviewPage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [recording, setRecording] = useState(false);
-  const [blob, setBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [followUpQuestion, setFollowUpQuestion] = useState<string | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunks = useRef<Blob[]>([]);
 
-  const searchParams = useSearchParams(); // Use useSearchParams to get query parameters
-  const jobDescription = searchParams.get("jobDescription"); // Retrieve jobDescription from query
-  const interviewId = searchParams.get("interviewId"); // Retrieve interviewId from query
-  const jobId = searchParams.get("jobId"); // Retrieve jobId from query
+  const searchParams = useSearchParams();
+  const jobDescription = searchParams.get("jobDescription");
+  const interviewId = searchParams.get("interviewId");
+  const jobId = searchParams.get("jobId");
+
   useEffect(() => {
     if (jobDescription || interviewId || jobId) {
       const contextData = {
@@ -36,22 +38,26 @@ export default function InterviewPage() {
         interviewId: interviewId || null,
         jobId: jobId || null,
       };
-      console.log("Sending context to backend:", contextData);
 
       axios
         .post(`${BASE_URL}/interview/start-interview/`, contextData, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          responseType: "blob", // Expecting a file response
+          responseType: "blob",
         })
         .then((response) => {
-          // Handle the audio file
           const audioBlob = new Blob([response.data], { type: "audio/mpeg" });
           const audioUrl = URL.createObjectURL(audioBlob);
           const audio = new Audio(audioUrl);
           setAudioUrl(audioUrl);
-          audio.play(); // Automatically play the first question
+          audio.play();
+          const interviewDataHeader = response.headers["x-interview-data"];
+          if (interviewDataHeader) {
+            const parsedData = JSON.parse(interviewDataHeader);
+            setFollowUpQuestion(parsedData.question);
+            
+          }
         })
         .catch((error) => {
           console.error("Error sending context to backend:", error);
@@ -62,24 +68,53 @@ export default function InterviewPage() {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-  const startRecording = () => setRecording(true);
-  const stopRecording = () => setRecording(false);
 
-  const onStop = (recordedBlob: any) => {
-    setBlob(recordedBlob.blob);
+  const startRecording = () => {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunks.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const completeBlob = new Blob(audioChunks.current, { type: "audio/wav" });
+        setAudioBlob(completeBlob);
+        audioChunks.current = []; // Clear chunks after recording
+      };
+
+      mediaRecorder.start();
+      setRecording(true);
+    });
+  };
+
+  const stopRecording = () => {
+    mediaRecorderRef.current?.stop();
+    setRecording(false);
+  };
+
+  const toggleRecording = () => {
+    if (recording) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
   };
 
   const uploadAudio = async () => {
-    if (!blob) {
+    if (!audioBlob) {
       alert("No audio recorded!");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("file", blob, "recorded-audio.wav");
-
     try {
-      const response = await axios.post(`${BASE_URL}/interview/process-audio/`, formData, {
+      const formData = new FormData();
+      formData.append("file", audioBlob, "recorded-audio.wav");
+
+      const uploadResponse = await axios.post(`${BASE_URL}/interview/process-audio/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -87,29 +122,19 @@ export default function InterviewPage() {
         responseType: "blob",
       });
 
-      console.log("Response from server:", response.data);
+      if (uploadResponse.headers['x-interview-data']) {
+        const interviewData = JSON.parse(uploadResponse.headers['x-interview-data']);
+        setFollowUpQuestion(interviewData.question);
+      } else {
+        console.warn("No follow-up question found in the response headers.");
+      }
 
-      // Check if the response is JSON (message) or audio (blob)
-      const contentType = response.headers["content-type"];
-      if (contentType && contentType.includes("application/json")) {
-        // If the response is JSON, parse it and show the summary
-        const reader = new FileReader();
-        reader.onload = () => {
-          const jsonResponse = JSON.parse(reader.result as string);
-          if (jsonResponse.message) {
-            alert(jsonResponse.summary);
-          }
-        };
-        reader.readAsText(response.data);
-      } else if (contentType && contentType.includes("audio/mpeg")) {
-        // If the response is audio, play it
-        const audioBlob = new Blob([response.data], { type: "audio/mpeg" });
+      const contentType = uploadResponse.headers["content-type"];
+      if (contentType.includes("audio/mpeg")) {
+        const audioBlob = new Blob([uploadResponse.data], { type: "audio/mpeg" });
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
-
-        // Automatically play the audio once received
-        const audio = new Audio(url);
-        audio.play();
+        new Audio(url).play();
       } else {
         alert("Unexpected response from the server.");
       }
@@ -141,7 +166,6 @@ export default function InterviewPage() {
       stream.getTracks().forEach((track) => track.stop());
       videoRef.current.srcObject = null;
     }
-    // Redirect to home or another page after ending the call
     window.location.href = "/dashboard";
   };
 
@@ -151,39 +175,50 @@ export default function InterviewPage() {
       .then((stream) => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-
-          // Mute the local audio playback to prevent self-echo
           const audioTracks = stream.getAudioTracks();
           audioTracks.forEach((track) => (track.enabled = false));
         }
       })
       .catch((err) => console.error("Error accessing media devices:", err));
   }, []);
-
   return (
-    <div className="flex min-h-screen bg-black relative">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative">
       <Dashboard_Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="flex-1 flex flex-col">
         <Dashboard_Header toggleSidebar={toggleSidebar} />
-        <section className="flex flex-col lg:flex-row justify-center items-center min-h-screen bg-gray-900 text-white p-6">
+        <section className="flex flex-col lg:flex-row justify-center items-center min-h-screen p-6">
           {/* Camera Feed */}
-          <div className="flex-1 flex flex-col justify-center items-center relative border-r border-gray-700">
-            <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
+          <div className="flex-1 flex flex-col justify-center items-center relative border-r border-gray-700 p-4">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              className="w-full h-full object-cover rounded-lg shadow-lg"
+            />
             <div className="absolute bottom-4 flex space-x-4">
-              <Button onClick={toggleAudio} className="bg-gray-800 hover:bg-gray-700 p-2 rounded-full">
+              <Button
+                onClick={toggleAudio}
+                className="bg-gray-800 hover:bg-gray-700 p-3 rounded-full shadow-md"
+              >
                 {audioEnabled ? <Mic className="text-white" /> : <MicOff className="text-red-500" />}
               </Button>
-              <Button onClick={toggleVideo} className="bg-gray-800 hover:bg-gray-700 p-2 rounded-full">
+              <Button
+                onClick={toggleVideo}
+                className="bg-gray-800 hover:bg-gray-700 p-3 rounded-full shadow-md"
+              >
                 {videoEnabled ? <Video className="text-white" /> : <VideoOff className="text-red-500" />}
               </Button>
-              <Button onClick={endCall} className="bg-red-600 hover:bg-red-700 p-2 rounded-full">
+              <Button
+                onClick={endCall}
+                className="bg-red-600 hover:bg-red-700 p-3 rounded-full shadow-md"
+              >
                 <PhoneOff className="text-white" />
               </Button>
             </div>
           </div>
 
           {/* AI Interviewer */}
-          <div className="flex-1 flex flex-col justify-center items-center bg-gray-800 p-6">
+          <div className="flex-1 flex flex-col justify-center items-center bg-gray-800 p-8 rounded-lg shadow-lg">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -195,48 +230,60 @@ export default function InterviewPage() {
                 alt="AI Interviewer"
                 className="w-40 h-40 rounded-full border-4 border-white shadow-lg"
               />
-              <h3 className="text-xl font-semibold mt-4">AI Interviewer</h3>
-              <p className="text-gray-300 mt-2">&quot;Tell me about yourself...&quot;</p>
+              <h3 className="text-2xl font-semibold mt-4 text-white">AI Interviewer</h3>
             </motion.div>
-            <div className="flex flex-col items-center space-y-4">
-              <ReactMic
-                record={recording}
-                onStop={onStop}
-                mimeType="audio/wav"
-                strokeColor="#FFFFFF"
-                backgroundColor="#1F2937"
-                className="rounded-lg shadow-md"
-              />
-              <div className="flex space-x-4 mt-4">
+            {followUpQuestion && (
+                <div className="mt-6 p-2 bg-gray-700 text-white rounded-lg shadow-lg w-full max-w-2xl">
+                  <h4 className="text-2xl font-bold text-center mb-4">Question</h4>
+                  <p className="text-lg text-gray-300 leading-relaxed text-center">
+                    {followUpQuestion}
+                  </p>
+                </div>
+              )}
+            <div className="flex flex-col items-center">
+              <div className="h-20 flex items-center">
+                {recording && (
+                  <div className="text-white text-lg font-medium animate-pulse">
+                    Recording...
+                  </div>
+                )}
+              </div>
+              <div className="flex space-x-4">
                 <Button
-                  onClick={startRecording}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                  onClick={toggleRecording}
+                  className={`${
+                    recording
+                      ? "bg-red-500 hover:bg-red-600"
+                      : "bg-blue-500 hover:bg-blue-600"
+                  } text-white px-6 py-3 rounded-lg shadow-md`}
                 >
-                  Start Recording
-                </Button>
-                <Button
-                  onClick={stopRecording}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-                >
-                  Stop Recording
+                  {recording ? "Stop Recording" : "Start Recording"}
                 </Button>
                 <Button
                   onClick={uploadAudio}
-                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                  className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg shadow-md"
+                  disabled={!audioBlob}
                 >
                   Upload Audio
                 </Button>
               </div>
+              {audioBlob && (
+                <div className="text-center mt-4">
+                  <Button
+                    onClick={() => new Audio(URL.createObjectURL(audioBlob)).play()}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md"
+                  >
+                    Replay Recording
+                  </Button>
+                </div>
+              )}
               {audioUrl && (
                 <div className="text-center mt-4">
                   <Button
-                    onClick={() => {
-                      const audio = new Audio(audioUrl!);
-                      audio.play();
-                    }}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                    onClick={() => new Audio(audioUrl).play()}
+                    className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md"
                   >
-                    Replay Audio
+                    Play Question Again
                   </Button>
                 </div>
               )}
@@ -247,4 +294,3 @@ export default function InterviewPage() {
     </div>
   );
 }
-
