@@ -50,7 +50,12 @@ class Users(Base):
             "exp": datetime.now(timezone.utc) +timedelta(hours=1)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-        return {"token": token,"role": user["role"],"name": name, "profile_completed": user["profile_completed"]}
+        return {
+            "token": token,
+            "role": user.get("role", "N/A"),
+            "name": name,
+            "profile_completed": user.get("profile_completed", False)
+        }
 
     def verify_jwt(self, token: str):
         try:

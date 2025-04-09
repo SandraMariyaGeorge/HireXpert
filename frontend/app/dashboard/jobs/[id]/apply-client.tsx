@@ -10,79 +10,79 @@ import Dashboard_Sidebar from '@/components/dashboard_sidebar';
 import Dashboard_Header from '@/components/dashboard_header';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import LoadingOverlayComponent from "@/components/loading-overlay";
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-
 export default function ApplyPageClient({ job }: { job?: Job }) {
-      const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [jobDesc, setJobDesc] = useState("");
-    const { id } = useParams(); // Get the job ID from the URL
+  const { id } = useParams(); // Get the job ID from the URL
 
-    useEffect(() => {
-        if (!id) return; // If no ID is present, do nothing
+  useEffect(() => {
+    if (!id) return; // If no ID is present, do nothing
 
-        const fetchJobDetails = async () => {
-            try {
-                const response = await fetch(`${BASE_URL}/job/${id}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                const data = await response.json();
-                setJobDesc(String(data)); // Convert the fetched data to a string
-            } catch (error) {
-                console.error("Error fetching job details:", error);
-            }
-        };
+    const fetchJobDetails = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/job/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        setJobDesc(String(data)); // Convert the fetched data to a string
+      } catch (error) {
+        console.error("Error fetching job details:", error);
+      }
+    };
 
-        fetchJobDetails();
-    }, [id]);
+    fetchJobDetails();
+  }, [id]);
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
   console.log(job);
 
-
   const handleResumeGenerationClick = async () => {
-          if (!id) {
-              alert("Job ID is not available");
-              return;
-          }
-  
-          setLoading(true);
-          try {
-              const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
-              const response = await axios.post(
-                  `${BASE_URL}/generate`,
-                  { job_desc: jobDesc },
-                  {
-                      headers: {
-                          "Content-Type": "application/json",
-                          Authorization: `Bearer ${token}`,
-                      },
-                      responseType: "blob", // Ensure the response is treated as a binary file
-                  }
-              );
-  
-              // Create a URL for the PDF file and trigger download
-              const url = window.URL.createObjectURL(new Blob([response.data]));
-              const link = document.createElement("a");
-              link.href = url;
-              link.setAttribute("download", "resume.pdf");
-              document.body.appendChild(link);
-              link.click();
-              link.remove();
-          } catch (error) {
-              console.error("Error generating resume:", error);
-              alert("Failed to generate resume. Please try again.");
-          } finally {
-              setLoading(false);
-          }
-      };
+    if (!id) {
+      alert("Job ID is not available");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("token"); // Assuming token is stored in localStorage
+      const response = await axios.post(
+        `${BASE_URL}/generate`,
+        { job_desc: jobDesc },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: "blob", // Ensure the response is treated as a binary file
+        }
+      );
+
+      // Create a URL for the PDF file and trigger download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "resume.pdf");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error generating resume:", error);
+      alert("Failed to generate resume. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleMockInterview = () => {
     router.push(`/dashboard/mockinterview?jobId=${encodeURIComponent(job.id)}`);
@@ -96,7 +96,6 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
     }
   };
 
-  
   if (!job) {
     return (
       <div className="container mx-auto py-16 px-4 text-center">
@@ -111,6 +110,7 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
 
   return (
     <div className="flex min-h-screen bg-black">
+      {loading && <LoadingOverlayComponent />} {/* Show overlay when loading */}
       {/* Sidebar */}
       <Dashboard_Sidebar
         sidebarOpen={sidebarOpen}
@@ -150,8 +150,8 @@ export default function ApplyPageClient({ job }: { job?: Job }) {
                   <CardContent className="space-y-4">
                     <div className="flex flex-col items-center space-y-4">
                       <Button onClick={handleResumeGenerationClick}
-                                        disabled={loading}
-                                        className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Download Customized Resume</Button>
+                        disabled={loading}
+                        className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Download Customized Resume</Button>
                       <Button onClick={handleApply} className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg">Apply for Job</Button>
                     </div>
                   </CardContent>

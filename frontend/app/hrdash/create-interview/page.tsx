@@ -5,7 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useDropzone } from 'react-dropzone';
 import HrDash_Sidebar from '@/components/hrdashboard/Sidebar';
 import Header from '@/components/common/Header';
+import AlertComp from '@/components/alertcomp';
+import tick from '@/public/tick.json'; // Assuming tick.json is in assets folder
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 function CreateInterview() {
   const [interviewTitle, setInterviewTitle] = useState('');
   const [interviewDescription, setInterviewDescription] = useState('');
@@ -14,7 +18,9 @@ function CreateInterview() {
   const [jobType, setJobType] = useState('');
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-  
+  const [showAlert, setShowAlert] = useState(false); // State to control alert visibility
+  const router = useRouter();
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -58,7 +64,7 @@ function CreateInterview() {
 
       const data = await response.json();
       console.log('Interview created successfully:', data);
-      alert('Interview created successfully!');
+      setShowAlert(true); // Show success alert
       
       setInterviewTitle('');
       setInterviewDescription('');
@@ -78,6 +84,14 @@ function CreateInterview() {
       <div className="flex flex-1">
         <HrDash_Sidebar sidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <div className="flex-1 p-10 ml-3 mr-3">
+          {showAlert && (
+            <AlertComp
+              svg={tick}
+              message="Your Interview was created and Invitation Emails were sent successfully!"
+              buttonText="Go to Dashboard"
+              onButtonClick={() => router.push('/hrdash')}
+            />
+          )}
           <header className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Create Interview</h1>
           </header>

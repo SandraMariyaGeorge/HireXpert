@@ -1,9 +1,10 @@
 {
     "interviewId": null,
     "questions": [
-        "Can you start by telling us more about your recent educational experiences and any specific subjects or projects you've found most exciting during your time at Bharathiya Vidya Bhavan Vidya Mandir Kodungallur?",
-        "Given your experience with Python and various developer tools, how have you used these skills in any personal projects or learning experiences so far?",
-        "Considering your interest in AI and your technical skills, how would you approach a project that aims to utilize AI in a practical sense, and what aspects of AI technology would you be most interested in exploring further?"
+        "Can you tell me more about your experience creating the Small Volcano Project and what motivated you to choose this particular project?",
+        "You have a strong foundation in technical skills like Python and web development. How have you applied these skills in any real-world scenarios, perhaps outside formal projects?",
+        "Considering your interest in technology and your impressive academic performance, how do you envision applying your skills and knowledge to make an impact in a role that aligns with your current background?"
     ],
-    "index": 0
+    "index": 1,
+    "response_0": "hello can you hear me hello hello"
 }
