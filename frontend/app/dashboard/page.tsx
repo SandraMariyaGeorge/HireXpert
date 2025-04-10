@@ -8,6 +8,7 @@ import Dashboard_Header from '@/components/dashboard_header';
 import Dashboard_Sidebar from '@/components/dashboard_sidebar';
 import { ShootingStars } from "@/components/ShootingStars";
 import { StarsBackground } from "@/components/stars-background";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface Interview {
@@ -16,7 +17,6 @@ interface Interview {
   date: string;
   status: string;
   feedback?: string;
-  score?: number;
   improvements?: string[];
   expanded?: boolean;
 }
@@ -114,7 +114,7 @@ export default function Dashboard() {
               Welcome back, <span className="text-blue-400">{localStorage.getItem('name')}</span>!
             </h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
               <Card className="bg-gray-800 shadow-lg rounded-lg p-4 md:p-6 hover:shadow-xl transition-shadow duration-300">
                 <div className="flex items-center">
                   <BarChart2 className="h-8 w-8 md:h-10 md:w-10 text-blue-400" />
@@ -135,88 +135,38 @@ export default function Dashboard() {
                   </div>
                 </div>
               </Card>
-              <Card className="bg-gray-800 shadow-lg rounded-lg p-4 md:p-6 hover:shadow-xl transition-shadow duration-300">
-                <div className="flex items-center">
-                  <Briefcase className="h-8 w-8 md:h-10 md:w-10 text-purple-400" />
-                  <div className="ml-3 md:ml-4">
-                    <p className="text-sm md:text-lg font-semibold text-gray-300">Avg. Score</p>
-                    <p className="text-xl md:text-2xl font-bold text-gray-100">
-                      {pastInterviews.length > 0
-                        ? Math.round(pastInterviews.reduce((sum, i) => sum + (i.score || 0), 0) / pastInterviews.length)
-                        : 'N/A'}
-                    </p>
-                  </div>
-                </div>
-              </Card>
             </div>
 
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-100">Your Past Interviews</h2>
 
-              {isLoading ? (
-                <p className="text-gray-400">Loading past interviews...</p>
-              ) : pastInterviews.length === 0 ? (
+              {pastInterviews.length === 0 ? (
                 <p className="text-gray-400">No past interviews found</p>
               ) : (
                 pastInterviews.map((interview) => (
-                  <div key={interview.id} className={`bg-gray-800 rounded-xl shadow-md overflow-hidden transition-all duration-300 ${interview.expanded ? 'p-8' : 'p-6'}`}>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-medium text-gray-300 mb-2">Feedback</h3>
-                      </div>
-                      <div className="px-3 py-1 bg-blue-900 text-gray-100 rounded-full text-sm font-medium">
-                        Score: {interview.score}/10
-                      </div>
-                    </div>
-
-                    <div className="mt-4">
-                      {interview.expanded ? (
-                        <p className="text-gray-400">{interview.feedback || 'No feedback available'}</p>
-                      ) : (
-                        <p className="text-gray-400">
-                          {interview.feedback?.split('\n').slice(0, 2).join('\n') || 'No feedback available'}
-                          {interview.feedback && interview.feedback.split('\n').length > 2 && (
-                            <span
-                              className="text-blue-400 cursor-pointer ml-2"
-                              onClick={() =>
-                                setPastInterviews((prev) =>
-                                  prev.map((item) =>
-                                    item.id === interview.id ? { ...item, expanded: true } : item
-                                  )
-                                )
-                              }
-                            >
-                              Read more
-                            </span>
-                          )}
-                        </p>
-                      )}
-                    </div>
-
-                    {interview.expanded && (
-                      <div className="mt-4">
-                        <h4 className="font-medium text-gray-300 mb-2">Areas for Improvement:</h4>
-                        <ul className="list-disc list-inside space-y-1 text-gray-400">
-                          {interview.improvements && interview.improvements.length > 0 ? (
-                            interview.improvements.map((item, index) => <li key={index}>{item}</li>)
-                          ) : (
-                            <li>No specific improvements mentioned</li>
-                          )}
-                        </ul>
-                        <span
-                          className="text-blue-400 cursor-pointer mt-4 block"
+                  <div key={interview.id} className="bg-gray-800 rounded-xl shadow-md p-6 transition-all duration-300">
+                    <div className="mb-2">
+                      <h3 className="font-medium text-gray-300 mb-1">Feedback</h3>
+                      <p className="text-gray-400 whitespace-pre-line">
+                        {interview.expanded || !interview.feedback
+                          ? interview.feedback || 'No feedback available'
+                          : `${interview.feedback.split('\n').slice(0, 2).join('\n')}...`}
+                      </p>
+                      {interview.feedback && interview.feedback.split('\n').length > 2 && (
+                        <button
+                          className="mt-2 text-sm text-blue-400 hover:underline focus:outline-none"
                           onClick={() =>
                             setPastInterviews((prev) =>
                               prev.map((item) =>
-                                item.id === interview.id ? { ...item, expanded: false } : item
+                                item.id === interview.id ? { ...item, expanded: !item.expanded } : item
                               )
                             )
                           }
                         >
-                          Show less
-                        </span>
-                      </div>
-                    )}
+                          {interview.expanded ? 'Show less ▲' : 'Read more ▼'}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))
               )}
