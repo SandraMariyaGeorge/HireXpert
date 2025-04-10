@@ -56,7 +56,7 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 openai.api_key = "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"  # Replace with your actual API key
 
 # ElevenLabs API Key and Voice ID
-ELEVENLABS_API_KEY = "sk_ec07f1ab4cd8c1d97052530e51b9a9bb4f6ccaf7c0afa39e"
+ELEVENLABS_API_KEY = "sk_b0c7c86dc5c36efcb66399b9b76ab24862cb0cb5a8627446"
 VOICE_ID = "21m00Tcm4TlvDq8ikWAM"  # Example voice ID
 
 class Interview(Base):

@@ -1,9 +1,9 @@
 {
     "interviewId": null,
     "questions": [
-        "Can you tell us more about your project experiences, particularly Prathibhimb AI, and how they demonstrate your skills in building user-friendly interfaces and handling backend processes?",
-        "In your role as a Full Stack Developer, how have you applied your knowledge of data structures and algorithms to optimize API response and UI state management in the applications you\u2019ve developed?",
-        "Given our focus on enterprise data governance within a heterogeneous cloud environment and your interest in developing SaaS products, how would you approach designing an SDK or REST API for our Purview Data Governance team to better manage enterprise data? Could you describe your thought process and any design patterns you might employ?"
+        "Can you tell us about a project or experience from your profile where you demonstrated customer obsession and how it impacted the outcome?",
+        "Your technical background includes proficiency in both frontend frameworks like React and backend tools. How do you approach the integration of these different layers to ensure security and efficiency in a multi-tenant environment?",
+        "Considering your experience and skills in building complex applications, how would you design a scalable and secure data retrieval system using Azure Cloud for a global enterprise, while ensuring usability and accessibility for diverse user personas?"
     ],
     "index": 0
 }

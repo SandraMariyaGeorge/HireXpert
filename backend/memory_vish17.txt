@@ -110,5 +110,37 @@
     {
         "role": "assistant",
         "content": "Hi there! If you have a LinkedIn profile you\u2019d like to share, please let me know. Otherwise, we can move on to collecting your education details."
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Let's move forward. Could you tell me the name of the school you are currently attending or have attended?"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! Let\u2019s continue. What is the name of the school you are currently attending or last attended?"
+    },
+    {
+        "role": "user",
+        "content": "Bharathiya vidya bhavans kodungallur"
+    },
+    {
+        "role": "assistant",
+        "content": "Great, thank you! Can you tell me the time period you attended or are attending this school? Please specify the start year and the end year (e.g., 2020 - 2023)."
+    },
+    {
+        "role": "user",
+        "content": "2020-2022"
+    },
+    {
+        "role": "assistant",
+        "content": "Thanks for the details! What percentage or grade did you achieve at Bharathiya Vidya Bhavans Kodungallur?"
     }
 ]
