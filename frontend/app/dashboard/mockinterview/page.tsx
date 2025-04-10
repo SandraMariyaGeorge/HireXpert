@@ -141,6 +141,8 @@ export default function InterviewPage() {
         responseType: "blob",
       });
 
+      console.log("Upload response:", uploadResponse);
+
       if (uploadResponse.headers["x-interview-data"]) {
         const interviewData = JSON.parse(uploadResponse.headers["x-interview-data"]);
         setFollowUpQuestion(interviewData.question);
@@ -155,7 +157,7 @@ export default function InterviewPage() {
         setAudioUrl(url);
         new Audio(url).play();
       } else {
-        const summary = uploadResponse.summary ? await uploadResponse.summary.text() : "Unknown error occurred.";
+        const summary = uploadResponse.data ? JSON.parse(await uploadResponse.data.text()).summary : "Unknown error occurred.";
         setShowAlert(true);
         setAlertMessage(summary); // Set the alert message dynamically
       }

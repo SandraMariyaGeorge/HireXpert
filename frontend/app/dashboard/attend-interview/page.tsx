@@ -163,9 +163,7 @@ export default function InterviewDashboard() {
                           <h4 className="font-medium text-gray-700 mb-2">Feedback </h4>
 
                       </div>
-                      <div className="px-3 py-1 bg-blue-100 text-gray-800 rounded-full text-sm font-medium">
-                          Score: {interview.score}/10
-                      </div>
+
                       </div>
 
                       <div className="mt-4">

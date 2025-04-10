@@ -1,0 +1,12 @@
+{
+    "interviewId": null,
+    "questions": [
+        "How are you?",
+        "Tell me about Prathibhimb AI.",
+        "Describe how you reduced workflow time?"
+    ],
+    "index": 3,
+    "response_0": "I am fine",
+    "response_1": "I am very very",
+    "response_2": "sorry sorry"
+}
