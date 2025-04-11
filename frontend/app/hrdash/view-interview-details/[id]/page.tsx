@@ -136,13 +136,7 @@ function InterviewResults() {
                     <h2 className="text-lg font-semibold text-gray-900">
                       Username: {candidate.user_id}
                     </h2>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      candidate.score >= 8 ? 'bg-green-100 text-green-800' :
-                      candidate.score >= 5 ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      Score: {candidate.score}/10
-                    </span>
+                    
                   </div>
                   <div className="mt-3">
                     <h3 className="text-gray-700 font-medium">Feedback:</h3>
