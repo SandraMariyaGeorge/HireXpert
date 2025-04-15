@@ -1,9 +1,0 @@
-{
-    "interviewId": null,
-    "questions": [
-        "Stiya, can you start by sharing what initially sparked your interest in front-end development and how your educational background has contributed to your journey so far?",
-        "Your project 'Prathibimb' demonstrates your work with Next.js. Could you delve deeper into what you found most challenging about this project and how you tackled those challenges?",
-        "Considering your experience with developing a chart-generating site, how do you approach optimizing frontend performance in your applications to enhance user experience, especially in a real-world production environment?"
-    ],
-    "index": 0
-}
