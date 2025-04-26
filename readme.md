@@ -16,7 +16,7 @@ This project showcases practical implementation of **Next.js**, **Python FastAPI
 
 | Level | Concept                  |
 |:-----:|---------------------------|
-| 1     | Frontend (Next.js App)     |
+| 1     | Frontend (Next.js)     |
 | 2     | Backend (Python FastAPI)   |
 | 3     | Database (MongoDB Setup)   |
 | 4     | AI Integration (OpenAI API)|
