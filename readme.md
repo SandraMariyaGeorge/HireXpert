@@ -49,7 +49,7 @@ Also recommended:
 ## 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/hirexpert.git
+https://github.com/vishnuhari17/HireXpert.git
 cd hirexpert
 ```
 
@@ -124,7 +124,7 @@ npm run dev
 
 ---
 
-# 🧠 How Hirexpert Works (Example Usage)
+# 🧠 How Hirexpert Works 
 
 - 📝 User uploads a candidate's resume (PDF/Docx).
 - 🔍 Backend parses the resume using Python and extracts skills, experience, and education.
