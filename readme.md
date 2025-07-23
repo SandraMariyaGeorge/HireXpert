@@ -32,6 +32,7 @@ This project showcases practical implementation of **Next.js**, **Python FastAPI
 ![Dashboard](https://github.com/vishnuhari17/HireXpert/blob/main/frontend/public/dashboard.png?raw=true)
 ![Interview Simulation](https://github.com/vishnuhari17/HireXpert/blob/main/frontend/public/interview%20(2).png?raw=true)
 ![Job Listings](https://github.com/vishnuhari17/HireXpert/blob/main/frontend/public/job.png?raw=true)
+
 ![Sign In Page](https://github.com/vishnuhari17/HireXpert/blob/main/frontend/public/signin.png?raw=true)
 
 
