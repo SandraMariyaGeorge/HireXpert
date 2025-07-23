@@ -35,7 +35,7 @@ export default function Dashboard_Header({ toggleSidebar }: HeaderProps) {
             <Menu className="text-white" />
           </Button>
           <Link href="/dashboard" passHref>
-            <h1 className="text-2xl font-semibold text-white">HireExpert</h1>
+            <h1 className="text-2xl font-semibold text-white">HireXpert</h1>
           </Link>
         </div>
         <div className="flex items-center space-x-3 cursor-pointer" onClick={() => router.push("/dashboard/profile")}>

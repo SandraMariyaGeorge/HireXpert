@@ -57,7 +57,7 @@ export default function Home() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <Users className="w-8 h-8 text-white" />
-              <span className="ml-2 text-xl font-semibold">HireExpert</span>
+              <span className="ml-2 text-xl font-semibold">HireXpert</span>
             </div>
             <div className="flex space-x-4">
               <Button variant="ghost" className="text-gray-300 hover:text-black" onClick={() => scrollToSection("services")}>
@@ -85,7 +85,7 @@ export default function Home() {
           </span>
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
             <TypewriterEffectSmooth words={[
-              { text: "HireExpert" },
+              { text: "HireXpert" },
               { text: ": Supercharge" },
               { text: "Your Hiring Process" },
             ]} />
