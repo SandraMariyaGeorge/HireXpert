@@ -29,6 +29,10 @@ This project showcases practical implementation of **Next.js**, **Python FastAPI
 - `/routes/` → API endpoints for candidate upload, parsing, matching
 
 ---
+![Dashboard](https://github.com/vishnuhari17/HireXpert/blob/main/frontend/public/dashboard.png?raw=true)
+![Interview Simulation](https://github.com/vishnuhari17/HireXpert/blob/main/frontend/public/interview%20(2).png?raw=true)
+
+
 
 # ⚙️ Prerequisites
 
